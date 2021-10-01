@@ -17,11 +17,11 @@ class CreateProgramsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->foreignId('devision_id');
+            $table->foreignId('division_id');
             $table->timestamp('start_at');
             $table->timestamps();
             
-            $table->foreign('devision_id')->references('id')->on('devisions');
+            $table->foreign('division_id')->references('id')->on('divisions');
         });
     }
 
