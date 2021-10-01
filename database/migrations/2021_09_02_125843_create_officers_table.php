@@ -23,7 +23,7 @@ class CreateOfficersTable extends Migration
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members')->cascadeOnDelete();
-            $table->foreign('devision_id')->references('id')->on('devisions')->nullOnDelete();
+            $table->foreign('division_id')->references('id')->on('devisions')->nullOnDelete();
         });
     }
 

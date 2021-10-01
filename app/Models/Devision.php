@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Devision extends Model
 {
+    public $table = 'divisions';
     use HasFactory;
 }
