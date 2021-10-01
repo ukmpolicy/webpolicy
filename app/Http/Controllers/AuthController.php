@@ -21,7 +21,7 @@ class AuthController extends Controller
             "username" => 'required',
             "password" => 'required',
         ]);
-        // $this->createUser('pemrograman');
+        // $this->createUser('pemrograman', 'admin', 3);
         // $this->createUser('jaringan');
         // dd('yeah');
 
@@ -32,10 +32,11 @@ class AuthController extends Controller
         return redirect()->route('dashboard')->with('success', 'Anda telah berhasil melakukan login');
     }
 
-    public function createUser(String $username, String $password = 'admin') {
+    public function createUser(String $username, String $password = 'admin', $level = 0) {
         $user = new User();
         $user->username = $username;
         $user->password = Hash::make($password);
+        $user->level = $level;
         $user->save();
         return $user;
     }

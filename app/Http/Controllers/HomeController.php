@@ -15,25 +15,28 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index() {
-        $devisiUmum = Devision::where('name', 'umum')->first();
-        $umum = Officer::where('devision_id', $devisiUmum->id)->get()->toArray();
-        $other = Officer::where('role', 0)->get()->toArray();
-        $officers = array_merge($umum, $other);
-        $officers = array_map(function($v) {
-            $v['member'] = Member::find($v['member_id'])->toArray();
-            if ($v['member']['profile_picture']) {
-                $v['member']['profile_picture'] = Source::find($v['member']['profile_picture'])->toArray();
-            }
-            $v['role'] = $this->getRole($v['role']);
-            $v['devision'] = Devision::find($v['devision_id'])->name;
-            return $v;
-        }, $officers);
-        $rows = [];
-        foreach ($officers as $i => $officer) {
-            if (!in_array($officer['id'], $rows)) {
-                $rows[] = $officer['id'];
-            }else {
-                unset($officers[$i]);
+        $officers = [];
+        if (!Officer::all()->empty()) {
+            $devisiUmum = Devision::where('name', 'umum')->first();
+            $umum = Officer::where('devision_id', $devisiUmum->id)->get()->toArray();
+            $other = Officer::where('role', 0)->get()->toArray();
+            $officers = array_merge($umum, $other);
+            $officers = array_map(function($v) {
+                $v['member'] = Member::find($v['member_id'])->toArray();
+                if ($v['member']['profile_picture']) {
+                    $v['member']['profile_picture'] = Source::find($v['member']['profile_picture'])->toArray();
+                }
+                $v['role'] = $this->getRole($v['role']);
+                $v['devision'] = Devision::find($v['devision_id'])->name;
+                return $v;
+            }, $officers);
+            $rows = [];
+            foreach ($officers as $i => $officer) {
+                if (!in_array($officer['id'], $rows)) {
+                    $rows[] = $officer['id'];
+                }else {
+                    unset($officers[$i]);
+                }
             }
         }
         // dd($officers);
