@@ -11,6 +11,9 @@ use App\Http\Controllers\SourceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+// Maintenance Route
+Route::view('/{route}', 'maintenance')->where('app', '.*');
+
 Route::get('/', [HomeController::class, 'index'])->name('main.home');
 Route::get('/article', [HomeController::class, 'articles'])->name('main.articles');
 Route::get('/article/{slug}', [HomeController::class, 'article'])->name('main.article');
