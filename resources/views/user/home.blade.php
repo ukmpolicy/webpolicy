@@ -6,25 +6,25 @@
 
             <div class="item">
                 <div class="image">
-                    <img src="{{ asset('images/gallery/DSC_0111.jpg') }}" alt="">
+                    <img src="{{ asset('images/gallery/or.jpeg') }}" alt="">
                 </div>
                 <div class="body">
                     <h2 class="title">Open Recruitment</h2>
                     <p class="subtitle">Saatnya Telah Tiba Untuk Bergabung Dalam UKM-POLICY Maka Mari Temukan Pengalaman Baru Bersama Kami</p>
                     <p class="subtitle"></p>
-                    <div class="btn btn-ctf">DAFTARKAN  </div>
+                    <a href="{{ route('open-recruitment') }}" class="btn btn-ctf">DAFTARKAN</a>
                 </div>
             </div>
             
             <div class="item">
                 <div class="image">
-                    <img src="{{ asset('images/gallery/DSC_0111.jpg') }}" alt="">
+                    <img src="{{ asset('images/gallery/or.jpeg') }}" alt="">
                 </div>
                 <div class="body">
                     <h2 class="title">Open Recruitment</h2>
                     <p class="subtitle">Saatnya Telah Tiba Untuk Bergabung Dalam UKM-POLICY Maka Mari Temukan Pengalaman Baru Bersama Kami</p>
                     <p class="subtitle"></p>
-                    <div class="btn btn-ctf">DAFTARKAN  </div>
+                    <a href="{{ route('open-recruitment') }}" class="btn btn-ctf">DAFTARKAN</a>
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
 @endsection
 
 @section('visi')
-    <section id="visi" style="background-image: url('{{ asset('images/gallery/IMG_0072.JPG') }}')">
+    <section id="visi" style="background-image: url('{{ asset('images/gallery/visi.jpeg') }}')">
         {{-- <div class="wafe"></div> --}}
         <div class="main">
             <div class="container">
@@ -84,7 +84,7 @@
 @endsection
 
 @section('misi')
-    <section id="misi" style="background-image: url('{{ asset('images/gallery/IMG_0061.JPG') }}')">
+    <section id="misi" style="background-image: url('{{ asset('images/gallery/misi.jpeg') }}')">
         <div class="main">
             <div class="container">
                 <div class="row align-items-center">

@@ -13,7 +13,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Maintenance Route
-// Route::view('/{app}', 'maintenance')->where('app', '.*');
+Route::view('/{app}', 'maintenance')->where('app', '.*');
 
 Route::get('/', [HomeController::class, 'index'])->name('main.home');
 
