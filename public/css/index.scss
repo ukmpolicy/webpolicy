@@ -26,6 +26,48 @@ body,html {
 .more:hover {
     color: #fff;
 }
+#introduction {
+    margin-top: 4rem;
+    padding-bottom: 3rem;
+    background-color: #101010;
+    color: #fff;
+    header {
+        .image {
+            height: 400px;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+        .text {
+            padding: 3rem;
+            text-align: center;
+            p {
+                opacity: .8;
+            }
+        }
+    }
+    section {
+        h2 {
+            margin: auto;
+            margin-bottom: 1rem;
+            padding: 1rem 2rem;
+            padding-left: 0;
+            display: inline-block;
+            border-bottom: 2px solid #ca3737;
+        }
+        p {
+            font-family: Arial !important;
+            opacity: .8;
+        }
+        &.detail-logo {
+            img {
+                width: 50%;
+            }
+        }
+    }
+}
 #navbar {
     position: fixed;
     z-index: 99;
@@ -220,7 +262,7 @@ body,html {
 }
 #aboutUs {
     background-color: #1a1a1a;
-    padding-bottom: 3rem;
+    padding-bottom: 5rem;
 
     .btn-started {
         width: 80px;
@@ -248,77 +290,32 @@ body,html {
     .btn-started:hover {
         background-color: #151515;
     }
-    .head {
-        color: #fff;
-        margin: 0 !important;
-        padding: 0;
-        margin-top: -25px;
-        text-align: center;
-
-        .devider {
-            background-color: #9b2a2a;
-            height: 4px;
-            width: 100px;
-            // margin: auto;
-            border-radius: 4px;
-            margin: 1rem auto;
-        }
-    }
     
-    .row {
-        display: flex;
-        align-items: center;
-
-        .image {
-            text-align: center;
-
-            img {
-                width: 100%;
-                border-radius: 6px;
-                // height: 300px;
-                box-shadow: 10px 10px 0px rgba(0,0,0,.25);
-                // margin-bottom: 1rem;
-                // border-right: 10px solid #111;
-                // border-bottom: 10px solid #111;
-            }
+    .main {
+        .introduction {
+            padding: .8rem 1.2rem;
+            background-color: #ac3333;
+            transition: .3s;
+            color: #fff;
+            font-family: Arial;
+            font-size: 18px;
+            display: block;
+            width: fit-content;
+            margin: auto;
+            margin-top: 2rem;
+            // font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,.75);
+            border-radius: 4px;
+            text-decoration: none;
         }
-        .main {
-            margin: 2rem 0;
-            h1 {
-                color: #fff;
-            }
-            p {
-                margin-top: 1rem;
-                background: #151515;
-                padding: 1rem 1.5rem;
-                border-radius: 6px;
-                // border-left: 3px solid #9b2a2a;
-                // font-size: 14px !important;
-                color: rgba(255, 255, 255, 0.8);
-            }
-            .storyLine {
-                padding: 10px 16px;
-                background-color: #9b2a2a;
-                color: #fff;
-                font-size: 18px;
-                display: block;
-                width: fit-content;
-                // margin: auto;
-                margin-top: 2rem;
-                // font-weight: bold;
-                box-shadow: 0 3px 10px rgba(0,0,0,.75);
-                border-radius: 4px;
-                text-decoration: none;
-            }
-            .storyLine:hover {
-                background-color: #9b2a2a;
-            }
+        .introduction:hover {
+            background-color: #9b2a2a;
         }
     }
 }
 #visi {
     padding-top: 0rem;
-    background-image: url('../images/head/still-life-851328.jpg');
+    // background-image: url('../images/head/still-life-851328.jpg');
     background-position: center center;
     background-size: cover;
     position: relative;
@@ -374,7 +371,7 @@ body,html {
     
 }
 #misi {
-    background-image: url('../images/head/still-life-851328.jpg');
+    // background-image: url('../images/head/still-life-851328.jpg');
     background-position: center center;
     background-size: cover;
     // filter: blur(1);

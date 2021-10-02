@@ -85,7 +85,7 @@
 <script>
     let user_id = '';
     @if (auth()->check())
-    let user_id = parseInt('{{ auth()->user()->id }}');
+    user_id = parseInt('{{ auth()->user()->id }}');
     @endif
 </script>
 <script src="{{ asset('js/Library.js') }}"></script>

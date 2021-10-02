@@ -48,6 +48,51 @@ body, html {
   color: #fff;
 }
 
+#introduction {
+  margin-top: 4rem;
+  padding-bottom: 3rem;
+  background-color: #101010;
+  color: #fff;
+}
+
+#introduction header .image {
+  height: 400px;
+}
+
+#introduction header .image img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#introduction header .text {
+  padding: 3rem;
+  text-align: center;
+}
+
+#introduction header .text p {
+  opacity: .8;
+}
+
+#introduction section h2 {
+  margin: auto;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+  padding-left: 0;
+  display: inline-block;
+  border-bottom: 2px solid #ca3737;
+}
+
+#introduction section p {
+  font-family: Arial !important;
+  opacity: .8;
+}
+
+#introduction section.detail-logo img {
+  width: 50%;
+}
+
 #navbar {
   position: fixed;
   z-index: 99;
@@ -271,7 +316,7 @@ body, html {
 
 #aboutUs {
   background-color: #1a1a1a;
-  padding-bottom: 3rem;
+  padding-bottom: 5rem;
 }
 
 #aboutUs .btn-started {
@@ -309,67 +354,19 @@ body, html {
   background-color: #151515;
 }
 
-#aboutUs .head {
+#aboutUs .main .introduction {
+  padding: .8rem 1.2rem;
+  background-color: #ac3333;
+  -webkit-transition: .3s;
+  transition: .3s;
   color: #fff;
-  margin: 0 !important;
-  padding: 0;
-  margin-top: -25px;
-  text-align: center;
-}
-
-#aboutUs .head .devider {
-  background-color: #9b2a2a;
-  height: 4px;
-  width: 100px;
-  border-radius: 4px;
-  margin: 1rem auto;
-}
-
-#aboutUs .row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-#aboutUs .row .image {
-  text-align: center;
-}
-
-#aboutUs .row .image img {
-  width: 100%;
-  border-radius: 6px;
-  -webkit-box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.25);
-          box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.25);
-}
-
-#aboutUs .row .main {
-  margin: 2rem 0;
-}
-
-#aboutUs .row .main h1 {
-  color: #fff;
-}
-
-#aboutUs .row .main p {
-  margin-top: 1rem;
-  background: #151515;
-  padding: 1rem 1.5rem;
-  border-radius: 6px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-#aboutUs .row .main .storyLine {
-  padding: 10px 16px;
-  background-color: #9b2a2a;
-  color: #fff;
+  font-family: Arial;
   font-size: 18px;
   display: block;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  margin: auto;
   margin-top: 2rem;
   -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.75);
           box-shadow: 0 3px 10px rgba(0, 0, 0, 0.75);
@@ -377,13 +374,12 @@ body, html {
   text-decoration: none;
 }
 
-#aboutUs .row .main .storyLine:hover {
+#aboutUs .main .introduction:hover {
   background-color: #9b2a2a;
 }
 
 #visi {
   padding-top: 0rem;
-  background-image: url("../images/head/still-life-851328.jpg");
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -444,7 +440,6 @@ body, html {
 }
 
 #misi {
-  background-image: url("../images/head/still-life-851328.jpg");
   background-position: center center;
   background-size: cover;
 }

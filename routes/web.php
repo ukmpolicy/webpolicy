@@ -7,20 +7,30 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OfficerController;
+use App\Http\Controllers\ORController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Maintenance Route
-Route::view('/{app}', 'maintenance')->where('app', '.*');
+// Route::view('/{app}', 'maintenance')->where('app', '.*');
 
 Route::get('/', [HomeController::class, 'index'])->name('main.home');
+
+Route::get('/introduction', function() {
+    return view('user.introduction');
+})->name('main.introduction');
+
 Route::get('/article', [HomeController::class, 'articles'])->name('main.articles');
 Route::get('/article/{slug}', [HomeController::class, 'article'])->name('main.article');
 Route::get('/documentation', [HomeController::class, 'documentation'])->name('main.documentations');
-Route::post('/recruitment', [MemberController::class, 'newMember'])->name('main.recruitment.store');
-Route::get('/recruitment', [MemberController::class, 'recruitment'])->name('main.recruitment');
-Route::get('/recruitment/success', [MemberController::class, 'recruitmentSuccess'])->name('main.recruitment.success');
+
+Route::prefix('open-recruitment')->group(function() {
+    Route::get('/', [ORController::class, 'index'])->name('open-recruitment');
+    Route::post('/', [ORController::class, 'store'])->name('open-recruitment.store');
+    Route::get('/form', [ORController::class, 'viewForm'])->name('open-recruitment.form');
+    Route::get('/success', [ORController::class, 'successPage'])->name('open-recruitment.success');
+});
 
 Route::prefix('manager')->group(function() {
 

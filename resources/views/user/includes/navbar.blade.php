@@ -12,13 +12,13 @@
             <div class="navbar-collapse collapse" id="topbar">
                 <ul class="navbar-nav nav">
                     <li class="nav-item">
-                        <a class="nav-link{{ request()->is('/') ? ' active' : '' }}" href="{{ route('main.home') }}">Home</i></a>
+                        <a class="nav-link{{ request()->is('/') ? ' active' : '' }}" href="{{ route('main.home') }}">Beranda</i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{{ request()->is('article') ? ' active' : '' }}" href="{{ route('main.articles') }}">Articles</a>
+                        <a class="nav-link{{ request()->is('article') ? ' active' : '' }}" href="{{ route('main.articles') }}">Artikel</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{{ request()->is('documentation') ? ' active' : '' }}" href="{{ route('main.documentations') }}">Documentation</a>
+                        <a class="nav-link{{ request()->is('documentation') ? ' active' : '' }}" href="{{ route('main.documentations') }}">Dokumentasi</a>
                     </li>
                 </ul>
             </div>
