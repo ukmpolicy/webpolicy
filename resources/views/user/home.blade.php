@@ -131,6 +131,7 @@
                 @foreach ($officers as $officer)
                     <div class="item">
                         <div class="image">
+                            {{-- {{ dd($officer)}} --}}
                             @if (!is_null($officer['member']['profile_picture']))
                             <img src="{{ $officer['member']['profile_picture']['path'] }}" alt="">
                             @endif

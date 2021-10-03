@@ -32,7 +32,8 @@
             <h2 class="mt-3">Langkah Pendaftaran</h2>
             <ol>
                 <li>
-                    <p>Silahkan mengunduh kuisioner <a href="">disini</a>.</p>
+                    
+                    <p>Silahkan mengunduh kuisioner <a href="{{ asset('kuisioner.pdf') }}" target="_blank" rel="noopener noreferrer">disini</a>.</p>
                 </li>
                 <li>
                     <p>Cetak kuisioner tersebut dan menjawab pertanyaan dengan tulis tangan.</p>

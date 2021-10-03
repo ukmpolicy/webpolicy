@@ -23,7 +23,8 @@ class HomeController extends Controller
             $officers = array_merge($umum, $other);
             $officers = array_map(function($v) {
                 $v['member'] = Member::find($v['member_id'])->toArray();
-                if ($v['member']['profile_picture']) {
+                if (!is_null($v['member']['profile_picture'])) {
+                    // dd(Source::find($v['member']['profile_picture']));
                     $v['member']['profile_picture'] = Source::find($v['member']['profile_picture'])->toArray();
                 }
                 $v['role'] = $this->getRole($v['role']);
