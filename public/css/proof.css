@@ -1,0 +1,60 @@
+.wrapper {
+  padding: 0 7rem;
+  font-family: 'Times New Roman';
+  margin: auto;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.3);
+}
+
+.wrapper header {
+  border-bottom: 3px double #000;
+  margin-bottom: 2rem;
+  padding: .8rem 2rem;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-grid-columns: 15% 85%;
+      grid-template-columns: 15% 85%;
+}
+
+.wrapper header .logo {
+  text-align: center;
+}
+
+.wrapper header .logo img {
+  height: 5rem;
+}
+
+.wrapper header .text div {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.wrapper main img.photo {
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+  width: 4cm;
+  height: 5cm;
+}
+
+.wrapper main .table {
+  font-size: 14px;
+}
+
+.wrapper main .table td {
+  padding: 6px;
+}
+
+.wrapper main .ttd {
+  width: 250px;
+  margin: auto;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  margin-right: 0;
+}
+/*# sourceMappingURL=proof.css.map */

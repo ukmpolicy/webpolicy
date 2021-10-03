@@ -10,45 +10,49 @@ use Illuminate\Support\Str;
 class MemberController extends Controller
 {
 
+    private $status = [
+        "Anggota Baru",
+        "Anggota",
+        "Alumni",
+    ];
+
     private $majors = [
-        "Teknik Elektro" => [
-            "Teknik Listrik",
-            "Teknik Telekomunikasi",
-            "Teknik Elektronika",
-            "Instrumentasi dan Otomasi Industri",
-            "Teknik Jaringan Telekomunikasi",
-            "Teknik Pembangkit Energi Listrik",
-        ],
-        "Teknik Informasi dan Komputer" => [
-            "Teknologi Informasi",
-            "Teknik Rekayasa Komputer Jaringan",
-            "Teknik Rekayasa Multi Media"
-        ],
         "Teknik Sipil" => [
-            "Teknik Sipil D3",
-            "Teknik Sipil D4"
-        ],
-        "Teknik Kimia" => [
-            "Teknologi Kimia Industri",
-            "Teknik Kimia D3",
-            "Pengolahan Minyak dan Gas Bumi"
+            "Teknologi Rekayasa Konstruksi Jalan dan Jembatan",
+            "Teknologi Konstruksi Bangunan Gedung",
+            "Teknologi Konstruksi Bangunan Air",
+            "Teknologi Konstruksi Jalan dan Jembatan",
         ],
         "Teknik Mesin" => [
-            "Teknik Mesin D3",
-            "Teknik Mesin D4",
+            "Teknologi Rekayasa Manufaktur",
+            "Teknologi Mesin",
+            "Teknologi Industri",
+            "Teknologi Rekayasa Pengelasan dan Fabrikasi",
+        ],
+        "Teknik Kimia" => [
+            "Teknologi Kimia",
+            "Teknologi Pengolahan Minyak dan Gas Bumi",
+            "Teknologi Rekayasa Kimia Industri",
+        ],
+        "Teknik Elektro" => [
+            "Teknologi Listrik",
+            "Teknologi Rekayasa Pembangkit Energi",
+            "Teknologi Rekayasa Jaringan Telekomunikasi",
+            "Teknologi Rekayasa Instrumentasi dan Kontrol",
+            "Teknologi Telekomunikasi",
+            "Teknologi Elektronika",
         ],
         "Tata Niaga" => [
             "Akuntansi",
-            "Keuangan dan Perbankan",
-            "Keuangan dan Perbankan Syariah",
-            "Administrasi Bisnis"
+            "Administrasi Bisnis",
+            "Perbankan dan Keuangan",
+            "Akuntasi Lembaga Keuangan Syariah",
         ],
-    ];
-
-    private $status = [
-        "Anggota",
-        "Pengurus",
-        "Alumni",
+        "Teknologi Informasi Dan Komputer" => [
+            "Teknik Informatika",
+            "Teknik Rekayasa Komputer Jaringan",
+            "Teknik Rekayasa Multi Media",
+        ],
     ];
 
     public function index() {

@@ -30,7 +30,7 @@ class Library {
             // Upload File
             axios.post('/api/source/upload', fd, {
                 onUploadProgress(v) {
-                    console.log(v);
+                    // console.log(v);
                 }
             })
             .then(r => {
@@ -46,6 +46,7 @@ class Library {
         this.getInputForm().value = id;
         axios.get('/api/source/'+id).then(r => {
             this.onChoiced(r.data.body, this.params);
+            document.querySelector(this.uploadViewSelector).style.backgroundImage = ``;
         })
     }
 

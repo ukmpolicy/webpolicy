@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\Devision;
+use App\Models\Division;
 use App\Models\Galery;
 use App\Models\Member;
 use App\Models\Officer;
@@ -16,9 +16,9 @@ class HomeController extends Controller
 {
     public function index() {
         $officers = [];
-        if (!Officer::all()->empty()) {
-            $devisiUmum = Devision::where('name', 'umum')->first();
-            $umum = Officer::where('devision_id', $devisiUmum->id)->get()->toArray();
+        if (!Officer::all()->isEmpty()) {
+            $devisiUmum = Division::where('name', 'umum')->first();
+            $umum = Officer::where('division_id', $devisiUmum->id)->get()->toArray();
             $other = Officer::where('role', 0)->get()->toArray();
             $officers = array_merge($umum, $other);
             $officers = array_map(function($v) {
@@ -27,7 +27,7 @@ class HomeController extends Controller
                     $v['member']['profile_picture'] = Source::find($v['member']['profile_picture'])->toArray();
                 }
                 $v['role'] = $this->getRole($v['role']);
-                $v['devision'] = Devision::find($v['devision_id'])->name;
+                $v['division'] = Division::find($v['division_id'])->name;
                 return $v;
             }, $officers);
             $rows = [];

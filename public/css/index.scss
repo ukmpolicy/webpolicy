@@ -11,7 +11,7 @@ $headHeight: 97vh;
     z-index: 102;
 }
 body,html {
-    font-family: Quicksand;
+    // font-family: Quicksand;
 }
 .more {
     color: rgba(255, 255, 255, .75);
@@ -32,6 +32,7 @@ body,html {
     background-color: #101010;
     color: #fff;
     header {
+        position: relative;
         .image {
             height: 400px;
             img {
@@ -41,10 +42,19 @@ body,html {
             }
         }
         .text {
-            padding: 3rem;
-            text-align: center;
+            background-color: rgba(0,0,0,.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
             p {
                 opacity: .8;
+                text-transform: uppercase;
             }
         }
     }
@@ -65,6 +75,70 @@ body,html {
             img {
                 width: 50%;
             }
+        }
+    }
+}
+#open-recruitment {
+    @extend #article ;
+    header {
+        position: relative;
+        .image {
+            height: 400px;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+        .text {
+            background-color: rgba(0,0,0,.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            p {
+                opacity: .8;
+                text-transform: uppercase;
+            }
+        }
+    }
+    main.content {
+        margin-top: 5rem;
+        a {
+            color: #ca3737;
+        }
+        .media {
+            width: 100%;
+            max-width: 480px;
+            margin: auto;
+
+            video {
+                border-radius: 6px;
+                width: 100%;
+            }
+            .desc {
+                padding: .5rem 1rem;
+                border-radius: 6px;
+                background-color: #151515;
+                font-size: 12px;
+                font-family: Calibri;
+                opacity: .75;
+                text-align: center;
+            }
+        }
+        h2 {
+            margin: auto;
+            margin-bottom: 1rem;
+            font-size: 25px;
+            padding: 1rem 2rem;
+            padding-left: 0;
+            display: inline-block;
+            border-bottom: 2px solid #ca3737;
         }
     }
 }

@@ -63,7 +63,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('devision') }}" class="nav-link">
+            <a href="{{ route('division') }}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Program Kerja</p>
             </a>

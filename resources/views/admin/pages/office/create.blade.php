@@ -46,13 +46,13 @@
                 @error('role') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
               <div class="form-group">
-                <label for="devision_id">Bidang</label>
-                <select class="custom-select rounded-0" id="devision_id" name="devision_id">
-                  @foreach ($devisions as $devision)
-                    <option value="{{ $devision->id }}">{{ $devision->name }}</option>
+                <label for="division_id">Bidang</label>
+                <select class="custom-select rounded-0" id="division_id" name="division_id">
+                  @foreach ($divisions as $division)
+                    <option value="{{ $division->id }}">{{ $division->name }}</option>
                   @endforeach
                 </select>
-                @error('devision_id') <div class="text-danger">{{ $message }}</div> @enderror
+                @error('division_id') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
               <div class="form-group">
                 <label for="period_start_at">Periode Tahun Mulai:</label>

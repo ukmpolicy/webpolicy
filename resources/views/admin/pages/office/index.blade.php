@@ -67,7 +67,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $officer['member'] }}</td>
                 <td>{{ $officer['role'] }}</td>
-                <td>{{ $officer['devision'] }}</td>
+                <td>{{ $officer['division'] }}</td>
                 <td>{{ $officer['period_start_at'] . '-' . $officer['period_end_at'] }}</td>
                 <td>
                   <a href="{{ route('office.edit', ['id' => $officer['id']]) }}" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i></a>

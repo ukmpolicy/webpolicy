@@ -43,8 +43,7 @@
         <h1>UKM-POLICY</h1>
         <p>Website sedang dalam perbaikan</p>
     </div>
-    <div id="particles">
-    </div>
+    <div id="particles"></div>
 
     <script src="{{ asset('plugins/particlesjs/particles.min.js') }}"></script>
     <script>/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */

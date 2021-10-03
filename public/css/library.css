@@ -1,58 +1,61 @@
+/* #libraryLayout .card-header {
+  display: flex;
+  justify-content: space-between;
+} */
+#libraryLayout .source_view {
+  height: 150px !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ddd;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+}
+#libraryLayout .source_view .loading {
+  top: 0;
+  bottom: 0;
+  transition: 1s;
+  left: 0;
+  right: 0;
+  background-color: rgba(65, 119, 218, 0.1);
+  backdrop-filter: blur(5px);
+  position: absolute;
+}
 
-  #libraryLayout .source_view {
-    height: 150px !important;
-    position: relative;
+#libraryLayout {
+  background: rgba(0,0,0,.5);
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#libraryLayout.show {
+  display: flex;
+}
+#libraryLayout .container > .card {
+  height: 90vh;
+  overflow-y: auto;
+}
+
+#libraryLayout .choice-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px dashed #ddd;
-    background-size: cover;
-    background-position: center center;
-    cursor: pointer;
-  }
-  #libraryLayout .source_view .loading {
-    top: 0;
-    bottom: 0;
-    transition: 1s;
-    left: 0;
-    right: 0;
-    background-color: rgba(65, 119, 218, 0.1);
-    backdrop-filter: blur(5px);
-    position: absolute;
-  }
-  
-  #libraryLayout {
-    background: rgba(0,0,0,.5);
-    position: fixed;
-    width: 100%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    justify-content: center;
-  }
-  #libraryLayout.show {
-    display: flex;
-  }
-  #libraryLayout .container > .card {
-    height: 90vh;
-    overflow-y: auto;
-  }
-
-  #libraryLayout .choice-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
-  #libraryLayout .choice-button .circle {
-      width: 16px;
-      height: 16px;
-      border: 2px solid #707070;
-      border-radius: 50%;
-  }
-  #libraryLayout .choice-button:hover .circle {
-      background-color: #707070;
-  }
+}
+#libraryLayout .choice-button .circle {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #707070;
+    border-radius: 50%;
+}
+#libraryLayout .choice-button:hover .circle {
+    background-color: #707070;
+}

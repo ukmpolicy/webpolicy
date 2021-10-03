@@ -1,48 +1,84 @@
 @extends('user.layout')
 @section('d_style') 
+{{-- <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}"> --}}
 <style>
-    
-  #choiceImage {
-    margin: auto;
-    height: 200px;
-    width: 200px;
-    padding: .2rem;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed #ddd;
-    border-radius: 4px;
-  }
-  #choiceImage img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-  
-  #choiceImage .label {
-    left: .2rem;
-    top: .2rem;
-    right: .2rem;
-    bottom: .2rem;
-    cursor: pointer;
-    display: flex;
-    transition: .3s;
-    border-radius: 4px;
-    position: absolute;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  #choiceImage:hover .label {
-    background-color: rgba(0,0,0,.5);
-    color: #fff;
-  }
-  #kirim {
-      width: 100%;
-      padding: 8px 16px;
-      margin-top: 1rem;
-  }
+    #libraryLayout .card .library-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #libraryLayout .card .library-header .card-title {
+        font-weight: normal !important;
+        font-family: Arial;
+        margin: 0;
+        font-size: 18px !important;
+    }
+    #libraryLayout .search {
+        display: none;
+    }
+    .choice-file {
+        margin: .5rem 0;
+        height: 100px;
+        background-color: #313131;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        padding: .5rem;
+        flex-direction: column;
+        cursor: pointer;
+    }
+    .choice-file:hover {
+        background-color: #2a2a2a;
+    }
+    .choice-file .title {
+        font-size: 13px;
+        color: #fff;
+        text-transform: uppercase;
+        font-family: Calibri;
+        opacity: .8;
+    }
+    .choice-file .subtitle {
+        font-size: 11px;
+        color: #fff;
+        font-family: Calibri;
+        opacity: .4;
+    }
+    .choice-file .normal{
+        display: block;
+    }
+    .choice-file .success{
+        display: none;
+    }
+    .choice-file.success .normal{
+        display: none;
+    }
+    .choice-file.success .success{
+        display: block;
+    }
+    .choice-file span {
+        font-size: 11px;
+        font-family: Calibri;
+        color: red;
+        margin-right: .2rem;
+    }
+    .btn-send {
+        width: 100%;
+        padding: .8rem 1.2rem;
+        margin-top: 1rem;
+        background: rgb(184, 33, 33);
+        border: 0;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
+        color: #fff !important;
+    }
+    .btn-send:hover {
+        background: rgb(148, 24, 24);
+    }
+    .btn-send:active,.btn-send:focus {
+        /* background: rgb(148, 24, 24); */
+        box-shadow: none !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -53,7 +89,7 @@
                 <h2>FORMULIR PENDAFTARAN</h2>
                 <div class="devider"></div>
             </div>
-            <form action="{{ route('main.recruitment.store') }}" method="post">
+            <form action="{{ route('open-recruitment.store') }}" id="form" method="post">
                 @csrf
                 <div class="row">
         
@@ -61,17 +97,61 @@
         
                         <div class="card">
                             <!-- form start -->
+                            <div class="card-header">
+                                <div class="card-title mt-1">Upload Berkas</div>
+                            </div>
                             <div class="card-body">
-                                <div id="choiceImage" onclick="library.open('#profile_picture_form')">
-                                    <img src="" id="profile_picture" alt="">
-                                    <div class="label"><i class="fa fa-edit"></i></div>
-                                    <input type="hidden" value="" name="profile_picture" id="profile_picture_form">
-                                </div>
-                                @error('profile_picture')
-                                    <div class="text-center text-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="form-group mt-2">
-                                    <button type="submit" id="kirim" class="btn btn-danger btn-block btn-sm">Kirim Berkas</button>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="choice-file" id="photo" onclick="library.open('#photo_input',{parent: '#photo', name: 'photo'})">
+                                            <div class="body">
+                                                <div class="normal">
+                                                    <span>(WAJIB)</span>
+                                                    <div class="title">Pas Foto 3x4</div>
+                                                    <div class="subtitle">Tap To Choice</div>
+                                                </div>
+                                                <div class="success">
+                                                    <div class="text-success"><i class="fa fa-check"></i></div>
+                                                    <div class="title">Pas Foto 3x4</div>
+                                                    <div class="subtitle">Tap To Choice</div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="photo" id="photo_input" class="d-none">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="choice-file" id="proof_pkkmb" onclick="library.open('#ppkkmb_input',{parent: '#proof_pkkmb', name: 'proof_pkkmb'})">
+                                            <div class="body">
+                                                <div class="normal">
+                                                    <span>(WAJIB)</span>
+                                                    <div class="title">Bukti Kelulusan PKKMB</div>
+                                                    <div class="subtitle">Tap To Choice</div>
+                                                </div>
+                                                <div class="success">
+                                                    <div class="text-success"><i class="fa fa-check"></i></div>
+                                                    <div class="title">Bukti Kelulusan PKKMB</div>
+                                                    <div class="subtitle">Tap To Choice</div>
+                                                </div>
+                                                <input type="hidden" name="proof_pkkmb" id="ppkkmb_input" class="d-none">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="choice-file" id="certificate" onclick="library.open('#certificate_input',{parent: '#certificate', name: 'certificate'})">
+                                            <div class="body">
+                                                <div class="normal">
+                                                    <div class="title">Sertifikat</div>
+                                                    <div class="subtitle">Tap To Choice</div>
+                                                </div>
+                                                <div class="success">
+                                                    <div class="text-success"><i class="fa fa-check"></i></div>
+                                                    <div class="title">Sertifikat</div>
+                                                    <div class="subtitle">Tap To Choice</div>
+                                                </div>
+                                                <input type="hidden" name="certificate" id="certificate_input" class="d-none">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -163,8 +243,10 @@
                                     @error('interested_in') <div class="text-danger">{{ $message }}</div> @enderror
                                 </div>
                             </div>
+
                         </div>
-                        <!-- /.card -->
+
+                        <button type="button" class="btn btn-send" type="button" data-toggle="modal" data-target="#sendData">KIRIM</button>
         
                     </div>
         
@@ -172,6 +254,25 @@
             </form>
         </div>
     </div>
+    
+<div class="modal fade" id="sendData" tabindex="-1" aria-labelledby="sendDataLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Tolong Konfirmasi</div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah anda sudah yakin telah mengisi data anda dengan benar? Jika anda mengirim maka tidak dapat melakukan perubahan kembali!</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="sendData()">Ya, Saya Yakin</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('d_script')
 @include('admin.components.library')
@@ -181,45 +282,59 @@
 <script>
     document.querySelector('#navbar').classList.add('scroll')
     let library = new Library();
-    library.onChoiced = (r) => {
+    library.onChoiced = (data, args) => {
         library.close();
-        let image = document.querySelector('#profile_picture');
-        console.log(image);
-        document.querySelector('#profile_picture').src = `{{ asset('') }}${r.path}`;
+        document.querySelector(args.parent).classList.add('success');
+        document.querySelector(args.parent+' input[type="hidden"]').value = data.id;
+        localStorage.setItem(args.name, JSON.stringify({data,args}))
     }
+
+    let els = ['photo','proof_pkkmb','certificate'];
+    els.forEach(v => {
+        if (localStorage.getItem(v)) {
+            let r = JSON.parse(localStorage.getItem(v));
+            document.querySelector(r.args.parent).classList.add('success');
+            document.querySelector(r.args.parent+' input[type="hidden"]').value = r.data.id;
+        }
+    })
+
     let majors = {
-        "Teknik Elektro": [
-            "Teknik Listrik",
-            "Teknik Telekomunikasi",
-            "Teknik Elektronika",
-            "Instrumentasi dan Otomasi Industri",
-            "Teknik Jaringan Telekomunikasi",
-            "Teknik Pembangkit Energi Listrik",
-        ],
-        "Teknologi Informasi Dan Komputer": [
-            "Teknologi Informasi",
-            "Teknik Rekayasa Komputer Jaringan",
-            "Teknik Rekayasa Multi Media"
-        ],
         "Teknik Sipil": [
-            "Teknik Sipil D3",
-            "Teknik Sipil D4"
-        ],
-        "Teknik Kimia": [
-            "Teknologi Kimia Industri",
-            "Teknik Kimia D3",
-            "Pengolahan Minyak dan Gas Bumi"
+            "Teknologi Rekayasa Konstruksi Jalan dan Jembatan",
+            "Teknologi Konstruksi Bangunan Gedung",
+            "Teknologi Konstruksi Bangunan Air",
+            "Teknologi Konstruksi Jalan dan Jembatan",
         ],
         "Teknik Mesin": [
-            "Teknik Mesin D3",
-            "Teknik Mesin D4",
+            "Teknologi Rekayasa Manufaktur",
+            "Teknologi Mesin",
+            "Teknologi Industri",
+            "Teknologi Rekayasa Pengelasan dan Fabrikasi",
+        ],
+        "Teknik Kimia": [
+            "Teknologi Kimia",
+            "Teknologi Pengolahan Minyak dan Gas Bumi",
+            "Teknologi Rekayasa Kimia Industri",
+        ],
+        "Teknik Elektro": [
+            "Teknologi Listrik",
+            "Teknologi Rekayasa Pembangkit Energi",
+            "Teknologi Rekayasa Jaringan Telekomunikasi",
+            "Teknologi Rekayasa Instrumentasi dan Kontrol",
+            "Teknologi Telekomunikasi",
+            "Teknologi Elektronika",
         ],
         "Tata Niaga": [
             "Akuntansi",
-            "Keuangan dan Perbankan",
-            "Keuangan dan Perbankan Syariah",
-            "Administrasi Bisnis"
-        ]
+            "Administrasi Bisnis",
+            "Perbankan dan Keuangan",
+            "Akuntasi Lembaga Keuangan Syariah",
+        ],
+        "Teknologi Informasi Dan Komputer": [
+            "Teknik Informatika",
+            "Teknik Rekayasa Komputer Jaringan",
+            "Teknik Rekayasa Multi Media",
+        ],
     };
 
     let options = ``;
@@ -242,6 +357,17 @@
         options += `<option ${('{{old("study_program")}}' == v) ? 'selected' : ''} value="${v}">${v}</option>`;
         });
         $('#study_program').html(options);
+    }
+
+    function sendData() {
+        event.preventDefault();
+        let els = ['photo','proof_pkkmb','certificate'];
+        els.forEach(v => {
+            if (localStorage.getItem(v)) {
+                localStorage.removeItem(v)
+            }
+        })
+        document.querySelector('#form').submit();
     }
 </script>
 @endsection

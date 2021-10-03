@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DevisionController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
@@ -13,7 +13,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Maintenance Route
-Route::view('/{app}', 'maintenance')->where('app', '.*');
+// Route::view('/{app}', 'maintenance')->where('app', '.*');
 
 Route::get('/', [HomeController::class, 'index'])->name('main.home');
 
@@ -27,9 +27,13 @@ Route::get('/documentation', [HomeController::class, 'documentation'])->name('ma
 
 Route::prefix('open-recruitment')->group(function() {
     Route::get('/', [ORController::class, 'index'])->name('open-recruitment');
-    Route::post('/', [ORController::class, 'store'])->name('open-recruitment.store');
-    Route::get('/form', [ORController::class, 'viewForm'])->name('open-recruitment.form');
-    Route::get('/success', [ORController::class, 'successPage'])->name('open-recruitment.success');
+    Route::middleware('or')->group(function() {
+        Route::post('/', [ORController::class, 'store'])->name('open-recruitment.store');
+        Route::get('/form', [ORController::class, 'viewForm'])->name('open-recruitment.form');
+        // Route::get('/success', [ORController::class, 'successPage'])->name('open-recruitment.success');
+        Route::get('/download-proof/{nim}', [ORController::class, 'proof'])->name('open-recruitment.proof');
+        Route::get('/check/{nim}', [ORController::class, 'check'])->name('open-recruitment.check');
+    });
 });
 
 Route::prefix('manager')->group(function() {
@@ -126,23 +130,23 @@ Route::prefix('manager')->group(function() {
        ->name('office.destroy');
     });
     
-    Route::prefix('devision')->group(function() {
-        Route::get('/', [DevisionController::class, 'index'])
-        ->name('devision');
-        Route::post('/', [DevisionController::class, 'store'])
-        ->name('devision.store');
-        Route::get('/{id}/edit', [DevisionController::class, 'edit'])
-        ->name('devision.edit');
-        Route::put('/{id}', [DevisionController::class, 'update'])
-        ->name('devision.update');
-        Route::delete('/{id}', [DevisionController::class, 'destroy'])
-        ->name('devision.destroy');
-        Route::post('/{devision_id}/program', [DevisionController::class, 'storeProgram'])
-        ->name('devision.program.store');
-        Route::put('/{devision_id}/program/{program_id}', [DevisionController::class, 'updateProram'])
-        ->name('devision.program.update');
-        Route::delete('/{devision_id}/program/{program_id}', [DevisionController::class, 'destroyProgram'])
-        ->name('devision.program.destroy');
+    Route::prefix('division')->group(function() {
+        Route::get('/', [DivisionController::class, 'index'])
+        ->name('division');
+        Route::post('/', [DivisionController::class, 'store'])
+        ->name('division.store');
+        Route::get('/{id}/edit', [DivisionController::class, 'edit'])
+        ->name('division.edit');
+        Route::put('/{id}', [DivisionController::class, 'update'])
+        ->name('division.update');
+        Route::delete('/{id}', [DivisionController::class, 'destroy'])
+        ->name('division.destroy');
+        Route::post('/{division_id}/program', [DivisionController::class, 'storeProgram'])
+        ->name('division.program.store');
+        Route::put('/{division_id}/program/{program_id}', [DivisionController::class, 'updateProram'])
+        ->name('division.program.update');
+        Route::delete('/{division_id}/program/{program_id}', [DivisionController::class, 'destroyProgram'])
+        ->name('division.program.destroy');
     });
     
     Route::prefix('user')->group(function() {

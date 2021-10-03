@@ -28,10 +28,6 @@
   z-index: 102;
 }
 
-body, html {
-  font-family: Quicksand;
-}
-
 .more {
   color: rgba(255, 255, 255, 0.75);
   cursor: pointer;
@@ -55,6 +51,10 @@ body, html {
   color: #fff;
 }
 
+#introduction header {
+  position: relative;
+}
+
 #introduction header .image {
   height: 400px;
 }
@@ -67,12 +67,30 @@ body, html {
 }
 
 #introduction header .text {
-  padding: 3rem;
-  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 #introduction header .text p {
   opacity: .8;
+  text-transform: uppercase;
 }
 
 #introduction section h2 {
@@ -91,6 +109,87 @@ body, html {
 
 #introduction section.detail-logo img {
   width: 50%;
+}
+
+#open-recruitment header {
+  position: relative;
+}
+
+#open-recruitment header .image {
+  height: 400px;
+}
+
+#open-recruitment header .image img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#open-recruitment header .text {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#open-recruitment header .text p {
+  opacity: .8;
+  text-transform: uppercase;
+}
+
+#open-recruitment main.content {
+  margin-top: 5rem;
+}
+
+#open-recruitment main.content a {
+  color: #ca3737;
+}
+
+#open-recruitment main.content .media {
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+}
+
+#open-recruitment main.content .media video {
+  border-radius: 6px;
+  width: 100%;
+}
+
+#open-recruitment main.content .media .desc {
+  padding: .5rem 1rem;
+  border-radius: 6px;
+  background-color: #151515;
+  font-size: 12px;
+  font-family: Calibri;
+  opacity: .75;
+  text-align: center;
+}
+
+#open-recruitment main.content h2 {
+  margin: auto;
+  margin-bottom: 1rem;
+  font-size: 25px;
+  padding: 1rem 2rem;
+  padding-left: 0;
+  display: inline-block;
+  border-bottom: 2px solid #ca3737;
 }
 
 #navbar {
@@ -1155,7 +1254,7 @@ footer .credits .container .socmeds .item:hover {
           box-shadow: 0 0 4px 0.2rem rgba(172, 51, 51, 0.5);
 }
 
-#article {
+#article, #open-recruitment {
   min-height: 100vh;
   background-color: #202020;
   padding-top: 4rem;
@@ -1163,7 +1262,7 @@ footer .credits .container .socmeds .item:hover {
   color: #fff;
 }
 
-#article .image img {
+#article .image img, #open-recruitment .image img {
   width: 100%;
   height: 400px;
   -o-object-fit: cover;
@@ -1172,22 +1271,22 @@ footer .credits .container .socmeds .item:hover {
      object-position: center center;
 }
 
-#article .head, #article .content {
+#article .head, #open-recruitment .head, #article .content, #open-recruitment .content {
   width: 75%;
   margin: auto;
 }
 
-#article .head {
+#article .head, #open-recruitment .head {
   padding: 2rem 0;
 }
 
-#article .head .title {
+#article .head .title, #open-recruitment .head .title {
   font-size: 48px;
   text-transform: capitalize;
   font-family: Quicksand-Bold;
 }
 
-#article .head .meta {
+#article .head .meta, #open-recruitment .head .meta {
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -1232,7 +1331,7 @@ footer .credits .container .socmeds .item:hover {
 }
 
 @media (max-width: 992px) {
-  #article .head, #article .content {
+  #article .head, #open-recruitment .head, #article .content, #open-recruitment .content {
     width: 100%;
   }
   #events .items .item .image img {
@@ -1315,13 +1414,13 @@ footer .credits .container .socmeds .item:hover {
 }
 
 @media (max-width: 575px) {
-  #article .head .title {
+  #article .head .title, #open-recruitment .head .title {
     font-size: 24px;
   }
-  #article .head .meta .date {
+  #article .head .meta .date, #open-recruitment .head .meta .date {
     font-size: 12px;
   }
-  #article .content p {
+  #article .content p, #open-recruitment .content p {
     font-size: 14px;
   }
   #events .items .item .image img {

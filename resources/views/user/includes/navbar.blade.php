@@ -4,11 +4,9 @@
                 <img src="{{ asset('images/policy2.png') }}" alt="">
                 UKM POLICY
             </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbar"
-                aria-controls="topbar" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topbar" aria-controls="topbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+              </button>
             <div class="navbar-collapse collapse" id="topbar">
                 <ul class="navbar-nav nav">
                     <li class="nav-item">

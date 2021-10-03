@@ -49,7 +49,7 @@
         <div class="text-center text-white container main">
             <h3 class="text-danger">SELAMAT DATANG</h3>
             <h1>POLYTECHNIC LINUX COMMUNITY</h1>
-            <p>Explore Linux And Open Source With Us. </p>
+            <p>Explore Linux And Open Source With Us.</p>
             <a href="{{ route('main.introduction') }}" class="introduction">MENGENAL LEBIH JAUH</a>
         </div>
     </section>
@@ -137,8 +137,8 @@
                             {{-- {{ dd(is_null($officer['member']['profile_picture'])) }} --}}
                         </div>
                         <div class="body">
-                            <div class="role text-capitalize">{{ $officer['role'].' '.$officer['devision'] }}</div>
-                            <div class="name text-capitalize">{{ $officer['member']['name'] }}</div>
+                            <div class="name text-capitalize mt-3">{{ $officer['member']['name'] }}</div>
+                            <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $officer['role'].' '.$officer['division'] }}</div>
                         </div>
                     </div>
                     @if ($loop->iteration%3==0)

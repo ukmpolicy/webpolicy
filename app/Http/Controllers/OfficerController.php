@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Devision;
+use App\Models\Division;
 use App\Models\Member;
 use App\Models\Officer;
 use Illuminate\Http\Request;
@@ -11,15 +11,15 @@ class OfficerController extends Controller
 {
     public function index() {
         $officers = Officer::all();
-        $data['devisions'] = Devision::all();
+        $data['divisions'] = Division::all();
         $data['officers'] = array_map(function($v) {
-            $devision = Devision::find($v['devision_id']);
+            $division = Division::find($v['division_id']);
             $member = Member::find($v['member_id']);
             $v['member'] = ($member) ? $member->name : '';
-            $v['devision'] = ($devision) ? $devision->name : '';
+            $v['division'] = ($division) ? $division->name : '';
             $v['role'] = $this->getRole($v['role']);
             unset($v['member_id']);
-            unset($v['devision_id']);
+            unset($v['division_id']);
             return $v;
         }, $officers->toArray());
         // dd($data['officers']);
@@ -30,7 +30,7 @@ class OfficerController extends Controller
         $this->validate($request, [
             "nim" => "required|exists:members,nim",
             "role" => "required",
-            "devision_id" => "required|exists:devisions,id",
+            "division_id" => "required|exists:divisions,id",
             "period_start_at" => "required",
             "period_end_at" => "required",
         ]);
@@ -38,7 +38,7 @@ class OfficerController extends Controller
         if ($member) {
             $office = new Officer();
             $office->member_id = $member->id;
-            $office->devision_id = $request->devision_id;
+            $office->division_id = $request->division_id;
             $office->role = $request->role;
             $office->period_start_at = $request->period_start_at;
             $office->period_end_at = $request->period_end_at;
@@ -50,13 +50,13 @@ class OfficerController extends Controller
     }
 
     public function create() {
-        $data['devisions'] = Devision::all();
+        $data['divisions'] = Division::all();
         return view('admin.pages.office.create', $data);
     }
     
     public function edit($id) {
         $officer = Officer::find($id)->toArray();
-        $data['devisions'] = Devision::all();
+        $data['divisions'] = Division::all();
         $officer['member'] = Member::find($officer['member_id']);
         $data['officer'] = $officer;
         unset($officer['member_id']);
@@ -67,7 +67,7 @@ class OfficerController extends Controller
         $this->validate($request, [
             "nim" => "required|exists:members,nim",
             "role" => "required",
-            "devision_id" => "required|exists:devisions,id",
+            "division_id" => "required|exists:divisions,id",
             "period_start_at" => "required",
             "period_end_at" => "required",
         ]);
@@ -75,7 +75,7 @@ class OfficerController extends Controller
         if ($office) {
             $member = Member::where('nim', $request->nim)->first();
             $office->member_id = $member->id;
-            $office->devision_id = $request->devision_id;
+            $office->division_id = $request->division_id;
             $office->role = $request->role;
             $office->period_start_at = $request->period_start_at;
             $office->period_end_at = $request->period_end_at;
