@@ -57,7 +57,7 @@
                     <p>Setelah terkirim, maka akan di arahkan ke halaman untuk mencetak dan mengunduh Bukti Pendaftaran.</p>
                 </li>
                 <li>
-                    <p>Menyerahkan Bukti Pendaftaram, Kuisioner dan Uang Administrasi sebanyak Rp 10.000 di Sekretariat UKM-POLICY.</p>
+                    <p>Menyerahkan Bukti Pendaftaram, Kuisioner dan Uang Administrasi sebanyak Rp 10.000 di Sekretariat UKM-POLICY di Lantai 3 Gedung Utama Sayap Kiri.</p>
                 </li>
             </ol>
             <div class="py-2 text-center px-3 rounded" style="background-color: #151515">
