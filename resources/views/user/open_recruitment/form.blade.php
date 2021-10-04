@@ -239,6 +239,7 @@
                                         <option @if (old('interested_in') == 'pemrograman') selected @endif value="pemrograman">Pemrograman</option>
                                         <option @if (old('interested_in') == 'jaringan') selected @endif value="jaringan">Jaringan</option>
                                         <option @if (old('interested_in') == 'multimedia') selected @endif value="multimedia">Multimedia</option>
+                                        <option @if (old('interested_in') == 'dll') selected @endif value="dll">Dan Lain Lain</option>
                                     </select>
                                     @error('interested_in') <div class="text-danger">{{ $message }}</div> @enderror
                                 </div>
