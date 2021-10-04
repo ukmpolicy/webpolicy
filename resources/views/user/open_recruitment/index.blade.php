@@ -45,7 +45,7 @@
                     <p>Cetak kuisioner tersebut dan menjawab pertanyaan dengan tulis tangan.</p>
                 </li>
                 <li>
-                    <p>Persiapkan pas foto 3x4, bukti kelulusan pkkmb, dan sertifikat jika ada.</p>
+                    <p>Persiapkan pas foto 3x4 layar merah, bukti kelulusan pkkmb, dan sertifikat jika ada.</p>
                 </li>
                 <li>
                     <p>Mengisi formulir dan mengunggah berkas yang telah dipersiapkan <a href="{{ route('open-recruitment.form') }}">disini</a> atau bisa melalui tombol dibawah.</p>
