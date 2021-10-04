@@ -20,13 +20,19 @@
                 <video controls src="{{ asset('videos/promosi.mp4') }}"></video>
                 <div class="desc">Video Promosi UKM-POLICY 2021.</div>
             </div>
-            <h2 class="mt-3">Syarat Pendaftaran</h2>
+            <h2 class="mt-3">Syarat Dan Ketentuan Pendaftaran</h2>
             <ol>
                 <li>
                     <p>Mahasiswa/i aktif Politeknik Negeri Lhokseumawe, bukan tingkat akhir.</p>
                 </li>
                 <li>
                     <p>Terbukti lulus PKKMB Politeknik Negeri Lhokseumawe.</p>
+                </li>
+                <li>
+                    <p>Mengikuti Instagram UKM-POLICY yaitu @@policy.kmbpnl</p>
+                </li>
+                <li>
+                    <p>Mengunduh dan mengupload video promosi UKM-POLICY 2021 dengan menyertakan tag Instagram UKM-POLICY di Instagram masing-masing.</p>
                 </li>
             </ol>
             <h2 class="mt-3">Langkah Pendaftaran</h2>
