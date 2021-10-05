@@ -169,10 +169,10 @@
         </main>
     </div>
     <script>
-        // window.print();
-        // setTimeout(function() {
-        //     location.replace('/');
-        // }, 5000);
+        window.print();
+        setTimeout(function() {
+            location.replace('/');
+        }, 5000);
     </script>
 </body>
 </html>
