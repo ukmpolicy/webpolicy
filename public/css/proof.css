@@ -1,36 +1,55 @@
+.w-footer {
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.3);
+}
+
 .wrapper {
   padding: 0 7rem;
   font-family: 'Times New Roman';
   margin: auto;
-  border-bottom: 2px dashed rgba(0, 0, 0, 0.3);
 }
 
 .wrapper header {
   border-bottom: 3px double #000;
   margin-bottom: 2rem;
-  padding: .8rem 2rem;
+  padding: 0 1rem;
+  padding-top: .8rem;
   display: -ms-grid;
   display: grid;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-grid-columns: 15% 85%;
-      grid-template-columns: 15% 85%;
+  -ms-grid-columns: auto 2fr auto;
+      grid-template-columns: auto 2fr auto;
 }
 
 .wrapper header .logo {
-  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .wrapper header .logo img {
   height: 5rem;
 }
 
-.wrapper header .text div {
+.wrapper header .text {
   text-align: center;
-  font-size: 18px;
+}
+
+.wrapper header .text div {
+  font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+.wrapper header .text p {
+  font-size: 11px;
 }
 
 .wrapper main img.photo {
@@ -50,11 +69,21 @@
   padding: 6px;
 }
 
+.wrapper main .ttd-right {
+  margin: auto;
+  margin-right: 0;
+}
+
 .wrapper main .ttd {
   width: 250px;
-  margin: auto;
-  margin-top: 5rem;
+  margin-top: 3rem;
   margin-bottom: 2rem;
-  margin-right: 0;
+}
+
+.wrapper main .d-ttd {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
 }
 /*# sourceMappingURL=proof.css.map */
