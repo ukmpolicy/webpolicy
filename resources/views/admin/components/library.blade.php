@@ -35,18 +35,18 @@
                 {{-- Brose Button --}}
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="card" style="box-shadow: none;border:none;">
-                    <div class="source_view" onclick="library.browse()">
-                        <div class="text-black-50"><i class="fa fa-file-upload"></i></div>
-                        <div class="loading" style="margin-left: 0%; display: none;"></div>
-                        <input type="file" class="d-none file_browse">
-                    </div>
-                    <div class="card-body p-1 rounded mt-2" style="border: 1px solid #eaeaea">
-                        <div class="row">
-                        <div class="col-10">
-                            <span class="ml-2 text-black-50 small" id="file_source_label">Belom ada file...</span>
+                        <div class="source_view" onclick="library.browse()" id="buttonExplore">
+                            <div class="text-black-50"><i class="fa fa-file-upload"></i></div>
+                            <div class="loading" style="margin-left: 0%; display: none;"></div>
+                            <input type="file" class="d-none file_browse">
                         </div>
+                        <div class="card-body p-1 rounded mt-2" style="border: 1px solid #eaeaea">
+                            <div class="row">
+                            <div class="col-10">
+                                <span class="ml-2 text-black-50 small" id="file_source_label">Belom ada file...</span>
+                            </div>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 

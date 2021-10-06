@@ -29,8 +29,23 @@ class Library {
 
             // Upload File
             axios.post('/api/source/upload', fd, {
-                onUploadProgress(v) {
-                    // console.log(v);
+                onUploadProgress: (progressEvent) => {
+                  const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
+                  // console.log("onUploadProgress", totalLength);
+                  if (totalLength !== null) {
+                    let el = document.querySelector('#buttonExplore .loading');
+                    // console.log(el)
+                    document.querySelector('#file_source_label').innerHTML = file.name;
+                    el.style.display = 'block';
+                    el.style.transition = `1s`;
+                    el.style.marginLeft = `${Math.round( (progressEvent.loaded * 100) / totalLength )}%`;
+                    if (el.style.marginLeft == '100%') {
+                      setTimeout(() => {
+                        el.style.display = 'none';
+                        el.style.marginLeft = `0%`;
+                      }, 2000)
+                    }
+                  }
                 }
             })
             .then(r => {

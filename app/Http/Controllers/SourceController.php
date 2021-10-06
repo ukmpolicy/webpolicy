@@ -11,7 +11,11 @@ class SourceController extends Controller
 {
     public function index() {
         // dd(Auth::user()->id);
-        $data['sources'] = Source::where('author_id', Auth::user()->id)->get()->reverse();
+        if (Auth::user()->level == 3) {
+            $data['sources'] = Source::all()->reverse();
+        }else {
+            $data['sources'] = Source::where('author_id', Auth::user()->id)->get()->reverse();
+        }
         return view('admin.pages.sources.index', $data);
     }
 
