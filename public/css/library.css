@@ -16,12 +16,29 @@
 #libraryLayout .source_view .loading {
   top: 0;
   bottom: 0;
-  transition: 1s;
   left: 0;
   right: 0;
-  background-color: rgba(65, 119, 218, 0.1);
-  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,.5);
+  color: #fff;
+  /* backdrop-filter: blur(5px); */
   position: absolute;
+}
+#libraryLayout .source_view .loading i {
+  animation: spinner .5s infinite;
+
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  
+  100% {
+    transform: rotateZ(360deg);
+  }
 }
 
 #libraryLayout {

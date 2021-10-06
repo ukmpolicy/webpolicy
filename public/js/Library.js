@@ -5,6 +5,7 @@ class Library {
     uploadViewSelector = '#libraryLayout .source_view';
     inputFormSelector = null;
     params = [];
+    errors = [];
 
     constructor() {
         
@@ -30,25 +31,13 @@ class Library {
             // Upload File
             axios.post('/api/source/upload', fd, {
                 onUploadProgress: (progressEvent) => {
-                  const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-                  // console.log("onUploadProgress", totalLength);
-                  if (totalLength !== null) {
-                    let el = document.querySelector('#buttonExplore .loading');
-                    // console.log(el)
-                    document.querySelector('#file_source_label').innerHTML = file.name;
-                    el.style.display = 'block';
-                    el.style.transition = `1s`;
-                    el.style.marginLeft = `${Math.round( (progressEvent.loaded * 100) / totalLength )}%`;
-                    if (el.style.marginLeft == '100%') {
-                      setTimeout(() => {
-                        el.style.display = 'none';
-                        el.style.marginLeft = `0%`;
-                      }, 2000)
-                    }
-                  }
+                    let el = document.querySelector('#buttonExplore .loading')
+                    el.style.display = 'flex';
                 }
             })
             .then(r => {
+                let el = document.querySelector('#buttonExplore .loading')
+                el.style.display = 'none';
                 this.choiceSource(r.data.body.id);
             })
             .catch(e => {

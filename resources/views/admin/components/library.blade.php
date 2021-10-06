@@ -37,7 +37,7 @@
                     <div class="card" style="box-shadow: none;border:none;">
                         <div class="source_view" onclick="library.browse()" id="buttonExplore">
                             <div class="text-black-50"><i class="fa fa-file-upload"></i></div>
-                            <div class="loading" style="margin-left: 0%; display: none;"></div>
+                            <div class="loading" style="margin-left: 0%; display: none;"><i class="fa fa-spinner"></i></div>
                             <input type="file" class="d-none file_browse">
                         </div>
                         <div class="card-body p-1 rounded mt-2" style="border: 1px solid #eaeaea">
