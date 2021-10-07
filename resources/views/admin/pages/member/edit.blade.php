@@ -260,6 +260,7 @@
       }, 10)
   }
 
+  // console.log('a')
   // Mengambil Data Jurusan
   let majors = '{{ $majors }}';
   setTimeout(() => {
@@ -268,7 +269,8 @@
     let options = ``;
     for (const key in majors) {
       if (Object.hasOwnProperty.call(majors, key)) {
-        options += `<option ${('{{$member->major}}' == key) ? 'selected' : ''} value="${key}">${key}</option>`;
+        let selected = '{{$member->major}}'.toLocaleLowerCase() == key.toLocaleLowerCase();
+        options += `<option ${(selected) ? 'selected' : ''} value="${key}">${key}</option>`;
       }
     }
     $('#major').html(options);
