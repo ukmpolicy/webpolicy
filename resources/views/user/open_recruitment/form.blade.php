@@ -154,7 +154,7 @@
                                                 </div>
                                                 <div class="success">
                                                     <div class="text-success"><i class="fa fa-check"></i></div>
-                                                    <div class="title">Sertifikat</div>
+                                                    <div class="title">Sertifikat Prestasi</div>
                                                     <div class="subtitle">Tap To Choice</div>
                                                 </div>
                                                 <input type="hidden" name="certificate" id="certificate_input" class="d-none">
