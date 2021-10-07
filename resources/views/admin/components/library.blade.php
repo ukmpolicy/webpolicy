@@ -6,6 +6,7 @@
     }
     // dd($sources);
 @endphp
+<link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/library.css') }}">
 <div id="libraryLayout">
     <div class="container">
@@ -88,4 +89,5 @@
     user_id = parseInt('{{ auth()->user()->id }}');
     @endif
 </script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('js/Library.js') }}"></script>

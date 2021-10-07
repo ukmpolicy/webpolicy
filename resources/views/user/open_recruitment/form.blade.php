@@ -101,9 +101,18 @@
                                 <div class="card-title mt-1">Upload Berkas</div>
                             </div>
                             <div class="card-body">
+                                <div class="small text-danger">
+                                    @error('photo_input') {{ $message }} @enderror
+                                </div>
+                                <div class="small text-danger">
+                                    @error('proof_pkkmb') {{ $message }} @enderror
+                                </div>
+                                <div class="small text-danger">
+                                    @error('certificate') {{ $message }} @enderror
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <div class="choice-file" id="photo" onclick="library.open('#photo_input',{parent: '#photo', name: 'photo'})">
+                                        <div class="choice-file" id="photo" onclick="library.open('#photo_input',{parent: '#photo', name: 'photo'}, 'image|max:5000')">
                                             <div class="body">
                                                 <div class="normal">
                                                     <span>(WAJIB)</span>
@@ -120,7 +129,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="choice-file" id="proof_pkkmb" onclick="library.open('#ppkkmb_input',{parent: '#proof_pkkmb', name: 'proof_pkkmb'})">
+                                        <div class="choice-file" id="proof_pkkmb" onclick="library.open('#ppkkmb_input',{parent: '#proof_pkkmb', name: 'proof_pkkmb'}, 'image|max:50000')">
                                             <div class="body">
                                                 <div class="normal">
                                                     <span>(WAJIB)</span>
@@ -137,7 +146,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="choice-file" id="certificate" onclick="library.open('#certificate_input',{parent: '#certificate', name: 'certificate'})">
+                                        <div class="choice-file" id="certificate" onclick="library.open('#certificate_input',{parent: '#certificate', name: 'certificate'}, 'image|max:50000')">
                                             <div class="body">
                                                 <div class="normal">
                                                     <div class="title">Sertifikat</div>

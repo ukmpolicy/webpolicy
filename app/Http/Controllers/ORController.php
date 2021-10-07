@@ -22,10 +22,10 @@ class ORController extends Controller
 
     public function store(Request $request) {
         // dd($request->all());
-        $this->validate($request, [
+        // dd($request->born_at);
+        $vals = [
             'photo' => 'required|exists:sources,id',
             'proof_pkkmb' => 'required|exists:sources,id',
-            'certificate' => 'exists:sources,id',
             "nim" => "required|unique:members,nim",
             "name" => "required",
             "address" => "required",
@@ -36,7 +36,11 @@ class ORController extends Controller
             "interested_in" => "required",
             "born_at" => "required",
             "birth_place" => "required"
-        ]);
+        ];
+        if ($request->certificate) {
+            $vals['certificate'] = 'exists:sources,id';
+        }
+        $this->validate($request, $vals);
         
         $member = new Member();
         $member->nim = $request->nim;
@@ -70,8 +74,8 @@ class ORController extends Controller
             if ($doc) {
                 $data = array_merge($member->toArray(), $doc->toArray());
                 $data['profile_picture'] = Source::find($data['profile_picture'])->path;
-                $data['certificate'] = Source::find($data['certificate'])->path;
-                $data['proof_pkkmb'] = Source::find($data['proof_pkkmb'])->path;
+                // $data['certificate'] = Source::find($data['certificate'])->path;
+                // $data['proof_pkkmb'] = Source::find($data['proof_pkkmb'])->path;
 
                 return view('user.open_recruitment.proof', $data);
             }

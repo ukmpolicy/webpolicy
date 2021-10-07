@@ -29,3 +29,10 @@ Route::post('/member/{id}/change_image', [MemberController::class, 'changeImage'
 Route::post('/documentation/event', [DocumentationController::class, 'storeDocumenter'])->name('documentation.store.documenter');
 
 Route::get('/auth/me', [AuthController::class, 'me']);
+
+
+Route::get('/test', function() {
+    return response()->json([
+        "message" => 'Hello WOrld'
+    ]);
+});

@@ -5,6 +5,7 @@ class Library {
     uploadViewSelector = '#libraryLayout .source_view';
     inputFormSelector = null;
     params = [];
+    rules = '';
     errors = [];
 
     constructor() {
@@ -15,6 +16,7 @@ class Library {
 
     onUpload() {
         this.getFileBrowse().onchange = (e) => {
+            // console.log(this.rules)
             
             let file = this.getFileBrowse().files[0];
 
@@ -24,6 +26,7 @@ class Library {
             // Create FormData
             let fd = new FormData();
             fd.append('file_source', file);
+            fd.append('rules', this.rules);
             if (user_id != '') {
                 fd.append('user_id', user_id);
             }
@@ -36,12 +39,32 @@ class Library {
                 }
             })
             .then(r => {
+                console.log(r)
                 let el = document.querySelector('#buttonExplore .loading')
                 el.style.display = 'none';
                 this.choiceSource(r.data.body.id);
             })
             .catch(e => {
                 console.dir(e);
+                // Swal.fire(
+                //     'FAILED',
+                //     e.response.data.body.file_source,
+                //     'error'
+                //   )
+                // Show success message
+                if (e.response.data.message == 'invalid field') {
+                    this.close()
+                    let el = document.querySelector('#buttonExplore .loading')
+                    el.style.display = 'none';
+                    document.querySelector(this.uploadViewSelector).style.backgroundImage = ``;
+                    Swal.fire(
+                        'Failed',
+                        e.response.data.body.file_source[0],
+                        'error'
+                    )
+                }
+                // if (e.response.response.data.message == 'invalid field') {
+                // }
             });
         }
     }
@@ -65,10 +88,11 @@ class Library {
         return document.querySelector(this.libraryLayoutSelector);
     }
 
-    open(inputFormSelector, params) {
+    open(inputFormSelector, params, rules = []) {
         this.getElement().classList.add('show');
         this.inputFormSelector = inputFormSelector;
         this.params = params;
+        this.rules = rules;
     }
 
     close() {

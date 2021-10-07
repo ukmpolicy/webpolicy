@@ -6,6 +6,8 @@ use App\Models\Member;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class SourceController extends Controller
 {
@@ -20,10 +22,26 @@ class SourceController extends Controller
     }
 
     public function store(Request $request) {
+        $rules = $request->rules;
+        // dd($rules);
+        // return response()->json($rules);
+        $val = Validator::make($request->all(), [
+            'file_source' => $rules
+        ]);
+
+        if ($val->fails()) {
+            return response()->json([
+                'message' => 'invalid field',
+                'body' => $val->errors()
+            ], 403);
+        }
+        // dd($val->errors());
         if (($file = $request->file('file_source'))) {
             $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
             $dir = 'uploads/library/';
             $file->move($dir, $filename);
+
+            // dd($file);
 
             $mime = explode('/',$file->getClientMimeType());
 
