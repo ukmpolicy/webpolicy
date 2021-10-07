@@ -149,7 +149,7 @@
                                         <div class="choice-file" id="certificate" onclick="library.open('#certificate_input',{parent: '#certificate', name: 'certificate'}, 'image|max:50000')">
                                             <div class="body">
                                                 <div class="normal">
-                                                    <div class="title">Sertifikat</div>
+                                                    <div class="title">Sertifikat Prestasi</div>
                                                     <div class="subtitle">Tap To Choice</div>
                                                 </div>
                                                 <div class="success">
