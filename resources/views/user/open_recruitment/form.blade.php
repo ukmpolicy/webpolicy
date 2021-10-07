@@ -256,7 +256,7 @@
 
                         </div>
 
-                        <button type="button" class="btn btn-send" type="button" data-toggle="modal" data-target="#sendData">KIRIM</button>
+                        <button type="button" class="btn btn-send" type="button" data-toggle="modal" data-target="#sendData">KIRIM DAN CETAK</button>
         
                     </div>
         
