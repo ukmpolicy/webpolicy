@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('images/policy.png') }}" type="image/x-icon">
     @include('user.includes.style')
+    <link rel="canonical" href="{{ route('main.home') }}">
     @yield('d_style')
 </head>
 
