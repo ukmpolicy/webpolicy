@@ -12,7 +12,7 @@
 <div id="introduction">
     <header>
         <div class="image">
-            <img src="{{ asset('images/poltek.jpg') }}" alt="">
+            <img src="{{ asset('images/poltek.jpg') }}" alt="Foto depan Politeknik Negeri Lhokseumawe">
         </div>
         <div class="text">
             <h1>INTRODUCTION</h1>

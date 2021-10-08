@@ -12,7 +12,7 @@
 <div id="open-recruitment">
     <header>
         <div class="image">
-            <img src="{{ asset('images/gallery/or.jpeg') }}" alt="">
+            <img src="{{ asset('images/gallery/or.jpeg') }}" alt="Foto Bersama Open Recruitment 2020">
         </div>
         <div class="text">
             <h1>OPEN RECRUITMENT</h1>
