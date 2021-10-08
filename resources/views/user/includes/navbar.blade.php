@@ -1,6 +1,6 @@
     <nav id="navbar" class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a href="" class="navbar-brand">
+            <a href="{{ route('main.home') }}" class="navbar-brand">
                 <img src="{{ asset('images/policy2.png') }}" alt="">
                 UKM POLICY
             </a>

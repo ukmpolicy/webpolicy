@@ -1,5 +1,7 @@
 @extends('user.layout')
-
+@section('header')
+@include('user.includes.main_header')
+@endsection
 @section('content')
     <section id="articles">
         <div class="container">

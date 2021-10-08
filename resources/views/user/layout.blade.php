@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
+    @yield('header')
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UKM POLICY ~ KBMPNL</title>
     <link rel="shortcut icon" href="{{ asset('images/policy.png') }}" type="image/x-icon">
     @include('user.includes.style')
     @yield('d_style')

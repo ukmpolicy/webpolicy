@@ -1,5 +1,7 @@
 @extends('user.layout')
-
+@section('header')
+@include('user.includes.main_header')
+@endsection
 @section('content')
     <div id="header">
         <div class="owl-carousel">

@@ -1,5 +1,13 @@
 @extends('user.layout')
-
+@section('header')
+@php
+    $title = 'OPEN RECRUITMENT';
+    $content = 'Hari yang di tunggu-tunggu telah tiba. Acara perekrutan Anggota baru Unit Kegiatan Mahasiswa Polytechnic Linux Community (UKM-POLICY) resmi dibuka. Daftarkan diri kalian sekarang, mari temukan pengalaman baru bersama kami.';
+    $image = asset('images/gallery/or.jpeg');
+    $url = url('open-recruitment');
+@endphp
+@include('user.includes.custom_header')
+@endsection
 @section('content')
 <div id="open-recruitment">
     <header>

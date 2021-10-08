@@ -1,4 +1,11 @@
 @extends('user.layout')
+@section('header')
+@php
+    $url = url('article/'.$slug);
+    $image = asset($thumbnail->path);
+@endphp
+@include('user.includes.custom_header')
+@endsection
 @section('content')
 <div id="article">
     <div class="image">

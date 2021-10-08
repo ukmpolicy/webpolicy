@@ -1,5 +1,13 @@
 @extends('user.layout')
-
+@section('header')
+@php
+    $title = 'INTRODUCTION';
+    $content = 'Unit Kegiatan Mahasiswa <b>Polytechnic Linux Community</b> (UKM POLICY) merupakan suatu UKM yang berada di bawah naungan Politeknik Negeri Lhokseumawe yang bergerak di bidang Teknologi Komputer terkhusnya terkait dengan Linux dan juga Open Source.';
+    $image = asset('images/poltek.jpg');
+    $url = url('introduction');
+@endphp
+@include('user.includes.custom_header')
+@endsection
 @section('content')
 <div id="introduction">
     <header>
