@@ -284,7 +284,7 @@
   function updateProdi() {
     let options = ``;
     majors[$('#major').val()].forEach(v => {
-      options += `<option ${('{{$member->study_program}}' == v) ? 'selected' : ''} value="${v}">${v}</option>`;
+      options += `<option ${('{{$member->study_program}}'.toLowerCase( ) == v) ? 'selected' : ''} value="${v}">${v}</option>`;
     });
     $('#study_program').html(options);
   }

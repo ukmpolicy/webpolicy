@@ -342,8 +342,8 @@
         ],
         "Teknologi Informasi Dan Komputer": [
             "Teknik Informatika",
-            "Teknik Rekayasa Komputer Jaringan",
-            "Teknik Rekayasa Multi Media",
+            "Teknologi Rekayasa Komputer Jaringan",
+            "Teknologi Rekayasa Multi Media",
         ],
     };
 
