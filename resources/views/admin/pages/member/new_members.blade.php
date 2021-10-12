@@ -8,6 +8,7 @@
                 <th>Nama</th>
                 <th>Email</th>
                 <th>No HP</th>
+                <th>Bidang Minat</th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@
                     <td>{{ $member->name }}</td>
                     <td>{{ $member->email }}</td>
                     <td>{{ $member->phone_number }}</td>
+                    <td class="text-capitalize">{{ $member->interested_in }}</td>
                 </tr>
             @endforeach
         </tbody>

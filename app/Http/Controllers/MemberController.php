@@ -127,6 +127,7 @@ class MemberController extends Controller
 
     public function viewNewMember() {
         $data['members'] = Member::where('status', 0)->get();
+        // $data['bidang'] = ['Pemrograman', 'Jaringan', 'Multimedia'];
         return view('admin.pages.member.new_members', $data);
     }
 
