@@ -125,6 +125,11 @@ class MemberController extends Controller
         return redirect()->route('member')->with('failed', 'Anggota tidak ditemukan!');
     }
 
+    public function viewNewMember() {
+        $data['members'] = Member::where('status', 0)->get();
+        return view('admin.pages.member.new_members', $data);
+    }
+
     public function destroy($id) {
         $member = Member::find($id);
         if ($member) {

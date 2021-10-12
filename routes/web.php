@@ -36,6 +36,9 @@ Route::prefix('open-recruitment')->group(function() {
     });
 });
 
+
+Route::get('/member/n/list', [MemberController::class, 'viewNewMember']);
+
 Route::prefix('manager')->group(function() {
 
     Route::get('/', function () {
