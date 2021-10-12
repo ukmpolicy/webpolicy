@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
-<div class="container my-5">
+<div class="container my-5 p-3 shadow rounded">
     <table class="table table-striped">
         <thead>
             <tr>
