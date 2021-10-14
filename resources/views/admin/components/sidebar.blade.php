@@ -40,7 +40,7 @@
         </a>
     </li>
     @endif
-    @if (auth()->user()->level == 2 || auth()->user()->level == 3 && auth()->user()->level == 4)
+    @if (auth()->user()->level == 2 || auth()->user()->level == 3)
     <li class="nav-item">
         {{-- <a href="{{ route('member') }}" class="nav-link @if (Route::current()->getName() == 'members') active @endif">
         <i class="nav-icon fas fa-users"></i>
