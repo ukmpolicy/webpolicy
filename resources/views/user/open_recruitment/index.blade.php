@@ -21,7 +21,7 @@
     </header>
     <main class="content">
         <div class="container">
-            @if ((int)date('d') >= 4 && (int)date('d') < 15)
+            @if (false)
             <h2 class="">Halo Para Cyber Baru!</h2>
             <p>Hari yang di tunggu-tunggu telah tiba. Acara perekrutan Anggota baru Unit Kegiatan Mahasiswa Polytechnic Linux Community (UKM-POLICY) resmi dibuka. Daftarkan diri kalian sekarang, mari temukan pengalaman baru bersama kami. Sampai bertemu di acara `` TEMU RAMAH UKM-POLICY ``.</p>
             <div class="text-center media">
