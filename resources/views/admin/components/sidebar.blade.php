@@ -30,14 +30,14 @@
     @if (auth()->user()->level == 3)
     <li class="nav-item">
         <a href="{{ route('user') }}" class="nav-link">
-        <i class="nav-icon fas fa-camera"></i>
+        <i class="nav-icon fas fa-user"></i>
         <p>
             User
         </p>
         </a>
     </li>
     @endif
-    @if (auth()->user()->level == 2)
+    @if (auth()->user()->level == 2 || auth()->user()->level == 3)
     <li class="nav-item">
         <a href="{{ route('member') }}" class="nav-link @if (Route::current()->getName() == 'members') active @endif">
         <i class="nav-icon fas fa-users"></i>
@@ -79,7 +79,7 @@
         </p>
         </a>
     </li>
-    @if (auth()->user()->level == 1)
+    @if (auth()->user()->level == 1 || auth()->user()->level == 3)
     <li class="nav-item">
         <a href="{{ route('documentation') }}" class="nav-link">
         <i class="nav-icon fas fa-camera"></i>

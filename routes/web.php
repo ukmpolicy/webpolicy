@@ -60,6 +60,14 @@ Route::prefix('manager')->group(function() {
     
         Route::put('/{id}', [MemberController::class, 'update'])
         ->name('member.update');
+
+        // Open Recruitment
+        Route::get('/or', [MemberController::class, 'orManager'])
+        ->name('member.or');
+
+        Route::post('/or/done/{id}', [MemberController::class, 'orDone'])
+        ->name('member.or.done');
+
     });
     
     Route::prefix('library')->middleware('auth')->group(function() {

@@ -18,7 +18,8 @@ class ORMiddleware
     {
         $today = (int) date('d');
         $open = false;
-        if (($today >= 4 && $today < 15) || $open) {
+        // if (($today >= 4 && $today < 15) || $open) {
+        if ($open) {
             return $next($request);
         }
         return redirect()->route('open-recruitment');

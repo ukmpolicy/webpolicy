@@ -127,7 +127,6 @@ class MemberController extends Controller
 
     public function viewNewMember() {
         $data['members'] = Member::where('status', 0)->get();
-        // $data['bidang'] = ['Pemrograman', 'Jaringan', 'Multimedia'];
         return view('admin.pages.member.new_members', $data);
     }
 
@@ -138,6 +137,7 @@ class MemberController extends Controller
             $member->delete();
             return redirect()->route('member')->with('success', 'Anggota dengan nama '.$temp->name.' berhasil dihapus');
         }
+        return redirect()->route('member')->with('error', 'Anggota tidak ditemukan');
     }
 
     public function recruitment() {
@@ -183,5 +183,31 @@ class MemberController extends Controller
         $member->save();
 
         return redirect()->route('main.recruitment.success')->with('success', 'Anda berhasil mengdaftar');
+    }
+
+    public function orManager(Request $request) {
+        $data['members'] = [];
+        $members = Member::where('status', 0);
+
+        // Status Berkas
+        if ($request->sb == 'd') {
+            // If Done
+            $data['members'] = $members->where('store_document', '!=', null)->get();
+        }else if ($request->sb == 'ny') {
+            // If Not Yet
+            $data['members'] = $members->where('store_document', null)->get();
+        }else {
+            $data['members'] = $members->get();
+        }
+        // dd($data['members']);
+        $data['status'] = $this->status;
+        return view('admin.pages.member.or_manager', $data);
+    }
+
+    public function orDone($id) {
+        $member = Member::findOrFail($id);
+        $member->store_document = ($member->store_document) ? null : date('Y-m-d H:i:s');
+        $member->save();
+        return redirect()->back();
     }
 }

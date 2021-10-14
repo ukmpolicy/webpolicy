@@ -27,27 +27,41 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">
-            {{-- <h3 class="card-title mt-1">Bordered Table</h3> --}}
-            
-            <div class="card-tools ml-3 mt-1">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div> 
-            </div>
-            
-            <div class="card-tools">
-              <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus"></i></button>
-            </div>
-          </div>
           <!-- /.card-header -->
           <div class="card-body">
+            {{-- <div class="row">
+              <div class="col-lg-6">
+                <select class="form-control">
+                  <option value="">Anggota Tetap</option>
+                  <option value="">Anggota Baru</option>
+                </select>
+              </div>
+              <div class="col-lg-6">
+                <div class="card-tools">
+                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus"></i></button>
+                </div>
+                <div class="card-tools ml-3 mt-1">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+    
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+            </div> --}}
+            <div class="row">
+              <div class="col-lg-6">
+                <select class="form-control">
+                  <option value="">Seluruh Anggota</option>
+                  <option value="">Anggota Tetap</option>
+                  <option value="">Anggota Baru</option>
+                </select>
+              </div>
+            </div>
             <table class="table table-bordered">
               <thead>
                 <tr>
