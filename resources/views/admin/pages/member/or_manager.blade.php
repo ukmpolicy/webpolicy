@@ -39,7 +39,7 @@
                   </select>
                 </form>
                 <div>
-                  <a href="{{ route('member.or.download') }}" class="btn ml-2 btn-success"><i class="fa fa-print fa-fw mr-2"></i>CETAK</a>
+                  <a href="{{ route('member.or.download', $_GET) }}" class="btn ml-2 btn-success"><i class="fa fa-print fa-fw mr-2"></i>CETAK</a>
                 </div>
               </div>
               <form class="d-flex" method="GET" action="">

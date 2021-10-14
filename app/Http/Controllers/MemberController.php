@@ -202,10 +202,10 @@ class MemberController extends Controller
             $members = $members->where('store_document', null);
         }
         if ($request->search) {
-            $members = $members->where('name', 'like', '%'. $request->search . '%');
-            $members = $members->where('nim', 'like', '%'. $request->search . '%');
-            $members = $members->where('major', 'like', '%'. $request->search . '%');
-            $members = $members->where('phone_number', 'like', '%'. $request->search . '%');
+            $members = $members->where('name', 'like', '%'. $request->search . '%')
+            ->orWhere('nim', 'like', '%'. $request->search . '%')
+            ->orWhere('major', 'like', '%'. $request->search . '%')
+            ->orWhere('phone_number', 'like', '%'. $request->search . '%');
         }
 
         return $members->get();
@@ -219,6 +219,7 @@ class MemberController extends Controller
     }
 
     public function downloadDataOR(Request $request) {
+        $request->search = '';
         $data['members'] = $this->getMembers($request);
         return view('admin.pages.member.new_members', $data);
     }

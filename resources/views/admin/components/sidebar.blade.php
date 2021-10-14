@@ -27,6 +27,9 @@
         </p>
         </a>
     </li>
+
+    @if (auth()->user()->level != 4)
+
     @if (auth()->user()->level == 3)
     <li class="nav-item">
         <a href="{{ route('user') }}" class="nav-link">
@@ -37,7 +40,7 @@
         </a>
     </li>
     @endif
-    @if (auth()->user()->level == 2 || auth()->user()->level == 3)
+    @if (auth()->user()->level == 2 || auth()->user()->level == 3 && auth()->user()->level == 4)
     <li class="nav-item">
         {{-- <a href="{{ route('member') }}" class="nav-link @if (Route::current()->getName() == 'members') active @endif">
         <i class="nav-icon fas fa-users"></i>
@@ -118,6 +121,16 @@
         </p>
         </a>
     </li>
+    @endif
+    @if ( auth()->user()->level == 4)
+    
+    <li class="nav-item">
+        <a href="{{ route('member.or') }}" class="nav-link">
+        <i class="nav-icon fas fa-user-cog"></i>
+        <p>OR Manager</p>
+        </a>
+    </li>
+    @endif
     
     <li class="nav-header">LAINNYA</li>
     
