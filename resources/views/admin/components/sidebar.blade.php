@@ -39,12 +39,33 @@
     @endif
     @if (auth()->user()->level == 2 || auth()->user()->level == 3)
     <li class="nav-item">
-        <a href="{{ route('member') }}" class="nav-link @if (Route::current()->getName() == 'members') active @endif">
+        {{-- <a href="{{ route('member') }}" class="nav-link @if (Route::current()->getName() == 'members') active @endif">
         <i class="nav-icon fas fa-users"></i>
-        <p>
-            Anggota
-        </p>
+            <p>
+                Anggota
+            </p>
+        </a> --}}
+        <a href="" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+                Anggota
+                <i class="right fas fa-angle-left"></i>
+            </p>
         </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('member') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Anggota Manager</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('member.or') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>OR Manager</p>
+              </a>
+            </li>
+          </ul>
     </li>
     
     <li class="nav-item">

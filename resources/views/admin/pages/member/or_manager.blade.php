@@ -29,17 +29,26 @@
         <div class="card">
           <!-- /.card-header -->
           <div class="card-body">
-            <div class="row">
-              <div class="col-lg-6 d-flex">
-                <div class="mt-2">Penyerahan Berkas:</div>
+            <div class="d-lg-flex" style="justify-content: space-between">
+              <div class="d-flex">
                 <form action="" method="get" id="sb">
-                  <select class="form-control ml-2 mb-2" name="sb" onchange="document.querySelector('#sb').submit()" style="width: fit-content">
-                    <option value="" @if (!$request->sb) selected @endif>Semua</option>
-                    <option value="d" @if (!$request->sb == '') selected @endif>Selesai</option>
-                    <option value="ny" @if (!$request->sb) selected @endif>Belum</option>
+                  <select class="form-control mb-2" name="sb" onchange="document.querySelector('#sb').submit()" style="width: fit-content">
+                    <option value="" @if (Request::get('sb')) selected @endif>Semua</option>
+                    <option value="d" @if (Request::get('sb') == 'd') selected @endif>Selesai</option>
+                    <option value="ny" @if (Request::get('sb') == 'ny') selected @endif>Belum</option>
                   </select>
                 </form>
+                <div>
+                  <a href="{{ route('member.or.download') }}" class="btn ml-2 btn-success"><i class="fa fa-print fa-fw mr-2"></i>CETAK</a>
+                </div>
               </div>
+              <form class="d-flex" method="GET" action="">
+                <input type="hidden" name="sb" value="{{ Request::get('sb') }}">
+                <input type="text" value="{{ Request::get('search') }}" name="search" class="form-control" style="width: 300px" placeholder="Cari">
+                <div>
+                  <button class="btn ml-2 btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+              </form>
             </div>
             <table class="table table-bordered">
               <thead>

@@ -1,27 +1,32 @@
-<link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
-<div class="container my-5 p-3 shadow rounded">
-    <table class="table table-striped">
-        <thead>
+@php
+header("Content-type: application/vnd-ms-excel");
+header("Content-Disposition: attachment; filename=Data MemberOR.xls");
+@endphp
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Jurusan</th>
+            <th>Program Studi</th>
+            <th>Email</th>
+            <th>Nomor Handphone</th>
+            <th>Bidang Minat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($members as $member)
             <tr>
-                <th>#</th>
-                <th>NIM</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>No HP</th>
-                <th>Bidang Minat</th>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $member->nim }}</td>
+                <td>{{ $member->name }}</td>
+                <td>{{ $member->major }}</td>
+                <td>{{ $member->study_program }}</td>
+                <td>{{ $member->email }}</td>
+                <td>{{ $member->phone_number }}</td>
+                <td>{{ $member->interested_in }}</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach ($members as $member)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $member->nim }}</td>
-                    <td>{{ $member->name }}</td>
-                    <td>{{ $member->email }}</td>
-                    <td>{{ $member->phone_number }}</td>
-                    <td class="text-capitalize">{{ $member->interested_in }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+        @endforeach
+    </tbody>
+</table>

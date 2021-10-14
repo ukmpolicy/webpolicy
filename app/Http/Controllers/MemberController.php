@@ -125,11 +125,6 @@ class MemberController extends Controller
         return redirect()->route('member')->with('failed', 'Anggota tidak ditemukan!');
     }
 
-    public function viewNewMember() {
-        $data['members'] = Member::where('status', 0)->get();
-        return view('admin.pages.member.new_members', $data);
-    }
-
     public function destroy($id) {
         $member = Member::find($id);
         if ($member) {
@@ -186,22 +181,34 @@ class MemberController extends Controller
     }
 
     public function orManager(Request $request) {
+
+        // dd(Member::where('interested_in', 'pemrograman')->get()->count());
+        // dd($data['members']);
+        $data['members'] = $this->getMembers($request);
+        $data['status'] = $this->status;
+        return view('admin.pages.member.or_manager', $data);
+    }
+
+    public function getMembers(Request $request) {
         $data['members'] = [];
         $members = Member::where('status', 0);
 
         // Status Berkas
         if ($request->sb == 'd') {
             // If Done
-            $data['members'] = $members->where('store_document', '!=', null)->get();
+            $members = $members->where('store_document', '!=', null);
         }else if ($request->sb == 'ny') {
             // If Not Yet
-            $data['members'] = $members->where('store_document', null)->get();
-        }else {
-            $data['members'] = $members->get();
+            $members = $members->where('store_document', null);
         }
-        // dd($data['members']);
-        $data['status'] = $this->status;
-        return view('admin.pages.member.or_manager', $data);
+        if ($request->search) {
+            $members = $members->where('name', 'like', '%'. $request->search . '%');
+            $members = $members->where('nim', 'like', '%'. $request->search . '%');
+            $members = $members->where('major', 'like', '%'. $request->search . '%');
+            $members = $members->where('phone_number', 'like', '%'. $request->search . '%');
+        }
+
+        return $members->get();
     }
 
     public function orDone($id) {
@@ -209,5 +216,10 @@ class MemberController extends Controller
         $member->store_document = ($member->store_document) ? null : date('Y-m-d H:i:s');
         $member->save();
         return redirect()->back();
+    }
+
+    public function downloadDataOR(Request $request) {
+        $data['members'] = $this->getMembers($request);
+        return view('admin.pages.member.new_members', $data);
     }
 }

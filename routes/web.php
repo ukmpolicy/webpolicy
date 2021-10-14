@@ -37,7 +37,6 @@ Route::prefix('open-recruitment')->group(function() {
 });
 
 
-Route::get('/member/n/list', [MemberController::class, 'viewNewMember']);
 
 Route::prefix('manager')->group(function() {
 
@@ -67,6 +66,9 @@ Route::prefix('manager')->group(function() {
 
         Route::post('/or/done/{id}', [MemberController::class, 'orDone'])
         ->name('member.or.done');
+
+        Route::get('/or/download', [MemberController::class, 'downloadDataOR'])
+        ->name('member.or.download');
 
     });
     
