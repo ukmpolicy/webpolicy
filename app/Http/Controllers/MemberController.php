@@ -208,7 +208,7 @@ class MemberController extends Controller
             ->orWhere('phone_number', 'like', '%'. $request->search . '%');
         }
 
-        return $members->get();
+        return $members->orderBy('name')->get();
     }
 
     public function orDone($id) {
