@@ -67,9 +67,9 @@
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $member->nim }}</td>
-                  <td>{{ $member->name }}</td>
+                  <td style="text-transform: uppercase">{{ $member->name }}</td>
+                  <td style="text-transform: uppercase">{{ $member->major }}</td>
                   <td>{{ $member->phone_number }}</td>
-                  <td>{{ $member->major }}</td>
                   <td>
                     <form action="{{ route('member.or.done', ['id' => $member->id]) }}" class="d-inline-block w-100" method="POST">
                       @csrf
