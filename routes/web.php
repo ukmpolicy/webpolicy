@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\ORController;
@@ -60,16 +61,27 @@ Route::prefix('manager')->group(function() {
         Route::put('/{id}', [MemberController::class, 'update'])
         ->name('member.update');
 
-        // Open Recruitment
-        Route::get('/or', [MemberController::class, 'orManager'])
+    });
+
+    Route::prefix('open-recruitment')->middleware('auth')->group(function() {
+
+        Route::get('/', [ORController::class, 'orManager'])
         ->name('member.or');
 
-        Route::post('/or/done/{id}', [MemberController::class, 'orDone'])
+        Route::get('/settings', [ORController::class, 'viewSettings'])
+        ->name('member.or.settings');
+        
+        Route::post('/settings/save', [ORController::class, 'saveSettings'])
+        ->name('member.or.settings.save');
+
+        Route::post('/done/{id}', [ORController::class, 'orDone'])
         ->name('member.or.done');
 
-        Route::get('/or/download', [MemberController::class, 'downloadDataOR'])
+        Route::get('/download', [ORController::class, 'downloadDataOR'])
         ->name('member.or.download');
-
+        
+        Route::post('/reset', [ORController::class, 'reset'])
+        ->name('member.or.reset');
     });
     
     Route::prefix('library')->middleware('auth')->group(function() {
@@ -94,6 +106,23 @@ Route::prefix('manager')->group(function() {
         ->name('documentation.destroy.event');
     });
     
+    Route::prefix('mail')->middleware('auth')->group(function() {
+        Route::get('/', [MailController::class, 'index'])
+        ->name('mail');
+
+        Route::post('/', [MailController::class, 'store'])
+        ->name('mail.store');
+        
+        Route::post('/reply/{id}', [MailController::class, 'reply'])
+        ->name('mail.reply');
+        
+        Route::get('/show/{id}', [MailController::class, 'show'])
+        ->name('mail.detail');
+        
+        Route::delete('/{id}', [MailController::class, 'destroy'])
+        ->name('mail.destroy');
+    });
+
     Route::prefix('article')->middleware('auth')->group(function() {
         Route::get('/', [ArticleController::class, 'index'])
         ->name('article');
@@ -156,7 +185,7 @@ Route::prefix('manager')->group(function() {
         ->name('division.destroy');
         Route::post('/{division_id}/program', [DivisionController::class, 'storeProgram'])
         ->name('division.program.store');
-        Route::put('/{division_id}/program/{program_id}', [DivisionController::class, 'updateProram'])
+        Route::put('/{division_id}/program/{program_id}', [DivisionController::class, 'updateProgram'])
         ->name('division.program.update');
         Route::delete('/{division_id}/program/{program_id}', [DivisionController::class, 'destroyProgram'])
         ->name('division.program.destroy');

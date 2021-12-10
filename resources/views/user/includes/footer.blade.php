@@ -1,34 +1,59 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-12" id="contactUs">
+                <div class="col-lg-3 col-12" id="contactUs">
                     <div class="head">
-                        <h2>Contact Us:</h2>
+                        <h2>Masukan:</h2>
                     </div>
-                    <input type="text" class="inp" placeholder="Name">
-                    <input type="email" class="inp" placeholder="Email">
-                    <textarea class="inp" placeholder="Content"></textarea>
-                    <button>Send</button>
+                    <form action="{{ route('mail.store') }}" method="post">
+                        @csrf
+                        <input type="text" class="inp" placeholder="Name" name="name">
+                        @error('name') <div class="text-danger" style="font-size: 12px">{{ $message }}</div> @enderror
+                        <input type="email" class="inp" placeholder="Email" name="email">
+                        @error('email') <div class="text-danger" style="font-size: 12px">{{ $message }}</div> @enderror
+                        <textarea class="inp" placeholder="Content" name="content"></textarea>
+                        @error('content') <div class="text-danger" style="font-size: 12px">{{ $message }}</div> @enderror
+                        <button>Send</button>
+                    </form>
                 </div>
-                <div class="col-lg-4 col-12">
+                <div class="col-lg-3 col-12">
                     <div class="head">
-                        <h2>Navigations:</h2>
-                        <div class="items">
-                            <div class="item"><a href="{{route('main.home')}}#header"><i class="fa fa-angle-double-right"></i>Beranda</a></div>
-                            <div class="item"><a href="{{route('main.home')}}#aboutUs"><i class="fa fa-angle-double-right"></i>About Us</a></div>
-                            <div class="item"><a href="{{route('main.home')}}#visi"><i class="fa fa-angle-double-right"></i>Visi</a></div>
-                            <div class="item"><a href="{{route('main.home')}}#misi"><i class="fa fa-angle-double-right"></i>Misi</a></div>
-                            <div class="item"><a href="{{route('main.home')}}#structural"><i class="fa fa-angle-double-right"></i>Struktural</a></div>
+                        <h2>Navigasi:</h2>
+                    </div>
+                    <div class="items">
+                        <div class="item"><a href="{{route('main.home')}}#header"><i class="fa fa-angle-double-right"></i>Sorotan</a></div>
+                        <div class="item"><a href="{{route('main.home')}}#visi"><i class="fa fa-angle-double-right"></i>Visi</a></div>
+                        <div class="item"><a href="{{route('main.home')}}#misi"><i class="fa fa-angle-double-right"></i>Misi</a></div>
+                        <div class="item"><a href="{{route('main.home')}}#structural"><i class="fa fa-angle-double-right"></i>Struktural</a></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-12">
+                    <div class="head">
+                        <h2>Halaman:</h2>
+                    </div>
+                    <div class="items">
+                        <div class="item"><a href="{{ route('main.home') }}"><i class="fa fa-angle-double-right"></i>Beranda</a></div>
+                        <div class="item"><a href="{{ route('main.articles') }}"><i class="fa fa-angle-double-right"></i>Artikel</a></div>
+                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Dokumentasi</a>
+                        </div>
+                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Tentang Kami</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-12">
+                <div class="col-lg-3 col-12">
                     <div class="head">
-                        <h2>Pages:</h2>
-                        <div class="items">
-                            <div class="item"><a href="{{ route('main.articles') }}"><i class="fa fa-angle-double-right"></i>Articles</a></div>
-                            <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Dokumentasi</a>
-                            </div>
+                        <h2>Bidang:</h2>
+                    </div>
+                    <div class="items">
+                        <div class="item"><a href="{{ route('main.home') }}"><i class="fa fa-angle-double-right"></i>Kaderisasi</a></div>
+                        <div class="item"><a href="{{ route('main.articles') }}"><i class="fa fa-angle-double-right"></i>Pengembangan</a></div>
+                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Humas</a>
+                        </div>
+                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Jaringan</a>
+                        </div>
+                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Multimedia</a>
+                        </div>
+                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Pemrograman</a>
                         </div>
                     </div>
                 </div>

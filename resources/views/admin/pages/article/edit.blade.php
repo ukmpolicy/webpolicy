@@ -49,12 +49,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Dokumentasi</h1>
+        <h1 class="m-0">Ubah Data Artikel</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="{{ route('article') }}">Article</a></li>
-          <li class="breadcrumb-item active">Edit Artikel</li>
+          <li class="breadcrumb-item"><a href="{{ route('article') }}">Daftar Artikel</a></li>
+          <li class="breadcrumb-item active">{{ $article->slug }}</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -69,6 +69,23 @@
     <form action="{{ route('article.update', ['id' => $article->id]) }}" method="post">
     <div class="row">
         @csrf @method('put')
+        <div class="col-lg-8 col-12">
+          @if (session('success'))
+          <div class="alert alert-success">
+            {{ session('success') }}
+          </div>
+          @elseif (session('failed'))
+          <div class="alert alert-danger">
+            {{ session('failed') }}
+          </div>
+          @endif
+          @error('content')
+            <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+          <textarea name="content" id="summernote">
+            {{ $article->content }}
+          </textarea>
+        </div>
         <div class="col-lg-4 col-12">
           <div class="card">
             <div class="card-header">
@@ -110,21 +127,6 @@
                   <button class="btn btn-primary btn-block">SIMPAN PERUBAHAN</button>
                 </div>
               </form>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-8 col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title mt-1">Edit Konten</h4>
-            </div>
-            <div class="card-body">
-              @error('content')
-                <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-              <textarea name="content" id="summernote">
-                {{ $article->content }}
-              </textarea>
             </div>
           </div>
         </div>

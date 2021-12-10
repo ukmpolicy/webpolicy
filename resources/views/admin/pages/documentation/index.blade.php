@@ -37,30 +37,23 @@
   
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header">
-        <h4 class="card-title mt-1">Dokumentasi</h4>
-        
-        <div class="card-tools ml-3 mt-1">
-          <div class="input-group input-group-sm" style="width: 300px;">
-            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-            <div class="input-group-append">
-              <button type="submit" class="btn btn-default">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div> 
-        </div>
-      </div>
       <div class="card-body">
-
-        <div class="text-center">
-          <button class="btn btn-block btn-outline-secondary my-2 d-flex align-items-center justify-content-center" type="button" data-toggle="modal" data-target="#addEvent">
-            <i class="fa fa-fw fa-plus-circle mr-2"></i>
-            <div class="small">Tambah Acara</div>
-          </button>
+        <div class="d-flex mb-3" style="justify-content: space-between">
+          <button class="btn btn-success" data-toggle="modal" data-target="#addEvent"><i class="fa fa-plus mr-2 fa-fw"></i>Tambah Acara</button>
+          <form class="d-flex" method="GET" action="">
+            <input type="hidden" name="status" value="{{ Request::get('status') }}">
+            <input type="text" value="{{ Request::get('search') }}" name="search" class="form-control" style="width: 300px" placeholder="Cari">
+            <div>
+              <button class="btn ml-2 btn-primary"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
         </div>
 
+        @if (empty($events))
+        <div class="py-3 small text-dark-50 text-center" style="border-bottom: 1px solid #ccc;">
+          Data Kosong.
+        </div>
+        @endif
         <div class="accordion" id="accordionExample">
           @foreach ($events as $event)
           <div class="card card-row">
@@ -68,22 +61,22 @@
             <div class="card-header" id="headingOne">
               <div class="row">
                 <div class="col-6 d-flex align-items-center">
-                  <h5>
-                    {{ $event['name'] }}
+                  <h5 class="text-capitalize">
+                    {{ $event->name }}
                   </h5>
                 </div>
                 <div class="col-6">
                   <ul class="nav" style="justify-content: right">
                     <a href="" class="nav-link text-secondary"><i class="fa fa-edit"></i></a>
 
-                    <form class="d-inline-block" action="{{ route('documentation.destroy.event', ['event_id' => $event['id']]) }}" method="post">
+                    <form class="d-inline-block" action="{{ route('documentation.destroy.event', ['event_id' => $event->id]) }}" method="post">
                       @csrf @method('delete')
                       <button onclick="return confirm('Apakah anda yakin ingin melakukan hapus')" class="btn btn-link text-secondary d-inline-block">
                         <fa class="fa fa-trash"></fa>
                       </button>
                     </form>
 
-                    <button class="btn btn-link nav-link text-secondary" type="button" data-toggle="collapse" data-target="#collapse-{{$event['id']}}" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="btn btn-link nav-link text-secondary" type="button" data-toggle="collapse" data-target="#collapse-{{$event->id}}" aria-expanded="true" aria-controls="collapseOne">
                       <i class="fa fa-th"></i>
                     </button>
                   </ul>
@@ -91,14 +84,14 @@
               </div>
             </div>
 
-            <div id="collapse-{{$event['id']}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div id="collapse-{{$event->id}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body px-0 pb-0">
 
                 <div class="row">
                   <div class="col-3">
 
                     <div class="card card-item">
-                      <div class="card-image" style="cursor: pointer" onclick="library.open('#eventId', {eventId: {{ $event['id'] }}})">
+                      <div class="card-image" style="cursor: pointer" onclick="library.open('#eventId', {eventId: {{ $event->id }}})">
                         <div class="icon"><i class="fa fa-file-upload"></i></div>
                         <input type="hidden" value="" id="eventId">
                       </div>
@@ -112,25 +105,29 @@
                     </div>
                   </div>
 
-                  @foreach ($event['documenters'] as $doc)
+                  @foreach ($event->getDocumentations() as $doc)
+
+                  @php
+                      // dd($doc->toArray());
+                  @endphp
                   <div class="col-3">
                     <div class="card card-item">
                       <div class="card-image showSource">
-                        @if ($doc['source']['type'] == 0)
-                          <img src="{{ asset($doc['source']['path']) }}" alt="{{ $doc['description'] }}" class="image">
-                        @elseif ($doc['source']['type'] == 1)
-                          <video src="{{ $doc['source']['path'] }}"></video>
+                        @if ($doc->type == 0)
+                          <img src="{{ asset($doc->path) }}" alt="{{ $doc->description }}" class="image">
+                        @elseif ($doc->type == 1)
+                          <video src="{{ asset($doc->path) }}"></video>
                         @endif
                       </div>
                       <div class="card-body">
                         <div class="row">
                           <div class="col-9 d-flex align-items-center">
-                            <div class="small">{{ (strlen($doc['description']) > 20) ? substr($doc['description'], 0, 20) . '...' : $doc['description'] }}</div>
+                            <div class="small">{{ (strlen($doc->description) > 20) ? substr($doc->description, 0, 20) . '...' : $doc->description }}</div>
                           </div>
                           <div class="col-3">
                             <div class="text-center">
                               <a href="" class="text-secondary small"><i class="fa fa-edit"></i></a>
-                              <form class="d-inline-block" action="{{ route('documentation.destroy.documenter', ['event_id' => $event['id'],'documenter_id' => $doc['id']]) }}" method="post">
+                              <form class="d-inline-block" action="{{ route('documentation.destroy.documenter', ['event_id' => $event->id,'documenter_id' => $doc->id]) }}" method="post">
                                 @csrf @method('delete')
                                 <button onclick="return confirm('Apakah anda yakin ingin melakukan hapus')" class="btn p-0 btn-link text-secondary d-inline-block btn-sm ml-2">
                                   <fa class="fa fa-trash"></fa>

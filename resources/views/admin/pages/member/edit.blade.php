@@ -66,6 +66,16 @@
 <section class="content">
   
   <div class="container-fluid">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @endif
+    @if (session('failed'))
+    <div class="alert alert-danger">
+      {{ session('failed') }}
+    </div>
+    @endif
     <form action="{{ route('member.update', ['id' => $member->id]) }}" method="post">
       @csrf @method('put')
     <div class="row">
@@ -173,6 +183,16 @@
                 <label for="joined_at">Tahun Bergabung</label>
                 <input type="number" class="form-control" value="{{ $member->joined_at }}" id="joined_at" name="joined_at">
                 @error('joined_at') <div class="text-danger">{{ $message }}</div> @enderror
+              </div>
+              <div class="form-group">
+                <label for="interested_in">Status</label>
+                <select class="custom-select rounded-0" id="status" name="status">
+                  @foreach ($status as $k => $v)
+                  <option @if ($member->status == $k) selected @endif value="{{ $k }}">{{ $v }}</option>
+                  @endforeach
+
+                </select>
+                @error('status') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
             </div>
         </div>

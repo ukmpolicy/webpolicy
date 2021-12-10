@@ -17,13 +17,13 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
+        if (User::all()->isEmpty()) {
+            $this->createUser('pemrograman', 'admin', 3);
+        }
         $this->validate($request, [
             "username" => 'required',
             "password" => 'required',
         ]);
-        // $this->createUser('pemrograman', 'admin', 3);
-        // $this->createUser('jaringan');
-        // dd('yeah');
 
         if (!Auth::attempt($request->only(['username', 'password']))) {
             return redirect()->route('login')->with('error', 'Username atau password anda salah');

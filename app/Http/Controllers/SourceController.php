@@ -23,7 +23,6 @@ class SourceController extends Controller
 
     public function store(Request $request) {
         $rules = $request->rules;
-        // dd($rules);
         // return response()->json($rules);
         $val = Validator::make($request->all(), [
             'file_source' => $rules
@@ -91,10 +90,5 @@ class SourceController extends Controller
             return redirect()->route('library')->with('success', 'File '.$temp->description.' berhasil dihapus');
         }
         return redirect()->route('library')->with('failed', 'File tidak ditemukan');
-    }
-
-    public function test() {
-        $data['sources'] = Source::all();
-        return view('test', $data);
     }
 }

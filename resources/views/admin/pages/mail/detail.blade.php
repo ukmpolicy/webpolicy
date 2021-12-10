@@ -6,12 +6,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Daftar Anggota</h1>
+        <h1 class="m-0">Masukan</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           {{-- <li class="breadcrumb-item"><a href="#">Anggota</a></li> --}}
-          <li class="breadcrumb-item active">Anggota</li>
+          <li class="breadcrumb-item active">Masukan</li>
           <li class="breadcrumb-item active"></li>
         </ol>
       </div><!-- /.col -->
@@ -24,16 +24,6 @@
 <section class="content">
   
   <div class="container-fluid">
-    @if (session('success'))
-    <div class="alert alert-success">
-      {{ session('success') }}
-    </div>
-    @endif
-    @if (session('failed'))
-    <div class="alert alert-danger">
-      {{ session('failed') }}
-    </div>
-    @endif
     <div class="card">
       <div class="card-header">
             
@@ -58,9 +48,9 @@
           <thead>
             <tr>
               <td>#</td>
-              <td>Username</td>
-              <td>Tingkat</td>
-              <td>Edit</td>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Tempilkan</td>
               <td>Hapus</td>
             </tr>
           </thead>
@@ -70,16 +60,16 @@
               <td colspan="7" class="small text-center text-black-50">Tidak ada data.</td>
             </tr>
             @endif
-            @foreach ($users as $user)
+            @foreach ($mails as $mail)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $user->username }}</td>
-                <td>{{ $user->level }}</td>
+                <td>{{ $mail->name }}</td>
+                <td>{{ $mail->email }}</td>
                 <td>
-                  <button class="btn btn-warning btn-block btn-sm" data-toggle="modal" data-target="#editUser-{{$user->id}}"><i class="fa fa-edit"></i></button>
+                  <a href="{{ route('mail.detail') }}" class="btn btn-primary btn-sm">Tampilkan</a>
                 </td>
                 <td>
-                  <form action="{{ route('user.destroy', ['id' => $user->id]) }}" method="post">
+                  <form action="{{ route('mail.destroy', ['id' => $mail->id]) }}" method="post">
                     @csrf @method('delete')
                     <button class="btn btn-danger btn-sm btn-block" onclick="return confirm('Apakah anda yakin ingin menghapus baris ini?')"><i class="fa fa-trash"></i></button>
                   </form>
@@ -137,50 +127,6 @@
   </div>
 
 </section>
-
-<div class="modal fade" id="addUser">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Tambah User</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{{ route('user.store') }}" method="post">
-          @csrf
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" class="form-control">
-            @error('username') <div class="text-danger">{{ $message }}</div> @enderror
-          </div>
-          <div class="form-group">
-            <label for="level">Tingkat:</label>
-            <input type="number" min="0" id="level" name="level" class="form-control">
-            @error('level') <div class="text-danger">{{ $message }}</div> @enderror
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="form-control">
-            @error('password') <div class="text-danger">{{ $message }}</div> @enderror
-          </div>
-          <div class="form-group">
-            <label for="cpassword">Konfirmasi Password:</label>
-            <input type="password" id="cpassword" name="cpassword" class="form-control">
-            @error('cpassword') <div class="text-danger">{{ $message }}</div> @enderror
-          </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> --}}
-        <button type="submit" class="btn btn-primary">Tambah</button>
-        </form>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
 
 @section('script')
 <script>

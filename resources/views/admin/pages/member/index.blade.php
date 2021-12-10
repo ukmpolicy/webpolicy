@@ -10,8 +10,8 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          {{-- <li class="breadcrumb-item"><a href="#">Anggota</a></li> --}}
-          <li class="breadcrumb-item active">Anggota</li>
+          <li class="breadcrumb-item">Data Organinsasi</li>
+          <li class="breadcrumb-item active">Daftar Anggota</li>
           <li class="breadcrumb-item active"></li>
         </ol>
       </div><!-- /.col -->
@@ -24,44 +24,49 @@
 <section class="content">
   
   <div class="container-fluid">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @elseif (session('failed'))
+    <div class="alert alert-danger">
+      {{ session('failed') }}
+    </div>
+    @endif
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <!-- /.card-header -->
           <div class="card-body">
-            {{-- <div class="row">
-              <div class="col-lg-6">
-                <select class="form-control">
-                  <option value="">Anggota Tetap</option>
-                  <option value="">Anggota Baru</option>
-                </select>
-              </div>
-              <div class="col-lg-6">
-                <div class="card-tools">
-                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus"></i></button>
-                </div>
-                <div class="card-tools ml-3 mt-1">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-    
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div> 
+            
+            <div class="d-lg-flex" style="justify-content: space-between">
+              <div class="d-flex">
+                <form action="" method="get" id="status">
+                  <input type="hidden" name="search" value="{{ Request::get('search') }}">
+                  <input type="hidden" name="page" value="{{ Request::get('page') }}">
+                  <select class="custom-select mb-2" name="status" onchange="document.querySelector('#status').submit()" style="width: fit-content">
+
+                    <option value="" @if (Request::get('status')) selected @endif>Semua</option>
+
+                    @foreach ($status as $k => $v)
+                    <option value="{{ strtolower($v) }}" @if (Request::get('status') === strtolower($v)) selected @endif>{{ $v }}</option>
+                    @endforeach
+
+                  </select>
+                </form>
+                <div>
+                  <button class="btn btn-success ml-2" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus fa-fw"></i>Tambah</button>
                 </div>
               </div>
-            </div> --}}
-            <div class="row">
-              <div class="col-lg-6">
-                <select class="form-control">
-                  <option value="">Seluruh Anggota</option>
-                  <option value="">Anggota Tetap</option>
-                  <option value="">Anggota Baru</option>
-                </select>
-              </div>
+              <form class="d-flex" method="GET" action="">
+                <input type="hidden" name="status" value="{{ Request::get('status') }}">
+                <input type="text" value="{{ Request::get('search') }}" name="search" class="form-control" style="width: 300px" placeholder="Cari">
+                <div>
+                  <button class="btn ml-2 btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+              </form>
             </div>
+
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -74,7 +79,7 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($members as $member)
+                @foreach ($members->forPage($page, $perPage) as $member)
                   
                 <tr>
                   <td>{{ $loop->iteration }}</td>
@@ -94,23 +99,22 @@
 
                 @endforeach
 
-                @if ($members->isEmpty())
+                @if ($members->forPage($page, $perPage)->isEmpty())
                 <tr>
                   <td colspan="6" class="text-center small text-black-50">Data Kosong</td>
                 </tr>
                 @endif
               </tbody>
             </table>
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <ul class="pagination pagination m-0 float-right">
-              <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-            </ul>
+
+            @if ($members->count() > $perPage)
+              <form action="" method="get">
+
+                <input type="hidden" name="status" value="{{ Request::get('status') }}">
+                <input type="hidden" name="search" value="{{ Request::get('search') }}">
+                @include('admin.components.pagination')
+              </form>
+            @endif
           </div>
         </div>
         <!-- /.card -->

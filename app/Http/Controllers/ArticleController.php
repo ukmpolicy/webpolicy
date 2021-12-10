@@ -12,19 +12,30 @@ use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
-    public function index() {
-        $articles = Article::where('creator_id', Auth::user()->id)->get()->toArray();
+    public function index(Request $request) {
         $data['categories'] = Category::where('type', 0)->get();
-        $data['articles'] = array_map(function($v) {
-            $category = Category::find($v['category_id']);
-            $creator = User::find($v['creator_id']);
-            $v['creator'] = (!is_null($creator)) ? $creator->username : 'Belum Ada';
-            $v['category'] = (!is_null($category)) ? $category->name : 'Belum Ada';
-            unset($v['creator_id']);
-            unset($v['category_id']);
-            return $v;
-        }, $articles);
+        $data['articles'] =  $this->getArticles($request);
+        $data['page'] = 1;
+        $data['perPage'] = 1;
         return view('admin.pages.article.index', $data);
+    }
+
+    
+    public function getArticles(Request $request) {
+        $articles = Article::where('creator_id', Auth::user()->id)
+        ->select('articles.id', 'categories.name as category', 'users.username as creator', 'title')
+        ->join('categories', 'articles.category_id', '=', 'categories.id')
+        ->join('users', 'articles.creator_id', '=', 'users.id');
+
+        if ($request->category) {
+            $articles = $articles->where('category_id', $request->category);
+        }
+
+        if ($request->search) {
+            $articles = $articles->where('title', 'like', '%'. $request->search . '%');
+        }
+
+        return $articles->get();
     }
 
     public function store(Request $request) {
@@ -40,7 +51,7 @@ class ArticleController extends Controller
         $article->category_id = $request->category_id;
         $article->save();
 
-        return redirect()->route('article.edit', ['id' => $article->id]);
+        return redirect()->route('article.edit', ['id' => $article->id])->with('success', 'Artikel berhasil dibuat');
     }
 
     public function destroy($id) {
@@ -50,7 +61,7 @@ class ArticleController extends Controller
             $article->delete();
             return redirect()->route('article')->with('success', 'Artikel berhasil dihapus');
         }
-        return redirect()->route('article')->with('error', 'Artikel gagal dihapus');
+        return redirect()->route('article')->with('failed', 'Artikel gagal dihapus');
     }
 
     public function edit($id) {
@@ -80,7 +91,7 @@ class ArticleController extends Controller
             $article->save();
             return redirect()->route('article.edit', ['id' => $article->id])->with('success', 'Perubahan berhasil disimpan');
         }
-        return redirect()->route('article.edit', ['id' => $article->id])->with('error', 'Perubahan gagal disimpan');
+        return redirect()->route('article.edit', ['id' => $article->id])->with('failed', 'Perubahan gagal disimpan');
     }
 
     public function getContent($description) {

@@ -6,23 +6,27 @@ use App\Models\Division;
 use App\Models\Member;
 use App\Models\Officer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OfficerController extends Controller
 {
-    public function index() {
-        $officers = Officer::all();
-        $data['divisions'] = Division::all();
-        $data['officers'] = array_map(function($v) {
-            $division = Division::find($v['division_id']);
-            $member = Member::find($v['member_id']);
-            $v['member'] = ($member) ? $member->name : '';
-            $v['division'] = ($division) ? $division->name : '';
-            $v['role'] = $this->getRole($v['role']);
-            unset($v['member_id']);
-            unset($v['division_id']);
-            return $v;
-        }, $officers->toArray());
-        // dd($data['officers']);
+
+    public static $roles = [
+        "ketua", "sekretaris", "bendahara", "anggota"
+    ];
+
+    public function index(Request $request) {
+        $officers = $this->getOfficers($request);
+
+        $data['officers'] = $officers;
+        $data['roles'] = self::$roles;
+        $page = 1;
+        $perPage = 10;
+        $maxPage = ceil($officers->count()/$perPage);
+
+        $data['page'] = $page;
+        $data['perPage'] = $perPage;
+        $data['maxPage'] = $maxPage;
         return view('admin.pages.office.index', $data);
     }
 
@@ -55,12 +59,30 @@ class OfficerController extends Controller
     }
     
     public function edit($id) {
-        $officer = Officer::find($id)->toArray();
+        $officer = Officer::where('members.id', $id)
+        ->select('officers.id', 'members.nim', 'members.name', 'division_id', 'role', 'period_start_at', 'period_end_at')
+        ->join('members', 'officers.member_id', '=', 'members.id')
+        ->first();
         $data['divisions'] = Division::all();
-        $officer['member'] = Member::find($officer['member_id']);
+        $data['roles'] = self::$roles;
         $data['officer'] = $officer;
         unset($officer['member_id']);
         return view('admin.pages.office.edit', $data);
+    }
+
+
+    public function getOfficers(Request $request) {
+        $officers = Officer::select(
+            'members.id', 'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at')
+        ->join('members','officers.member_id','=','members.id')
+        ->join('divisions','officers.division_id','=','divisions.id');
+
+        
+        if ($request->search) {
+            $officers = $officers->where('members.name', 'like', '%'. $request->search . '%')
+            ->orWhere('nim', 'like', '%'. $request->search . '%');
+        }
+        return $officers->get();
     }
 
     public function update(Request $request, $id) {
@@ -96,11 +118,4 @@ class OfficerController extends Controller
         return redirect()->route('office')->with('error', 'Pengurus gagal dihapus');
     }
 
-    public function getRole($role) {
-        if ($role == 0) $role = 'ketua';
-        if ($role == 1) $role = 'sekretaris';
-        if ($role == 2) $role = 'bendahara';
-        if ($role == 3) $role = 'anggota';
-        return $role;
-    }
 }

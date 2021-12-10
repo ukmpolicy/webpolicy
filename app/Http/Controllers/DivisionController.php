@@ -23,7 +23,7 @@ class DivisionController extends Controller
         $division->name = strtolower($request->name);
         $division->save();
         
-        return redirect()->route('division')->with('succes', 'Devisi berhasil ditambahkan');
+        return redirect()->route('division')->with('success', 'Devisi berhasil ditambahkan');
     }
 
     public function edit($id) {
@@ -55,18 +55,18 @@ class DivisionController extends Controller
         if ($division) {
             $division->name = strtolower($request->name);
             $division->save();
-            return redirect()->route('division')->with('succes', 'Devisi berhasil diubah');
+            return redirect()->route('division')->with('success', 'Devisi berhasil diubah');
         }
-        return redirect()->route('division')->with('succes', 'Devisi gagal diubah');
+        return redirect()->route('division')->with('failed', 'Devisi gagal diubah');
     }
 
     public function destroy($id) {
         $division = Division::find($id);
         if ($division) {
             $division->delete();
-            return redirect()->route('division')->with('succes', 'Devisi berhasil dihapus');
+            return redirect()->route('division')->with('success', 'Devisi berhasil dihapus');
         }
-        return redirect()->route('division')->with('succes', 'Devisi gagal dihapus');
+        return redirect()->route('division')->with('failed', 'Devisi gagal dihapus');
     }
 
     public function storeProgram(Request $request, $division_id) {
@@ -82,7 +82,7 @@ class DivisionController extends Controller
         $program->description = $request->description;
         $program->start_at = $request->start_at;
         $program->save();
-        return redirect()->route('division.edit', ['id' => $division_id])->with('succes', 'Program berhasil ditambahkan');
+        return redirect()->route('division.edit', ['id' => $division_id])->with('success', 'Program berhasil ditambahkan');
     }
     
     public function updateProgram(Request $request, $division_id, $program_id) {
@@ -97,16 +97,16 @@ class DivisionController extends Controller
         $program->description = $request->description;
         $program->start_at = $request->start_at;
         $program->save();
-        return redirect()->route('division.edit', ['id' => $division_id])->with('succes', 'Program berhasil diubah');
+        return redirect()->route('division.edit', ['id' => $division_id])->with('success', 'Program berhasil diubah');
     }
 
     public function destroyProgram($division_id, $program_id) {
         $division = Division::find($division_id);
-        $program = Division::find($program_id);
+        $program = Program::find($program_id);
         if ($division && $program) {
             $program->delete();
-            return redirect()->route('division.edit', ['id' => $division_id])->with('succes', 'Program berhasil dihapus');
+            return redirect()->route('division.edit', ['id' => $division_id])->with('success', 'Program berhasil dihapus');
         }
-        return redirect()->route('division.edit', ['id' => $division_id])->with('succes', 'Program gagal dihapus');
+        return redirect()->route('division.edit', ['id' => $division_id])->with('success', 'Program gagal dihapus');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,9 +17,22 @@ class ORMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $today = (int) date('d');
+
+        $settings = [];
+        foreach (Setting::all() as $s) {
+            $settings[$s->key] = $s->value;
+        }
+        $start = strtotime($settings['or_setting_start']);
+        $end = strtotime($settings['or_setting_end']);
+        $status = $settings['or_setting_status'];
         $open = false;
-        // if (($today >= 4 && $today < 15) || $open) {
+        if ($status == 0) {
+            $open = (time() >= $start && time() <= $end);
+        }elseif ($status == 1) {
+            $open = true;
+        }elseif ($status == 2){
+            $open = false;
+        }
         if ($open) {
             return $next($request);
         }

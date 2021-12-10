@@ -6,12 +6,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Daftar Anggota</h1>
+        <h1 class="m-0">Daftar Pengurus</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           {{-- <li class="breadcrumb-item"><a href="#">Anggota</a></li> --}}
-          <li class="breadcrumb-item active">Anggota</li>
+          <li class="breadcrumb-item active">Pengurus</li>
           <li class="breadcrumb-item active"></li>
         </ol>
       </div><!-- /.col -->
@@ -24,27 +24,34 @@
 <section class="content">
   
   <div class="container-fluid">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @endif
+    @if (session('failed'))
+    <div class="alert alert-danger">
+      {{ session('failed') }}
+    </div>
+    @endif
     <div class="card">
-      <div class="card-header">
-            
-        <div class="card-tools ml-3 mt-1">
-          <div class="input-group input-group-sm" style="width: 150px;">
-            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-            <div class="input-group-append">
-              <button type="submit" class="btn btn-default">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div> 
-        </div>
-        
-        <div class="card-tools">
-          <a href="{{ route('office.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-        </div>
-      </div>
       <div class="card-body">
-        <table class="table table-bordered">
+        <div class="d-lg-flex" style="justify-content: space-between">
+          <div class="d-flex">
+            <div>
+              <a href="{{ route('office.create') }}" class="btn btn-success"><i class="fa fa-plus fa-fw mr-2"></i>Tambah</a>
+            </div>
+          </div>
+          <form class="d-flex" method="GET" action="">
+            <input type="hidden" name="status" value="{{ Request::get('status') }}">
+            {{-- <input type="hidden" name="page" value="{{ Request::get('page') }}"> --}}
+            <input type="text" value="{{ Request::get('search') }}" name="search" class="form-control" style="width: 300px" placeholder="Cari">
+            <div>
+              <button class="btn ml-2 btn-primary"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
+        </div>
+        <table class="table table-bordered mt-2">
           <thead>
             <tr>
               <td>#</td>
@@ -57,23 +64,23 @@
             </tr>
           </thead>
           <tbody>
-            @if (empty($officers)) 
+            @if ($officers->forPage($page, $perPage)->isEmpty())
             <tr>
-              <td colspan="7" class="small text-center text-black-50">Tidak ada data.</td>
+              <td colspan="7" class="text-center small text-black-50">Data Kosong</td>
             </tr>
             @endif
-            @foreach ($officers as $officer)
+            @foreach ($officers->forPage($page, $perPage) as $officer)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $officer['member'] }}</td>
-                <td>{{ $officer['role'] }}</td>
-                <td>{{ $officer['division'] }}</td>
-                <td>{{ $officer['period_start_at'] . '-' . $officer['period_end_at'] }}</td>
+                <td>{{ $officer->name }}</td>
+                <td>{{ $roles[$officer->role] }}</td>
+                <td>{{ $officer->division }}</td>
+                <td>{{ $officer->period_start_at . '-' . $officer->period_end_at }}</td>
                 <td>
-                  <a href="{{ route('office.edit', ['id' => $officer['id']]) }}" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i></a>
+                  <a href="{{ route('office.edit', ['id' => $officer->id]) }}" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i></a>
                 </td>
                 <td>
-                  <form action="{{ route('office.destroy', ['id' => $officer['id']]) }}" method="post">
+                  <form action="{{ route('office.destroy', ['id' => $officer->id]) }}" method="post">
                     @csrf @method('delete')
                     <button class="btn btn-danger btn-sm btn-block" onclick="return confirm('Apakah anda yakin ingin menghapus baris ini?')"><i class="fa fa-trash"></i></button>
                   </form>
@@ -82,6 +89,12 @@
             @endforeach
           </tbody>
         </table>
+        @if ($officers->count() > $perPage)
+          <form action="" method="get">
+            <input type="hidden" name="search" value="{{ Request::get('search') }}">
+            @include('admin.components.pagination')
+          </form>
+        @endif
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\Galery;
 use App\Models\Source;
 use Illuminate\Http\Request;
@@ -10,24 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class DocumentationController extends Controller
 {
-    public function index() {
-        $categories = Category::where('type', 1)->get()->reverse()->toArray();
-        $data['events'] = array_map(function($v) {
-            $documenters = Galery::where('category_id', $v['id'])->get()->reverse()->toArray();
-            $documenters = array_filter($documenters, function($v) {
-                // if (empty($documenters)) dd($v);
-                if (!is_null($v['source_id'])) return $v;
-            });
-            $v['documenters'] = array_map(function($v) {
-                $v['source'] = Source::find($v['source_id'])->toArray();
-                unset($v['source_id']);
-                return $v;
-            }, $documenters);
-            return $v;
-        }, $categories);     
-
+    public function index(Request $request) {
+        $data['events'] = $this->getEvents($request); 
         // dd($data['events']);
         return view('admin.pages.documentation.index', $data);
+    }
+
+    public function getEvents(Request $request) {
+        $events = Event::where('type', 1);
+
+        if ($request->search) {
+            $events->where('name', 'like', '%'.$request->search.'%');
+        }
+
+        return $events->get();
     }
 
     public function storeEvent(Request $request) {

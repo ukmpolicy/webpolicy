@@ -49,7 +49,8 @@
     <section id="aboutUs">
         <a href="#aboutUs" class="btn-started"><i class="fa fa-angle-left"></i></a>
         <div class="text-center text-white container main">
-            <h3 class="text-danger">SELAMAT DATANG</h3>
+            <h3 class="text-danger">SELAMAT DATANG DI</h3>
+            <h1>UNIT KEGIATAN MAHASISWA</h1>
             <h1>POLYTECHNIC LINUX COMMUNITY</h1>
             <p>Explore Linux And Open Source With Us.</p>
             <a href="{{ route('main.introduction') }}" class="introduction">MENGENAL LEBIH JAUH</a>
@@ -144,7 +145,7 @@
                             <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $officer['role'].' '.$officer['division'] }}</div>
                         </div>
                     </div>
-                    @if ($loop->iteration%3==0)
+                    @if ($loop->iteration%3==0 && $loop->iteration < count($officers))
                     <div class="devider d-none d-lg-block">
                         <div class="inner"></div>
                     </div>

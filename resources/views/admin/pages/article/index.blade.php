@@ -9,12 +9,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Dokumentasi</h1>
+        <h1 class="m-0">Daftar Artikel</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           {{-- <li class="breadcrumb-item"><a href="#">Anggota</a></li> --}}
-          <li class="breadcrumb-item active">Artikel</li>
+          <li class="breadcrumb-item active">Daftar Artikel</li>
           <li class="breadcrumb-item active"></li>
         </ol>
       </div><!-- /.col -->
@@ -27,32 +27,39 @@
 <section class="content">
   
   <div class="container-fluid">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @elseif (session('failed'))
+    <div class="alert alert-danger">
+      {{ session('failed') }}
+    </div>
+    @endif
     <div class="row">
       <div class="col-lg-8 col-12">
         <div class="card">
-          <div class="card-header">
-            <h4 class="card-title mt-1">Daftar Artikel</h4>
-            
-            <div class="card-tools ml-3 mr-1 mt-1">
-              <div class="input-group input-group-sm">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-    
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div> 
-            </div>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addArticle">
-                <i class="fa fa-plus"></i>
-              </button>
-            </div>
-          </div>
           <div class="card-body">
-            
+            <form action="" method="get">
+              <div class="row">
+                <div class="col-3">
+                  <select name="category" class="custom-select">
+                    <option value="">Semua</option>
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @if (Request::get('category') == $category->id) selected @endif>{{ $category->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-7">
+                  <div class="form-group">
+                    <input type="text" value="{{ Request::get('search')  }}" class="form-control" placeholder="Cari..." name="search">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <button class="btn btn-primary btn-block"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+            </form>
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -62,19 +69,26 @@
                   <th>Edit</th>
                   <th>Hapus</th>
                 </tr>
+                <tr>
+                  <td colspan="5">
+                    <button type="button" class="btn btn-block btn-sm btn-primary" data-toggle="modal" data-target="#addArticle">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </td>
+                </tr>
               </thead>
               <tbody>
-                @foreach ($articles as $article)
+                @foreach ($articles->forPage($page, $perPage) as $article)
                   
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>{{ $article['title'] }}</td>
-                  <td>{{ $article['category'] }}</td>
+                  <td class="text-capitalize">{{ $article->title }}</td>
+                  <td>{{ $article->category }}</td>
                   <td>
-                    <a href="{{ route('article.edit', ['id' => $article['id']]) }}" class="btn btn-sm btn-block btn-warning"><i class="fa fa-edit"></i></a>
+                    <a href="{{ route('article.edit', ['id' => $article->id]) }}" class="btn btn-sm btn-block btn-warning"><i class="fa fa-edit"></i></a>
                   </td>
                   <td>
-                    <form action="{{ route('article.destroy', ['id' => $article['id']]) }}" method="post">
+                    <form action="{{ route('article.destroy', ['id' => $article->id]) }}" method="post">
                     @csrf @method('delete')
                       <button onclick="return confirm('Apakah anda yakin ingin menghapus baris ke {{$loop->iteration}}?')" class="btn btn-sm btn-block btn-danger"><i class="fa fa-trash"></i></button>
                     </form>
@@ -83,13 +97,20 @@
 
                 @endforeach
 
-                @if (empty($articles))
+                @if (empty($articles->forPage($page, $perPage)))
                 <tr>
                   <td colspan="6" class="text-center small text-black-50">Data Kosong</td>
                 </tr>
                 @endif
               </tbody>
             </table>
+            @if ($articles->count() > $perPage)
+              <form action="" method="get">
+
+                <input type="hidden" name="search" value="{{ Request::get('search') }}">
+                @include('admin.components.pagination')
+              </form>
+            @endif
           </div>
         </div>
       </div>

@@ -6,12 +6,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Daftar Anggota</h1>
+        <h1 class="m-0">Ubah Data Bidang</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          {{-- <li class="breadcrumb-item"><a href="#">Anggota</a></li> --}}
-          <li class="breadcrumb-item active">Anggota</li>
+          <li class="breadcrumb-item"><a href="{{ route('division') }}">Daftar Bidang</a></li>
+          <li class="breadcrumb-item active">{{ $division->name }}</li>
           <li class="breadcrumb-item active"></li>
         </ol>
       </div><!-- /.col -->
@@ -24,6 +24,15 @@
 <section class="content">
   
   <div class="container-fluid">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @elseif (session('failed'))
+    <div class="alert alert-danger">
+      {{ session('failed') }}
+    </div>
+    @endif
     <div class="row">
       <div class="col-lg-4 col-12">
         <div class="card">
@@ -82,7 +91,10 @@
                     <button class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#editProgram-{{ $program->id }}"><i class="fa fa-edit"></i></button>
                   </td>
                   <td>
-                    <button class="btn btn-danger btn-sm btn-block"><i class="fa fa-trash"></i></button>
+                    <form action="{{ route('division.program.destroy', ['division_id' => $division->id, 'program_id' => $program->id]) }}" method="post">
+                      @csrf @method('delete')
+                      <button class="btn btn-danger btn-sm btn-block" onclick="return confirm('Apakah anda yakin ingin menghapus program ini?')"><i class="fa fa-trash"></i></button>
+                    </form>
                   </td>
                 </tr>
                 
@@ -98,6 +110,7 @@
                       <div class="modal-body">
                         <form action="{{ route('division.program.update', ['division_id' => $division->id, 'program_id' => $program->id]) }}" method="post">
                           @csrf
+                          @method('PUT')
                           <div class="form-group">
                             <label for="">Nama</label>
                             <input type="text" name="name" value="{{ $program->name }}" placeholder="Nama acara..." class="form-control">
@@ -120,7 +133,7 @@
                             @enderror
                           </div>
                           <div class="form-group">
-                            <button class="btn btn-block btn-primary">TAMBAHKAN</button>
+                            <button class="btn btn-block btn-primary">SIMPAN PERUBAHAN</button>
                           </div>
                         </form>
                       </div>

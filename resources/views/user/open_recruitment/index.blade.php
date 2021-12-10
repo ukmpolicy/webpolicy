@@ -5,6 +5,19 @@
     $content = 'Hari yang di tunggu-tunggu telah tiba. Acara perekrutan Anggota baru Unit Kegiatan Mahasiswa Polytechnic Linux Community (UKM-POLICY) resmi dibuka. Daftarkan diri kalian sekarang, mari temukan pengalaman baru bersama kami.';
     $image = asset('images/gallery/or.jpeg');
     $url = url('open-recruitment');
+
+    $start = strtotime($settings['or_setting_start']);
+    $end = strtotime($settings['or_setting_end']);
+    $status = $settings['or_setting_status'];
+    $open = false;
+    if ($status == 0) {
+        $open = (time() >= $start && time() <= $end);
+    }elseif ($status == 1) {
+        $open = true;
+    }elseif ($status == 2){
+        $open = false;
+    }
+    
 @endphp
 @include('user.includes.custom_header')
 @endsection
@@ -21,7 +34,7 @@
     </header>
     <main class="content">
         <div class="container">
-            @if (false)
+            @if ( $open )
             <h2 class="">Halo Para Cyber Baru!</h2>
             <p>Hari yang di tunggu-tunggu telah tiba. Acara perekrutan Anggota baru Unit Kegiatan Mahasiswa Polytechnic Linux Community (UKM-POLICY) resmi dibuka. Daftarkan diri kalian sekarang, mari temukan pengalaman baru bersama kami. Sampai bertemu di acara `` TEMU RAMAH UKM-POLICY ``.</p>
             <div class="text-center media">

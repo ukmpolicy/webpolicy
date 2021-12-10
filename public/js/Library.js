@@ -88,7 +88,7 @@ class Library {
         return document.querySelector(this.libraryLayoutSelector);
     }
 
-    open(inputFormSelector, params, rules = []) {
+    open(inputFormSelector, params = [], rules = "required") {
         this.getElement().classList.add('show');
         this.inputFormSelector = inputFormSelector;
         this.params = params;

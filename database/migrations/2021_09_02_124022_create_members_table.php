@@ -28,7 +28,9 @@ class CreateMembersTable extends Migration
             $table->string('study_program')->nullable();
             $table->integer('joined_at')->nullable();
             $table->integer('status')->default(0); // 0: New Member | 1: Member | 2: Alumni
+            $table->timestamp('store_document')->nullable();
             $table->timestamps();
+
         });
     }
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class MemberController extends Controller
 {
 
-    private $status = [
+    public static $status = [
         "Anggota Baru",
         "Anggota",
         "Alumni",
@@ -55,10 +55,22 @@ class MemberController extends Controller
         ],
     ];
 
-    public function index() {
-        $data['members'] = Member::all(); 
+    public function index(Request $request) {
+        $members = $this->getMembers($request);
+        $page = 1;
+        $perPage = 10;
+        $maxPage = ceil($members->count()/$perPage);
+        // dd($maxPage);
 
-        $data['status'] = $this->status;
+        if (is_numeric($request->page)) {
+            $page = $request->page;
+        }
+
+        $data['members'] = $members;
+        $data['status'] = self::$status;
+        $data['page'] = $page;
+        $data['perPage'] = $perPage;
+        $data['maxPage'] = $maxPage;
         return view('admin.pages.member.index', $data);
     }
 
@@ -72,7 +84,7 @@ class MemberController extends Controller
         $member->nim = $request->nim;
         $member->save();
 
-        return redirect()->route('member')->with('success', 'Anggota berhasil ditambahkan');
+        return redirect()->route('member.edit',['id' => $member->id])->with('success', 'Anggota berhasil ditambahkan');
     }
 
     public function edit($id) {
@@ -81,6 +93,7 @@ class MemberController extends Controller
             $data['member'] = $member;
             $majors = json_encode($this->majors);
             $data['majors'] = $majors;
+            $data['status'] = self::$status;
             $data['image'] = ($member->profile_picture) ? Source::find($member->profile_picture) : '';
             
             return view('admin.pages.member.edit', $data);
@@ -102,6 +115,7 @@ class MemberController extends Controller
             "born_at" => "required",
             "birth_place" => "required",
             "joined_at" => "required",
+            "status" => "required",
         ]);
 
         $member = Member::find($id);
@@ -118,6 +132,7 @@ class MemberController extends Controller
             $member->born_at = strtolower($request->born_at);
             $member->birth_place = $request->birth_place;
             $member->joined_at = $request->joined_at;
+            $member->status = $request->status;
             $member->save();
             return redirect()->route('member.edit', ['id' => $member->id])->with('success', 'Perubahan berhasil disimpan!');
         }
@@ -133,17 +148,6 @@ class MemberController extends Controller
             return redirect()->route('member')->with('success', 'Anggota dengan nama '.$temp->name.' berhasil dihapus');
         }
         return redirect()->route('member')->with('error', 'Anggota tidak ditemukan');
-    }
-
-    public function recruitment() {
-        return view('user.recruitment.form');
-    }
-    
-    public function recruitmentSuccess() {
-        if (!session('success')) {
-            return redirect('main.home');
-        }
-        return view('user.recruitment.done');
     }
 
     public function newMember(Request $request) {
@@ -180,47 +184,24 @@ class MemberController extends Controller
         return redirect()->route('main.recruitment.success')->with('success', 'Anda berhasil mengdaftar');
     }
 
-    public function orManager(Request $request) {
 
-        // dd(Member::where('interested_in', 'pemrograman')->get()->count());
-        // dd($data['members']);
-        $data['members'] = $this->getMembers($request);
-        $data['status'] = $this->status;
-        return view('admin.pages.member.or_manager', $data);
-    }
 
     public function getMembers(Request $request) {
-        $data['members'] = [];
-        $members = Member::where('status', 0);
 
-        // Status Berkas
-        if ($request->sb == 'd') {
-            // If Done
-            $members = $members->where('store_document', '!=', null);
-        }else if ($request->sb == 'ny') {
-            // If Not Yet
-            $members = $members->where('store_document', null);
+        $data['members'] = [];
+        $members = Member::whereIn('status', [0,1,2]);
+
+        if ($request->status) {
+            $status = '';
+            foreach (self::$status as $k => $v) if ($request->status == strtolower($v)) $status = $k;
+            $members = Member::where('status', $status);
         }
+
         if ($request->search) {
             $members = $members->where('name', 'like', '%'. $request->search . '%')
-            ->orWhere('nim', 'like', '%'. $request->search . '%')
-            ->orWhere('major', 'like', '%'. $request->search . '%')
-            ->orWhere('phone_number', 'like', '%'. $request->search . '%');
+            ->orWhere('nim', 'like', '%'. $request->search . '%');
         }
 
         return $members->orderBy('name')->get();
-    }
-
-    public function orDone($id) {
-        $member = Member::findOrFail($id);
-        $member->store_document = ($member->store_document) ? null : date('Y-m-d H:i:s');
-        $member->save();
-        return redirect()->back();
-    }
-
-    public function downloadDataOR(Request $request) {
-        $request->search = '';
-        $data['members'] = $this->getMembers($request);
-        return view('admin.pages.member.new_members', $data);
     }
 }
