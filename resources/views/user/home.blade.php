@@ -132,19 +132,19 @@
             </div>
             <div class="items">
                 @foreach ($officers as $officer)
-                    <div class="item">
+                    @if ($officer->division == 'umum') <div class="item"> @else <a class="item" href="{{ route('main.divison', ['division' => $officer->division]) }}"> @endif
                         <div class="image">
                             {{-- {{ dd($officer)}} --}}
-                            @if (!is_null($officer['member']['profile_picture']))
-                            <img src="{{ $officer['member']['profile_picture']['path'] }}" alt="">
+                            @if (!is_null($officer->profile_image))
+                            <img src="{{ asset($officer->profile_image) }}" alt="{{ $officer->name }}">
                             @endif
                             {{-- {{ dd(is_null($officer['member']['profile_picture'])) }} --}}
                         </div>
                         <div class="body">
-                            <div class="name text-capitalize mt-3">{{ $officer['member']['name'] }}</div>
-                            <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $officer['role'].' '.$officer['division'] }}</div>
+                            <div class="name text-capitalize mt-3">{{ $officer->name }}</div>
+                            <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $roles[$officer->role].' '.$officer->division }}</div>
                         </div>
-                    </div>
+                    @if ($officer->division == 'umum') </div> @else </a> @endif
                     @if ($loop->iteration%3==0 && $loop->iteration < count($officers))
                     <div class="devider d-none d-lg-block">
                         <div class="inner"></div>
@@ -160,3 +160,4 @@
 @section('d_script')
     <script src="{{ asset('js/base.js') }}"></script>
 @endsection
+

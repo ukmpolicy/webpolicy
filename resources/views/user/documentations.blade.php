@@ -4,9 +4,6 @@
 @endsection
 @section('content')
     <section id="documentation">
-        <!-- <div class="notFound">
-            <img src="assets/images/illustrator/feeling.svg" alt="">
-        </div> -->
         <div class="container">
             <div class="head mb-5">
                 <h2>DOCUMENTATION</h2>
@@ -18,16 +15,23 @@
                 <h4 class="text-capitalize">{{ $event['name'] }}</h4>
             </div>
             <div class="items">
-                @foreach ($event['docs'] as $doc)
-                    <a data-gall="gal1" class="venobox" data-title="{{ $doc['description'] }}" href="{{ asset($doc['source']->path) }}">
-                        <div class="image">
-                            <img src="{{ asset($doc['source']->path) }}" alt="{{ $doc['source']->description }}">
-                        </div>
-                        <div class="body">
-                            <div class="title">{{ $doc['description'] }}</div>
-                            <div class="date">{{ date('l, d M Y', strtotime($doc['created_at'])) }}</div>
-                        </div>
-                    </a>
+                @php
+                    $docs = $documentations->getDocumentation($event->id)
+                    @endphp
+                @foreach ($docs as $doc)
+                <div class="item">
+                
+                @if ($doc->type == 0)
+                
+                    <img src="{{ asset($doc->path) }}" alt="{{ $doc->description }}">
+                
+                @elseif ($doc->type == 1)
+
+                    <iframe height="150" src="{{ $doc->path }}">
+
+                @endif
+
+                </div>
                 @endforeach
 
             </div>

@@ -64,6 +64,24 @@ class SourceController extends Controller
         ], 500);
     }
 
+    public function storeVideo(Request $request) {
+        $this->validate($request, [
+            "url" => "required|url",
+            "description" => "required",
+        ]);
+        $source = new Source();
+        $source->path = $request->url;
+        $source->description = $request->description;
+        $source->author_id = $request->user_id;
+        if ($request->user_id) {
+            $source->author_id = Auth::user()->id;
+        }
+        $source->type = 1;
+        $source->save();
+
+        return redirect()->back()->with('success', 'Video berhasil di tambahkan');
+    }
+
     public function show($id) {
         $source = Source::find($id);
 

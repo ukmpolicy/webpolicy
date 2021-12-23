@@ -8,41 +8,40 @@ use App\Models\Division;
 use App\Models\Galery;
 use App\Models\Member;
 use App\Models\Officer;
+use App\Models\Program;
 use App\Models\Source;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Nette\Utils\ArrayList;
 
 class HomeController extends Controller
 {
     public function index() {
-        $officers = [];
-        if (!Officer::all()->isEmpty()) {
-            $devisiUmum = Division::where('name', 'umum')->first();
-            $umum = Officer::where('division_id', $devisiUmum->id)->get()->toArray();
-            $other = Officer::where('role', 0)->get()->toArray();
-            $officers = array_merge($umum, $other);
-            $officers = array_map(function($v) {
-                $v['member'] = Member::find($v['member_id'])->toArray();
-                if (!is_null($v['member']['profile_picture'])) {
-                    // dd(Source::find($v['member']['profile_picture']));
-                    $v['member']['profile_picture'] = Source::find($v['member']['profile_picture'])->toArray();
-                }
-                $v['role'] = $this->getRole($v['role']);
-                $v['division'] = Division::find($v['division_id'])->name;
-                return $v;
-            }, $officers);
-            $rows = [];
-            foreach ($officers as $i => $officer) {
-                if (!in_array($officer['id'], $rows)) {
-                    $rows[] = $officer['id'];
-                }else {
-                    unset($officers[$i]);
-                }
-            }
-        }
-        // dd($officers);
+        $officers = $this->getDOfficer(Officer::where('role', 0));
+        $generalDivision = Division::where('name', 'umum')->first();
+        $general = $this->getDOfficer(Officer::where('division_id', $generalDivision->id));
+        $officers = $general->merge($officers);
         $data['officers'] = $officers;
+        $data['roles'] = ['ketua', 'sekretaris', 'bendahara', 'anggota'];
         return view('user.home', $data);
+    }
+
+    public function detailDivision(Request $request, $division) {
+        $division = Division::where('name', $division)->first();
+        $officers = $this->getDOfficer(Officer::where('division_id', $division->id));
+        $data['officers'] = $officers;
+        $data['roles'] = ['ketua', 'sekretaris', 'bendahara', 'anggota'];
+        $data['programs'] = Program::where('division_id', $division->id)->get();
+        return view('user.structural_division', $data);
+    }
+
+    private function getDOfficer($o) {
+        return $o->select('officers.id', 
+        'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at', 'sources.path as profile_image'
+        )->join('members', 'officers.member_id', '=', 'members.id')
+        ->join('divisions', 'officers.division_id', '=', 'divisions.id')
+        ->join('sources', 'members.profile_picture', '=',  'sources.id')
+        ->get();
     }
     
     public function articles(Request $request) {
@@ -71,17 +70,22 @@ class HomeController extends Controller
     }
     
     public function documentation() {
-        $events = Category::where('type', 1)->get()->toArray();
-        $data['events'] = array_map(function($v) {
-            $docs = Galery::where('category_id', $v['id'])->get()->toArray();
-            $docs = array_map(function($v) {
-                $v['source'] = Source::find($v['source_id']);
-                return $v;
-            }, $docs);
-            $v['docs'] = $docs;
-            return $v;
-        }, $events);
+        $events = Category::where('type', 1)->get();
+        $data['events'] = $events;
+        $data['documentations'] = $this;
         return view('user.documentations', $data);
+    }
+
+    public function getDocumentation($event_id) {
+        $event = Category::find($event_id);
+        $docs = [];
+        if ($event) {
+            $docs = Galery::where('category_id', $event->id)
+            ->select('galeries.id', 'galeries.description', 'galeries.created_at', 'sources.path', 'sources.type')
+            ->join('sources', 'galeries.source_id', '=', 'sources.id')
+            ->get();
+        }
+        return $docs;
     }
 
     public function article($slug) {
@@ -95,7 +99,7 @@ class HomeController extends Controller
             ];
             $time = strtotime($data['created_at']);
             $hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            $bulan = $bulan[(int)date('m', $time)];
+            $bulan = $bulan[(int)date('m', $time) - 1];
             $hari = $hari[(int)date('N', $time)-1];
             // dd($hari);
             $data['created_at'] = $hari.date(', d ', $time) . $bulan. date(' Y H:i', $time);

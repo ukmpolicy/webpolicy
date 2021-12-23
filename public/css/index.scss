@@ -970,43 +970,48 @@ footer {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 1rem;
-            
-            .venobox {
-                position: relative;
-                height: fit-content;
-    
-                .image {
-                    border-radius: 4px;
-                    overflow: hidden;
-                    img {
-                        width: 100%;
-                    }
-                }
-                .body {
-                    position: absolute;
-                    transition: .3s;
-                    background-color: rgba(0,0,0,.5);
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    left: 0;
-                    top: 0;
-                    right: 0;
-                    height: 100%;
-                    flex-direction: column;
-                    .title {
-                        font-size: 23px;
-                        color: rgba(255,255,255, 1);
-                    }
-                    .date {
-                        font-size: 14px;
-                        color: rgba(255,255,255, .75);
-                    }
-                }
-                .body:hover {
-                    opacity: 0;
+
+            .item {
+
+                img, iframe {
+                    width: 100%;
+                    min-height: 200px;
+                    max-height: 300px;
+                    border-radius: 6px;
+                    object-fit: cover;
+                    object-position: center center;
                 }
             }
+        }
+    }
+}
+
+#programs {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+    .head {
+        text-align: center;
+        h2 {
+            font-weight: bold;
+        }
+
+        .devider {
+            height: .5px;
+            background-color: rgba(255,255,255, .8);
+            width: 200px;
+            position: relative;
+            border-radius: 1px;
+            margin: 1.5rem auto;
+        }
+        .devider::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 1px;
+            width: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ca3737;
         }
     }
 }

@@ -36,6 +36,15 @@
 <section class="content">
   
   <div class="container-fluid">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @elseif (session('failed'))
+    <div class="alert alert-danger">
+      {{ session('failed') }}
+    </div>
+    @endif
     <div class="card">
       <div class="card-body">
         <div class="d-flex mb-3" style="justify-content: space-between">
@@ -54,21 +63,31 @@
           Data Kosong.
         </div>
         @endif
+
+        {{-- List Events --}}
         <div class="accordion" id="accordionExample">
           @foreach ($events as $event)
           <div class="card card-row">
 
+            {{-- Header Event --}}
             <div class="card-header" id="headingOne">
               <div class="row">
+
+                {{-- Event Name --}}
                 <div class="col-6 d-flex align-items-center">
                   <h5 class="text-capitalize">
                     {{ $event->name }}
                   </h5>
                 </div>
+
+                {{-- Event Bar --}}
                 <div class="col-6">
                   <ul class="nav" style="justify-content: right">
-                    <a href="" class="nav-link text-secondary"><i class="fa fa-edit"></i></a>
 
+                    {{-- Edit Button --}}
+                    <a href="" onclick="event.preventDefault();showModal('renameEvent-{{$event->id}}')" class="nav-link text-secondary"><i class="fa fa-edit"></i></a>
+
+                    {{-- Delete Button --}}
                     <form class="d-inline-block" action="{{ route('documentation.destroy.event', ['event_id' => $event->id]) }}" method="post">
                       @csrf @method('delete')
                       <button onclick="return confirm('Apakah anda yakin ingin melakukan hapus')" class="btn btn-link text-secondary d-inline-block">
@@ -76,22 +95,29 @@
                       </button>
                     </form>
 
+                    {{-- Toggler Button --}}
                     <button class="btn btn-link nav-link text-secondary" type="button" data-toggle="collapse" data-target="#collapse-{{$event->id}}" aria-expanded="true" aria-controls="collapseOne">
                       <i class="fa fa-th"></i>
                     </button>
+
                   </ul>
+
                 </div>
+
               </div>
+
             </div>
 
+            {{-- Inner Event --}}
             <div id="collapse-{{$event->id}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body px-0 pb-0">
 
                 <div class="row">
                   <div class="col-3">
 
+                    {{-- Button Add Document --}}
                     <div class="card card-item">
-                      <div class="card-image" style="cursor: pointer" onclick="library.open('#eventId', {eventId: {{ $event->id }}})">
+                      <div class="card-image" style="cursor: pointer" onclick="library.open('#eventId', {eventId: {{$event->id}}})">
                         <div class="icon"><i class="fa fa-file-upload"></i></div>
                         <input type="hidden" value="" id="eventId">
                       </div>
@@ -107,16 +133,14 @@
 
                   @foreach ($event->getDocumentations() as $doc)
 
-                  @php
-                      // dd($doc->toArray());
-                  @endphp
                   <div class="col-3">
                     <div class="card card-item">
                       <div class="card-image showSource">
                         @if ($doc->type == 0)
                           <img src="{{ asset($doc->path) }}" alt="{{ $doc->description }}" class="image">
                         @elseif ($doc->type == 1)
-                          <video src="{{ asset($doc->path) }}"></video>
+                          <iframe height="150" class="card-img-top rounded" src="{{ asset($doc->path) }}">
+                        </iframe>
                         @endif
                       </div>
                       <div class="card-body">
@@ -126,7 +150,9 @@
                           </div>
                           <div class="col-3">
                             <div class="text-center">
-                              <a href="" class="text-secondary small"><i class="fa fa-edit"></i></a>
+                              
+                              <a href="" onclick="event.preventDefault();showModal('renameDocument-{{$doc->id}}')" class="text-secondary small"><i class="fa fa-edit"></i></a>
+
                               <form class="d-inline-block" action="{{ route('documentation.destroy.documenter', ['event_id' => $event->id,'documenter_id' => $doc->id]) }}" method="post">
                                 @csrf @method('delete')
                                 <button onclick="return confirm('Apakah anda yakin ingin melakukan hapus')" class="btn p-0 btn-link text-secondary d-inline-block btn-sm ml-2">
@@ -139,6 +165,34 @@
                       </div>
                     </div>
                   </div>
+                  
+                  <div class="modal fade" id="renameDocument-{{$doc->id}}" tabindex="-1" aria-labelledby="renameDocumentLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <div class="modal-title">Ubah Nama File</div>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="{{ route('documentation.rename.document', ['event_id' => $event->id, 'document_id' => $doc->id]) }}" method="post">
+                            @method('PUT')
+                            @csrf
+                            <div class="form-group">
+                              <input type="text" name="name" placeholder="Nama dokumen..." class="form-control">
+                              @error('name')
+                                <div class="text-small text-danger">{{ $name }}</div>
+                              @enderror
+                            </div>
+                            <div class="form-group">
+                              <button class="btn btn-block btn-primary">UBAH</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   @endforeach
 
                 </div>
@@ -147,6 +201,34 @@
             </div>
 
           </div>
+                  
+          <div class="modal fade" id="renameEvent-{{$event->id}}" tabindex="-1" aria-labelledby="renameEventLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <div class="modal-title">Ubah Nama File</div>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="{{ route('documentation.rename.event', ['event_id' => $event->id]) }}" method="post">
+                    @method('PUT')
+                    @csrf
+                    <div class="form-group">
+                      <input type="text" name="name" placeholder="Nama acara..." class="form-control">
+                      @error('name')
+                        <div class="text-small text-danger">{{ $name }}</div>
+                      @enderror
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-block btn-primary">UBAH</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           @endforeach
         </div>
 
@@ -154,13 +236,7 @@
     </div>
   </div>
 
-</section>
-{{-- 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#menuTambah">
-  Launch demo modal
-</button>
- --}}
- 
+</section> 
 
 <div class="modal fade" id="menuTambah" tabindex="-1" aria-labelledby="menuTambahLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered">
@@ -222,10 +298,21 @@
 @include('admin.components.library')
 
 <script>
+  modal = null;
+  function showModal(id) {
+    if (modal) modal.hide();
+    let el = document.getElementById(id);
+    if (el)  {
+      modal = new bootstrap.Modal(el, {
+        keyboard: false
+      })
+      modal.show();
+    }
+  }
+
   let fd = new FormData();
   fd.append('source_id', 1);
   fd.append('description', 'aa');
-  console.log(fd);
   let library = new Library();
   library.onChoiced = (r, p) => {
       library.close();

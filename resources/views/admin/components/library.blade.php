@@ -36,7 +36,7 @@
                 {{-- Brose Button --}}
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="card" style="box-shadow: none;border:none;">
-                        <div class="source_view" onclick="library.browse()" id="buttonExplore">
+                        <div class="source_view" onclick="library.choiceType()" id="buttonExplore">
                             <div class="text-black-50"><i class="fa fa-file-upload"></i></div>
                             <div class="loading" style="margin-left: 0%; display: none;"><i class="fa fa-spinner"></i></div>
                             <input type="file" class="d-none file_browse">
@@ -55,8 +55,9 @@
                     <div class="col-lg-3 col-md-4 col-6">
                         <div class="card" style="box-shadow: none;border:none;">
 
-                            @if ($source->type == 1)
-                            <video src="{{ asset($source->path) }}" style="height: 150px;" class="card-img-top rounded"></video>
+                            @if ($source->type == 1)                            
+                            <iframe height="150" class="card-img-top rounded" src="{{ asset($source->path) }}">
+                            </iframe>
                             @endif
 
                             @if ($source->type == 0)
@@ -83,6 +84,61 @@
     </div>
 </div>
 
+<div class="modal fade" id="typeFile" tabindex="-1" aria-labelledby="typeFileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Tipe File?</div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-6">
+              <button class="btn btn-primary btn-block" onclick="library.browseImage()"><i class="fa fa-image"></i></button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-primary btn-block" onclick="library.browseVideo()"><i class="fa fa-video"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="browseVideo" tabindex="-1" aria-labelledby="browseVideoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Tambah Video Dokumentasi</div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ route('source.store.video') }}" method="post">
+            @csrf
+            <div class="form-group">
+              <input type="text" name="url" placeholder="Youtube url..." class="form-control">
+              @error('url')
+                <div class="text-small text-danger">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="form-group">
+              <input type="text" name="description" placeholder="Descripsi..." class="form-control">
+              @error('description')
+              <div class="text-small text-danger">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-primary">TAMBAHKAN</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 <script>
     let user_id = '';
     @if (auth()->check())

@@ -7,11 +7,18 @@ class Library {
     params = [];
     rules = '';
     errors = [];
+    typeFileModal = null;
+    browseVideoModal = null;
 
     constructor() {
         
         this.onUpload();
-        
+        this.typeFileModal = new bootstrap.Modal(document.getElementById('typeFile'), {
+            keyboard: false
+        })
+        this.browseVideoModal = new bootstrap.Modal(document.getElementById('browseVideo'), {
+            keyboard: false
+        })
     }
 
     onUpload() {
@@ -81,6 +88,11 @@ class Library {
         return document.querySelector(this.inputFormSelector);
     }
 
+    choiceType() {
+        this.getElement().classList.remove('show');
+        this.typeFileModal.show();
+    }
+
     getFileBrowse() {
         return document.querySelector(this.fileBrowseSelector);
     }
@@ -107,8 +119,14 @@ class Library {
         }
     }
 
-    browse() {
+    browseImage() {
+        this.typeFileModal.hide();
         this.getFileBrowse().click();
+    }
+
+    browseVideo() {
+        this.typeFileModal.hide();
+        this.browseVideoModal.show();
     }
 
     onChoiced() {}

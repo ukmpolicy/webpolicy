@@ -8,12 +8,12 @@ use App\Models\Galery;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
 class DocumentationController extends Controller
 {
     public function index(Request $request) {
-        $data['events'] = $this->getEvents($request); 
-        // dd($data['events']);
+        $data['events'] = $this->getEvents($request);
         return view('admin.pages.documentation.index', $data);
     }
 
@@ -37,6 +37,33 @@ class DocumentationController extends Controller
         $category->save();
 
         return redirect()->route('documentation');
+    }
+
+    public function renameEvent(Request $request, $event_id) {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+        $event = Category::find($event_id);
+        if ($event) {
+            $event->name = $request->name;
+            $event->save();
+            return redirect()->back()->with('success', 'Berhasil mengubah nama acara');
+        }
+        return redirect()->back()->with('failed', 'Gagal mengubah nama acara');
+    }
+
+    public function renameDocument(Request $request, $event_id, $document_id) {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+        $event = Category::find($event_id);
+        $document = Galery::find($document_id);
+        if ($event && $document) {
+            $document->description = $request->name;
+            $document->save();
+            return redirect()->back()->with('success', 'Berhasil mengubah nama dokumen');
+        }
+        return redirect()->back()->with('failed', 'Gagal mengubah nama dokumen');
     }
 
     public function storeDocumenter(Request $request) {

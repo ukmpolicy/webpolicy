@@ -15,7 +15,7 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->string('profile_picture')->nullable();
+            $table->foreignId('profile_picture')->nullable();
             $table->string('name');
             $table->string('nim');
             $table->string('address')->nullable();
@@ -30,6 +30,8 @@ class CreateMembersTable extends Migration
             $table->integer('status')->default(0); // 0: New Member | 1: Member | 2: Alumni
             $table->timestamp('store_document')->nullable();
             $table->timestamps();
+
+            $table->foreign('profile_picture')->references('id')->on('sources');
 
         });
     }

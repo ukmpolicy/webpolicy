@@ -1141,58 +1141,49 @@ footer .credits .container .socmeds .item:hover {
   gap: 1rem;
 }
 
-#documentation .container .items .venobox {
-  position: relative;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
-#documentation .container .items .venobox .image {
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-#documentation .container .items .venobox .image img {
+#documentation .container .items .item img, #documentation .container .items .item iframe {
   width: 100%;
+  min-height: 200px;
+  max-height: 300px;
+  border-radius: 6px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
 }
 
-#documentation .container .items .venobox .body {
+#programs {
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+}
+
+#programs .head {
+  text-align: center;
+}
+
+#programs .head h2 {
+  font-weight: bold;
+}
+
+#programs .head .devider {
+  height: .5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 200px;
+  position: relative;
+  border-radius: 1px;
+  margin: 1.5rem auto;
+}
+
+#programs .head .devider::after {
+  content: '';
   position: absolute;
-  -webkit-transition: .3s;
-  transition: .3s;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  left: 0;
   top: 0;
-  right: 0;
-  height: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-#documentation .container .items .venobox .body .title {
-  font-size: 23px;
-  color: white;
-}
-
-#documentation .container .items .venobox .body .date {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-#documentation .container .items .venobox .body:hover {
-  opacity: 0;
+  height: 1px;
+  width: 50px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background-color: #ca3737;
 }
 
 #recruitment {

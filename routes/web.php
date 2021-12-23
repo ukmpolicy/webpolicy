@@ -25,6 +25,7 @@ Route::get('/introduction', function() {
 Route::get('/article', [HomeController::class, 'articles'])->name('main.articles');
 Route::get('/article/{slug}', [HomeController::class, 'article'])->name('main.article');
 Route::get('/documentation', [HomeController::class, 'documentation'])->name('main.documentations');
+Route::get('/division/{division}', [HomeController::class, 'detailDivision'])->name('main.divison');
 
 Route::prefix('open-recruitment')->group(function() {
     Route::get('/', [ORController::class, 'index'])->name('open-recruitment');
@@ -98,12 +99,21 @@ Route::prefix('manager')->group(function() {
     
         Route::post('/event', [DocumentationController::class, 'storeEvent'])
         ->name('documentation.store.event');
+        
+        Route::post('/video', [DocumentationController::class, 'storeVideo'])
+        ->name('documentation.store.video');
     
         Route::delete('/{event_id}/{documenter_id}', [DocumentationController::class, 'destroyDocumenter'])
         ->name('documentation.destroy.documenter');
     
         Route::delete('/{event_id}', [DocumentationController::class, 'destroyEvent'])
         ->name('documentation.destroy.event');
+
+        Route::put('/rename/{event_id}/{document_id}', [DocumentationController::class, 'renameDocument'])
+        ->name('documentation.rename.document');
+
+        Route::put('/rename/{event_id}', [DocumentationController::class, 'renameEvent'])
+        ->name('documentation.rename.event');
     });
     
     Route::prefix('mail')->middleware('auth')->group(function() {
@@ -201,6 +211,11 @@ Route::prefix('manager')->group(function() {
         Route::delete('/{id}', [UserController::class, 'destroy'])
         ->name('user.destroy');
     });
+});
+
+Route::prefix("source")->group(function() {
+    Route::post('/video', [SourceController::class, 'storeVideo'])
+    ->name('source.store.video');
 });
 
 Route::get('summernote-image-upload', [PostController::class, 'index']);
