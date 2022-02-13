@@ -5,9 +5,6 @@
 @section('content')
     <section id="articles">
         <div class="container">
-            <!-- <div class="notFound">
-                <img src="assets/images/illustrator/feeling.svg" alt="">
-            </div> -->
             <div class="head">
                 <h2>ARTICLES</h2>
                 <div class="devider"></div>
@@ -17,11 +14,10 @@
                 @foreach ($articles as $article)
                     <a href="{{ route('main.article', ['slug' => $article['slug']]) }}" class="item">
                         <div class="image">
-                            <img src="{{ asset($article['thumbnail']['path']) }}" alt="thumbnail">
+                            <img src="{{ asset('uploads/library/'.$article['thumbnail']['path']) }}" alt="thumbnail">
                         </div>
                         <div class="body">
-                            <div class="title">{{ $article['title'] }}</div>
-                            {{-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro iure quod ipsam dolore ex facere eligendi a excepturi ratione tempora.</p> --}}
+                            <div class="title text-capitalize">{{ $article['title'] }}</div>
                             <div class="meta mt-2">
                                 <div class="text-capitalize">
                                     <span class="small">#{{ $article['creator']['username'] }}</span>

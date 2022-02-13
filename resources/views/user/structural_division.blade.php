@@ -1,10 +1,10 @@
 @extends('user.layout')
 @section('header')
 @php
-    $title = 'INTRODUCTION';
+    $title = strtoupper($division->name);
     $content = 'Unit Kegiatan Mahasiswa <b>Polytechnic Linux Community</b> (UKM POLICY) merupakan suatu UKM yang berada di bawah naungan Politeknik Negeri Lhokseumawe yang bergerak di bidang Teknologi Komputer terkhusnya terkait dengan Linux dan juga Open Source.';
     $image = asset('images/poltek.jpg');
-    $url = url('introduction');
+    $url = url($division->name);
 @endphp
 @include('user.includes.custom_header')
 @endsection
@@ -15,7 +15,7 @@
             <img src="{{ asset('images/poltek.jpg') }}" alt="Foto depan Politeknik Negeri Lhokseumawe">
         </div>
         <div class="text">
-            <h1>PEMROGRAMAN</h1>
+            <h1 class="text-uppercase">{{ $division->name }}</h1>
             <p>Struktural Dan Program Kerja</p>
         </div>
     </header>
@@ -34,7 +34,7 @@
                         <div class="image">
                             {{-- {{ dd($officer)}} --}}
                             @if (!is_null($officer->profile_image))
-                            <img src="{{ asset($officer->profile_image) }}" alt="{{ $officer->name }}">
+                            <img src="{{ asset('uploads/library/'.$officer->profile_image) }}" alt="{{ $officer->name }}">
                             @endif
                             {{-- {{ dd(is_null($officer['member']['profile_picture'])) }} --}}
                         </div>

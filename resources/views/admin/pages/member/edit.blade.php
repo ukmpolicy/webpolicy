@@ -86,7 +86,9 @@
           <!-- form start -->
           <div class="card-body">
               <div id="choiceImage" onclick="library.open('#profile_picture_form')">
-                <img src="{{ asset(($image) ? $image->path : '') }}" id="profile_picture" alt="{{ ($image) ? $image->description : '' }}">
+                @if ($image)
+                  <img src="{{ asset('uploads/library/'.$image->path) }}" id="profile_picture" alt="{{ $image->description }}">
+                @endif
                 <div class="label"><i class="fa fa-edit"></i></div>
                 <input type="hidden" value="{{ $member->profile_picture }}" name="profile_picture" id="profile_picture_form">
               </div>

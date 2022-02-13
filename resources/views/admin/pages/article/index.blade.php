@@ -37,6 +37,8 @@
     </div>
     @endif
     <div class="row">
+
+      {{-- Articles --}}
       <div class="col-lg-8 col-12">
         <div class="card">
           <div class="card-body">
@@ -114,7 +116,110 @@
           </div>
         </div>
       </div>
+      {{-- End Articles --}}
+
       <div class="col-lg-4 col-12">
+
+        {{-- Highlighs --}}
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Sorotan</h4>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-light border btn-block mb-3 text-black-50" data-toggle="modal" data-target="#addHighligh" type="button">
+              <div class="p-1"><i class="fa fa-plus-circle"></i></div>
+            </button>
+            @foreach ($highlighs as $highligh)
+              <div class="alert alert-light small fade show align-items-center d-flex text-capitalize" style="justify-content: space-between;">
+                {{ $highligh->title }}
+                <div class="d-flex">
+                  <style>
+                    .tool {
+                      border: 0; 
+                      background: none; 
+                      font-size: 12px; 
+                      outline: none;
+                      color: #bbb;
+                      padding: 0;
+                    }
+                    .tool:hover {
+                      color: #707070;
+                    }
+                  </style>
+                  <button type="button" data-toggle="modal" data-target="#editHighligh-{{ $highligh->id }}" class="tool">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                  <form action="{{ route('highligh.destroy', ['highligh' => $highligh->id]) }}" method="post">
+                  @csrf @method('delete')
+                    <button onclick="return confirm('Apakah anda yakin ingin melakukan hapus?')" style="font-size: 14px;" class="ml-3 tool">
+                      <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="modal fade" id="editHighligh-{{ $highligh->id }}" tabindex="-1" aria-labelledby="editHighligh-{{ $highligh->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="modal-title">Edit Sorotan</div>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{{ route('highligh.update', ['highligh' => $highligh->id]) }}" enctype="multipart/form-data" method="post">
+                        @csrf
+                        @method('put')
+                        <div class="form-group">
+                          <div class="">Judul:</div>
+                          <input type="text" name="title" value="{{ $highligh->title }}" placeholder="Judul..." class="form-control">
+                          @error('title')
+                            <div class="text-small text-danger">{{ $message }}</div>
+                          @enderror
+                        </div>
+                        <div class="form-group">
+                          <div class="">Subjudul:</div>
+                          <input type="text" name="subtitle" value="{{ $highligh->subtitle }}" placeholder="Subjudul..." class="form-control">
+                          @error('subtitle')
+                            <div class="text-small text-danger">{{ $message }}</div>
+                          @enderror
+                        </div>
+                        <div class="form-group">
+                          <div class="">Tulisan Tombol:</div>
+                          <input type="text" name="text_button" value="{{ $highligh->text_button }}" placeholder="Tulisan Tombol..." class="form-control">
+                          @error('text_button')
+                            <div class="text-small text-danger">{{ $message }}</div>
+                          @enderror
+                        </div>
+                        <div class="form-group">
+                          <div class="">URL:</div>
+                          <input type="text" name="url_button" value="{{ $highligh->url_button }}" placeholder="Url..." class="form-control">
+                          @error('url_button')
+                            <div class="text-small text-danger">{{ $message }}</div>
+                          @enderror
+                        </div>
+                        <div class="">Thumbnail:</div>
+                        <div class="custom-file mb-3">
+                          <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail">
+                          <label class="custom-file-label" for="thumbnail">Thumbnail</label>
+                          @error('thumbnail')
+                            <div class="text-small text-danger">{{ $message }}</div>
+                          @enderror
+                        </div>
+                        <div class="form-group">
+                          <button class="btn btn-block btn-primary">SIMPAN PERUBAHAN</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
+        {{-- End Highlighs --}}
+
+        {{-- Categories --}}
         <div class="card">
           <div class="card-header">
             <h4 class="card-title">Kategori</h4>
@@ -124,7 +229,7 @@
               <div class="p-1"><i class="fa fa-plus-circle"></i></div>
             </button>
             @foreach ($categories as $category)
-              <div class="alert alert-light small alert-dismissible fade show">
+              <div class="alert alert-light small alert-dismissible fade show text-capitalize">
                 {{ $category->name }}
                 <form action="{{ route('article.category.destroy', ['id' => $category->id]) }}" method="post">
                   @csrf @method('delete')
@@ -136,16 +241,12 @@
             @endforeach
           </div>
         </div>
+        {{-- End Category --}}
       </div>
     </div>
   </div>
 
 </section>
-{{-- 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#menuTambah">
-  Launch demo modal
-</button>
- --}}
 
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered">
@@ -214,6 +315,63 @@
   </div>
 </div>
 
+<div class="modal fade" id="addHighligh" tabindex="-1" aria-labelledby="addHighligh" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Tambah Sorotan</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ route('highligh.store') }}" enctype="multipart/form-data" method="post">
+          @csrf
+          <div class="form-group">
+            <div class="">Judul:</div>
+            <input type="text" name="title" placeholder="Judul..." class="form-control">
+            @error('title')
+              <div class="text-small text-danger">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="form-group">
+            <div class="">Subjudul:</div>
+            <input type="text" name="subtitle" placeholder="Subjudul..." class="form-control">
+            @error('subtitle')
+              <div class="text-small text-danger">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="form-group">
+            <div class="">Tulisan Tombol:</div>
+            <input type="text" name="text_button" placeholder="Tulisan Tombol..." class="form-control">
+            @error('text_button')
+              <div class="text-small text-danger">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="form-group">
+            <div class="">URL:</div>
+            <input type="text" name="url_button" placeholder="Url..." class="form-control">
+            @error('url_button')
+              <div class="text-small text-danger">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="">Thumbnail:</div>
+          <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail">
+            <label class="custom-file-label" for="thumbnail">Thumbnail</label>
+            @error('thumbnail')
+              <div class="text-small text-danger">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="form-group">
+            <button class="btn btn-block btn-primary">TAMBAHKAN</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('script')
@@ -225,7 +383,6 @@
   let fd = new FormData();
   fd.append('source_id', 1);
   fd.append('description', 'aa');
-  console.log(fd);
   let library = new Library();
   library.onChoiced = (r, p) => {
       library.close();

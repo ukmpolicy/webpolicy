@@ -1,29 +1,9 @@
 @extends('admin.layouts.index')
 
 @section('style')
-<style>
-  .library-button-explore {
-    height: 150px !important;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed #ddd;
-    background-size: cover;
-    background-position: center center;
-    cursor: pointer;
-  }
-  .library-button-explore .loading {
-    top: 0;
-    bottom: 0;
-    transition: 1s;
-    left: 0;
-    right: 0;
-    background-color: rgba(65, 119, 218, 0.1);
-    backdrop-filter: blur(5px);
-    position: absolute;
-  }
-</style>
+<link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/library.css') }}">
 @endsection
 
 @section('content')
@@ -72,28 +52,29 @@
             <div class="row">
 
               <div class="col-lg-3 col-md-4 col-6">
-                <div class="card" style="box-shadow: none;">
-                  <div class="text-center rounded library-button-explore" id="buttonExplore">
-                    <div class="text-black-50"><i class="fa fa-file-upload"></i></div>
-                    <div class="loading" style="margin-left: 0%; display: none;"></div>
-                    <input type="file" name="file_source" class="d-none" id="file_source">
-                  </div>
-                  <div class="card-body p-1 rounded mt-2" style="border: 1px solid #eaeaea">
-                    <div class="row">
-                      <div class="col-10">
-                        <span class="ml-2 text-black-50 small" id="file_source_label">Belom ada file...</span>
-                      </div>
+                <div class="card" style="box-shadow: none;border:none;">
+                    <div class="source_view" onclick="library.choiceType()" id="buttonExplore">
+                        <div class="text-black-50"><i class="fa fa-file-upload"></i></div>
+                        <div class="loading" style="margin-left: 0%; display: none;"><i class="fa fa-spinner"></i></div>
+                        <input type="file" class="d-none file_browse">
                     </div>
-                  </div>
+                    <div class="card-body p-1 rounded mt-2" style="border: 1px solid #eaeaea">
+                        <div class="row">
+                        <div class="col-10">
+                            <span class="ml-2 text-black-50 small" id="file_source_label">Belom ada file...</span>
+                        </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div>
 
               @foreach ($sources as $source)
                 <div class="col-lg-3 col-md-4 col-6">
                   <div class="card" style="box-shadow: none;">
 
-                    @if ($source->type == 1)
-                    <video src="{{ asset($source->path) }}" style="height: 150px;" class="card-img-top rounded"></video>
+                    @if ($source->type == 1)                            
+                    <iframe height="150" class="card-img-top rounded" src="{{ asset($source->path) }}">
+                    </iframe>
                     @endif
 
                     @if ($source->type == 0)
@@ -130,56 +111,28 @@
 @endsection
 
 @section('script') 
-{{-- Vue JS --}}
-<script src="{{ asset('plugins/axios/axios.min.js') }}"></script>
-
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('js/Library.js') }}"></script>
 <script>
-  function deleteSource(id,desc) {
-    event.preventDefault();
-    let conf = confirm('Apakah anda yakin ingin menghapus file '+desc);
-    if (conf) {
-      document.querySelector('#'+id).submit();
-    }
+  let user_id = '';
+  @if (auth()->check())
+  user_id = parseInt('{{ auth()->user()->id }}');
+  @endif
+  let library = new Library();
+  library.onChoiced = (r, p) => {
+      library.close();
+      axios.post('/api/documentation/event', {
+        source_id: r.id,
+        description: r.description,
+        category_id: p.eventId,
+      })
+      .then(r => {
+        location.reload();
+      })
+      .catch(e => {
+        console.dir(e)
+      })
   }
-  $('#buttonExplore').click(function() {
-    document.querySelector('#file_source').click();
-  })
-  $('#file_source').change(function(e) {
-    
-    document.querySelector('#buttonExplore').style.backgroundImage = `url('${URL.createObjectURL(this.files[0])}')`;
-
-    let fd = new FormData();
-    let file = this.files[0];
-    fd.append('file_source', file);
-    
-    fd.append('user_id', parseInt('{{ auth()->user()->id }}'));
-    axios.post('/api/source/upload', fd, {
-      onUploadProgress: (progressEvent) => {
-        const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-        // console.log("onUploadProgress", totalLength);
-        if (totalLength !== null) {
-          let el = document.querySelector('#buttonExplore .loading');
-          document.querySelector('#file_source_label').innerHTML = file.name;
-          el.style.display = 'block';
-          el.style.transition = `1s`;
-          el.style.marginLeft = `${Math.round( (progressEvent.loaded * 100) / totalLength )}%`;
-          if (el.style.marginLeft == '100%') {
-            setTimeout(() => {
-              el.style.display = 'none';
-              el.style.marginLeft = `0%`;
-            }, 2000)
-          }
-        }
-      }
-    })
-    .then(r => {
-      console.log(r);
-      location.reload();
-    })
-    .catch(e => {
-      console.dir(e);
-    })
-  })
 </script>
 
 @endsection

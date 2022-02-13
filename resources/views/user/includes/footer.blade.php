@@ -45,16 +45,11 @@
                         <h2>Bidang:</h2>
                     </div>
                     <div class="items">
-                        <div class="item"><a href="{{ route('main.home') }}"><i class="fa fa-angle-double-right"></i>Kaderisasi</a></div>
-                        <div class="item"><a href="{{ route('main.articles') }}"><i class="fa fa-angle-double-right"></i>Pengembangan</a></div>
-                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Humas</a>
-                        </div>
-                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Jaringan</a>
-                        </div>
-                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Multimedia</a>
-                        </div>
-                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Pemrograman</a>
-                        </div>
+                        @foreach (DB::table('divisions')->get() as $div)
+                            <div class="item">
+                                <a href="{{ route('main.division', ['division' => $div->name]) }}" class="text-capitalize"><i class="fa fa-angle-double-right"></i>{{ $div->name }}</a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

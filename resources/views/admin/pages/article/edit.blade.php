@@ -2,7 +2,8 @@
 
 @section('style')
 <!-- summernote -->
-<link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+{{-- <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}"> --}}
+{{-- <link rel="stylesheet" href="//bootswatch.com/3/darkly/bootstrap.css"> --}}
 <style>
   #thumbnail {
     margin: auto;
@@ -79,12 +80,22 @@
             {{ session('failed') }}
           </div>
           @endif
+
           @error('content')
             <div class="alert alert-danger">{{ $message }}</div>
           @enderror
-          <textarea name="content" id="summernote">
+
+          {{-- Editor --}}
+
+          <div class="text-center small text-black-50 mt-5 pt-5" id="waiteditor">Please Wait...</div>
+          <textarea name="content" class="d-none" id="summernote">
             {{ $article->content }}
           </textarea>
+
+          {{-- <div id="editor"></div> --}}
+
+
+          {{-- End Editor --}}
         </div>
         <div class="col-lg-4 col-12">
           <div class="card">
@@ -103,7 +114,9 @@
   
                 <label>Thumbnail</label>
                 <div id="thumbnail" onclick="library.open('#thumbnail_form')">
-                  <img src="{{ asset(($image) ? $image->path : '') }}" id="thumbnail_image" alt="{{ ($image) ? $image->description : '' }}">
+                  @if ($image)
+                  <img src="{{ asset('/uploads/library/'.$image->path) }}" id="thumbnail_image" alt="{{ $image->description }}">
+                  @endif
                   <div class="label"><i class="fa fa-edit"></i></div>
                   <input type="hidden" @if ($image)value="{{ $article->thumbnail }}"@endif name="thumbnail" id="thumbnail_form">
                 </div>
@@ -173,9 +186,12 @@
 @section('script')
 <script src="{{ asset('plugins/axios/axios.min.js') }}"></script>
 <!-- Summernote -->
-<script src="../../plugins/summernote/summernote-bs4.min.js"></script>
+{{-- <script src="../../plugins/summernote/summernote-bs4.min.js"></script> --}}
+{{-- <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script> --}}
+
 
 @include('admin.components.library')
+
 
 <script>
   let library = new Library();
@@ -188,7 +204,36 @@
 
   $(function () {
     // Summernote
-    $('#summernote').summernote()
+    document.querySelector('#waiteditor').classList.add('d-none')
+    document.querySelector('#summernote').classList.remove('d-none')
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 120,
+        // codemirror: { "theme": "ambiance" }
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          // ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        callbacks: {
+          onPaste: function (e) {
+            alert('a')
+            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
+            e.preventDefault();
+            var div = $('<div />');
+            div.append(bufferText);
+            div.find('*').removeAttr('style');
+            setTimeout(function () {
+              document.execCommand('insertHtml', false, div.html());
+            }, 10);
+          }
+        }
+    })
 
     // CodeMirror
     CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {

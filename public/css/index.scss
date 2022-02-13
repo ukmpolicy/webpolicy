@@ -1088,6 +1088,10 @@ footer {
     .head,.content {
         width: 75%;
         margin: auto;
+
+        span {
+            color: #fff !important;
+        }
     }
     .head {
         padding: 2rem 0;
@@ -1314,7 +1318,4 @@ footer {
             
         }
     }
-}
-
-@media (max-width: 375px) {
 }

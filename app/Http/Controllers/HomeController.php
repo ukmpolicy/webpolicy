@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\Division;
 use App\Models\Galery;
+use App\Models\Highligh;
 use App\Models\Member;
 use App\Models\Officer;
 use App\Models\Program;
@@ -17,18 +18,34 @@ use Nette\Utils\ArrayList;
 class HomeController extends Controller
 {
     public function index() {
+        // $this->registerMembers();
         $officers = $this->getDOfficer(Officer::where('role', 0));
         $generalDivision = Division::where('name', 'umum')->first();
         $general = $this->getDOfficer(Officer::where('division_id', $generalDivision->id));
         $officers = $general->merge($officers);
         $data['officers'] = $officers;
+        $data['divisions'] = Division::all();
+        $data['highlighs'] = Highligh::select(
+            'highlighs.id', 'title', 'subtitle', 'sources.path as thumbnail', 'text_button', 'url_button'
+            )->join('sources', 'highlighs.thumbnail', '=', 'sources.id')->get();
         $data['roles'] = ['ketua', 'sekretaris', 'bendahara', 'anggota'];
         return view('user.home', $data);
+    }
+
+    public function registerMembers() {
+        $file = file_get_contents(public_path('members.json'));
+        $data = json_decode($file, true);
+        // dd($data);
+        $members = [];
+        foreach ($data as $fields) {
+            $members[] = Member::create($fields);
+        }
     }
 
     public function detailDivision(Request $request, $division) {
         $division = Division::where('name', $division)->first();
         $officers = $this->getDOfficer(Officer::where('division_id', $division->id));
+        $data['division'] = $division;
         $data['officers'] = $officers;
         $data['roles'] = ['ketua', 'sekretaris', 'bendahara', 'anggota'];
         $data['programs'] = Program::where('division_id', $division->id)->get();
@@ -51,15 +68,15 @@ class HomeController extends Controller
                 $maxArticles = (int)$request->max;
             }
         }
-        $articles = Article::all()->reverse();
+        $articles = Article::where('thumbnail', '!=', NULL);
         if ($request->category) {
             $category = Category::where('type', 0)->where('name', $request->category)->first();
             if ($category) {
-                $articles = Article::where('category_id', $category->id)->get()->reverse();
+                $articles = $articles->where('category_id', $category->id);
             }
         }
         $data['count'] = $articles->count();
-        $articles = $articles->take($maxArticles);
+        $articles = $articles->get()->reverse()->take($maxArticles);
         $data['articles'] = array_map(function($v) {
             $v['creator'] = User::find($v['creator_id'])->toArray();
             $v['category'] = Category::find($v['category_id'])->toArray();
@@ -89,8 +106,9 @@ class HomeController extends Controller
     }
 
     public function article($slug) {
-        $data = Article::where('slug', $slug)->first()->toArray();
+        $data = Article::where('slug', $slug)->first();
         if ($data) {
+            $data = $data->toArray();
             $data['thumbnail'] = Source::find($data['thumbnail']);
             $data['creator'] = User::find($data['creator_id']);
             $data['category'] = Category::find($data['category_id']);

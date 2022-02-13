@@ -7,7 +7,7 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{ asset('dist/img/boxed-bg.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
             <div style="text-transform: capitalize" class="text-white">{{ auth()->user()->username }}</div>
@@ -17,8 +17,7 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-            with font-awesome or any other icon font library -->
+            
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link @if (Route::current()->getName() == 'dashboard') active @endif">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -28,6 +27,7 @@
                 </a>
             </li>
 
+            @if (in_array(auth()->user()->level, [4]))
             <li class="nav-item">
                 <a href="{{ route('user') }}" class="nav-link">
                     <i class="nav-icon fas fa-user-tie"></i>
@@ -36,6 +36,8 @@
                     </p>
                 </a>
             </li>
+            @endif
+            @if (in_array(auth()->user()->level, [4, 2, 6]))
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-user-cog"></i>
@@ -59,7 +61,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if (in_array(auth()->user()->level, [4, 6]))
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
@@ -89,14 +93,18 @@
                     </li>
                 </ul>
             </li>
+            @endif
+
+            @if (in_array(auth()->user()->level, [0,1,2,3,4,5]))
             <li class="nav-item">
                 <a href="{{ route('article') }}" class="nav-link">
-                    <i class="nav-icon fas fa-file-alt"></i>
-                    <p>
-                        Artikel
-                    </p>
+                    <i class="fa fa-file-alt nav-icon"></i>
+                    <p>Artikel</p>
                 </a>
             </li>
+            @endif
+
+            @if (in_array(auth()->user()->level, [4, 0]))
             <li class="nav-item">
                 <a href="{{ route('documentation') }}" class="nav-link">
                     <i class="nav-icon fas fa-camera"></i>
@@ -105,21 +113,16 @@
                     </p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('library') }}" class="nav-link">
-                    <i class="nav-icon fas fa-image"></i>
-                    <p>
-                        Pustaka
-                    </p>
-                </a>
-            </li>
+            @endif
 
+            @if (in_array(auth()->user()->level, [4, 0]))
             <li class="nav-item">
                 <a href="{{ route('mail') }}" class="nav-link">
                     <i class="nav-icon fas fa-envelope"></i>
                     <p>Masukan</p>
                 </a>
             </li>
+            @endif
 
             <li class="nav-header">LAINNYA</li>
 

@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Highligh;
+use App\Models\Member;
 use App\Models\Source;
 use App\Models\User;
+use App\Notifications\NewArticle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
     public function index(Request $request) {
         $data['categories'] = Category::where('type', 0)->get();
-        $data['articles'] =  $this->getArticles($request);
+        $data['highlighs'] = Highligh::all();
+        $data['articles'] =  $this->getArticles($request)->get();
         $data['page'] = 1;
-        $data['perPage'] = 1;
+        $data['perPage'] = 5;
+        $data['maxPage'] = 3;
         return view('admin.pages.article.index', $data);
     }
 
@@ -35,7 +41,8 @@ class ArticleController extends Controller
             $articles = $articles->where('title', 'like', '%'. $request->search . '%');
         }
 
-        return $articles->get();
+        // dd($articles->get()->toArray());
+        return $articles;
     }
 
     public function store(Request $request) {
@@ -50,6 +57,8 @@ class ArticleController extends Controller
         $article->creator_id = Auth::user()->id;
         $article->category_id = $request->category_id;
         $article->save();
+
+        Notification::sendNow(Member::all(), new NewArticle($article));
 
         return redirect()->route('article.edit', ['id' => $article->id])->with('success', 'Artikel berhasil dibuat');
     }
@@ -85,6 +94,7 @@ class ArticleController extends Controller
         $article = Article::find($id);
         if ($article) {
             $article->title = strtolower($request->title);
+            $article->slug = Str::slug($request->title);
             $article->thumbnail = $request->thumbnail;
             $article->content = $this->getContent($request->content);
             $article->category_id = $request->category_id;
@@ -96,7 +106,10 @@ class ArticleController extends Controller
 
     public function getContent($description) {
         $dom = new \DomDocument();
+
+        // dd($description);
  
+        libxml_use_internal_errors(true);
         $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
   
         $images = $dom->getElementsByTagName('img');
@@ -105,30 +118,35 @@ class ArticleController extends Controller
  
  
             $data = $img->getAttribute('src');
-  
-            list($type, $data) = explode(';', $data);
-  
-            list(, $data)      = explode(',', $data);
-  
-            $data = base64_decode($data);
-  
-            $filename = time().rand(0,99999).'.png';
-            $dir= "/uploads/library/";
-  
-            $path = public_path() . $dir . $filename;
-  
-            file_put_contents($path, $data);
             
-            $source = new Source();
-            $source->path = $filename;
-            $source->description = $filename;
-            $source->author_id = Auth::user()->id;
-            $source->type = 0;
-            $source->save();
-  
-            $img->removeAttribute('src');
-  
-            $img->setAttribute('src', $dir.$filename);
+            $ex = explode('/', $data);
+            if (!Source::where('path', end($ex))->first()) {
+
+                list($type, $data) = explode(';', $data);
+    
+      
+                list(, $data)      = explode(',', $data);
+      
+                $data = base64_decode($data);
+      
+                $filename = time().rand(0,99999).'.png';
+                $dir= "/uploads/library/";
+      
+                $path = public_path() . $dir . $filename;
+      
+                file_put_contents($path, $data);
+                
+                $source = new Source();
+                $source->path = $filename;
+                $source->description = $filename;
+                $source->author_id = Auth::user()->id;
+                $source->type = 0;
+                $source->save();
+      
+                $img->removeAttribute('src');
+      
+                $img->setAttribute('src', $dir.$filename);
+            }
   
          }
   
@@ -141,7 +159,7 @@ class ArticleController extends Controller
             "name" => "required",
         ]);
         $category = new Category();
-        $category->name = $request->name;
+        $category->name = strtolower($request->name);
         $category->type = 0;
         $category->save();
 

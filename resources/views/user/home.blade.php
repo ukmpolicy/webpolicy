@@ -6,29 +6,20 @@
     <div id="header">
         <div class="owl-carousel">
 
+            @foreach ($highlighs as $highligh)
+                
             <div class="item">
                 <div class="image">
-                    <img src="{{ asset('images/gallery/or.jpeg') }}" alt="">
+                    <img src="{{ asset('uploads/library/'.$highligh->thumbnail) }}" alt="{{ $highligh->title }}">
                 </div>
                 <div class="body">
-                    <h2 class="title">Open Recruitment</h2>
-                    <p class="subtitle">Saatnya Telah Tiba Untuk Bergabung Dalam UKM-POLICY Maka Mari Temukan Pengalaman Baru Bersama Kami</p>
-                    <p class="subtitle"></p>
-                    <a href="{{ route('open-recruitment') }}" class="btn btn-ctf">DAFTARKAN</a>
+                    <h2 class="title text-capitalize">{{ $highligh->title }}</h2>
+                    <p class="subtitle text-capitalize">{{ $highligh->subtitle }}</p>
+                    <a href="{{ $highligh->url_button }}" class="btn btn-ctf text-uppercase">{{ $highligh->text_button }}</a>
                 </div>
             </div>
-            
-            <div class="item">
-                <div class="image">
-                    <img src="{{ asset('images/gallery/or.jpeg') }}" alt="">
-                </div>
-                <div class="body">
-                    <h2 class="title">Open Recruitment</h2>
-                    <p class="subtitle">Saatnya Telah Tiba Untuk Bergabung Dalam UKM-POLICY Maka Mari Temukan Pengalaman Baru Bersama Kami</p>
-                    <p class="subtitle"></p>
-                    <a href="{{ route('open-recruitment') }}" class="btn btn-ctf">DAFTARKAN</a>
-                </div>
-            </div>
+
+            @endforeach
 
         </div>
         <div id="nav-carousel">
@@ -132,13 +123,11 @@
             </div>
             <div class="items">
                 @foreach ($officers as $officer)
-                    @if ($officer->division == 'umum') <div class="item"> @else <a class="item" href="{{ route('main.divison', ['division' => $officer->division]) }}"> @endif
+                    @if ($officer->division == 'umum') <div class="item"> @else <a class="item" href="{{ route('main.division', ['division' => $officer->division]) }}"> @endif
                         <div class="image">
-                            {{-- {{ dd($officer)}} --}}
                             @if (!is_null($officer->profile_image))
-                            <img src="{{ asset($officer->profile_image) }}" alt="{{ $officer->name }}">
+                            <img src="{{ asset('uploads/library/'.$officer->profile_image) }}" alt="{{ $officer->name }}">
                             @endif
-                            {{-- {{ dd(is_null($officer['member']['profile_picture'])) }} --}}
                         </div>
                         <div class="body">
                             <div class="name text-capitalize mt-3">{{ $officer->name }}</div>

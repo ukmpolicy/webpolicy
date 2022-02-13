@@ -56,12 +56,12 @@
                         <div class="card" style="box-shadow: none;border:none;">
 
                             @if ($source->type == 1)                            
-                            <iframe height="150" class="card-img-top rounded" src="{{ asset($source->path) }}">
+                            <iframe height="150" class="card-img-top rounded" src="{{ $source->path }}">
                             </iframe>
                             @endif
 
                             @if ($source->type == 0)
-                            <img src="{{ asset($source->path) }}" style="height: 150px;object-fit: cover;" class="card-img-top rounded" alt="{{ $source->description }}">
+                            <img src="{{ asset('uploads/library/'.$source->path) }}" style="height: 150px;object-fit: cover;" class="card-img-top rounded" alt="{{ $source->description }}">
                             @endif
 
                             <div class="card-body p-1 rounded mt-2" style="border: 1px solid #eaeaea">

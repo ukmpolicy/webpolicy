@@ -36,6 +36,7 @@ class SourceController extends Controller
         }
         // dd($val->errors());
         if (($file = $request->file('file_source'))) {
+            
             $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
             $dir = 'uploads/library/';
             $file->move($dir, $filename);
@@ -45,7 +46,7 @@ class SourceController extends Controller
             $mime = explode('/',$file->getClientMimeType());
 
             $source = new Source();
-            $source->path = $dir.$filename;
+            $source->path = $filename;
             $source->description = $file->getClientOriginalName();
             if ($request->user_id) {
                 $source->author_id = $request->user_id;
@@ -73,7 +74,7 @@ class SourceController extends Controller
         $source->path = $request->url;
         $source->description = $request->description;
         $source->author_id = $request->user_id;
-        if ($request->user_id) {
+        if (!$request->user_id) {
             $source->author_id = Auth::user()->id;
         }
         $source->type = 1;
@@ -100,8 +101,8 @@ class SourceController extends Controller
     public function destroy($id) {
         $source = Source::find($id);
         if ($source) {
-            if (file_exists($source->path)) {
-                unlink($source->path);
+            if (file_exists('/uploads/library/'.$source->path)) {
+                unlink('/uploads/library/'.$source->path);
             }
             $temp = $source;
             $source->delete();

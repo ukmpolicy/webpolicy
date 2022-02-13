@@ -73,7 +73,7 @@ class OfficerController extends Controller
 
     public function getOfficers(Request $request) {
         $officers = Officer::select(
-            'members.id', 'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at')
+            'officers.id', 'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at')
         ->join('members','officers.member_id','=','members.id')
         ->join('divisions','officers.division_id','=','divisions.id');
 

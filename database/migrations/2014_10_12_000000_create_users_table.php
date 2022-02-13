@@ -17,7 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('username');
             $table->string('password');
-            $table->integer('level')->default(0); // 0: Editor | 1: Admin
+            $table->integer('level')->default(0); 
+            // 0: humas | 1: pengembangan | 2: kaderisasi | 3: jaringan | 4: pemrograman | 5: multimedia | 6: umum
             $table->timestamps();
         });
     }

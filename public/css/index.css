@@ -1267,6 +1267,10 @@ footer .credits .container .socmeds .item:hover {
   margin: auto;
 }
 
+#article .head span, #open-recruitment .head span, #article .content span, #open-recruitment .content span {
+  color: #fff !important;
+}
+
 #article .head, #open-recruitment .head {
   padding: 2rem 0;
 }

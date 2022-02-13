@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\HighlighController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\MemberController;
@@ -25,7 +26,7 @@ Route::get('/introduction', function() {
 Route::get('/article', [HomeController::class, 'articles'])->name('main.articles');
 Route::get('/article/{slug}', [HomeController::class, 'article'])->name('main.article');
 Route::get('/documentation', [HomeController::class, 'documentation'])->name('main.documentations');
-Route::get('/division/{division}', [HomeController::class, 'detailDivision'])->name('main.divison');
+Route::get('/division/{division}', [HomeController::class, 'detailDivision'])->name('main.division');
 
 Route::prefix('open-recruitment')->group(function() {
     Route::get('/', [ORController::class, 'index'])->name('open-recruitment');
@@ -92,6 +93,12 @@ Route::prefix('manager')->group(function() {
         Route::delete('/{id}', [SourceController::class, 'destroy'])
         ->name('library.delete');
     });
+    
+    Route::resource('highligh', HighlighController::class)->middleware('auth')
+    ->name('index', 'highligh')
+    ->name('store', 'highligh.store')
+    ->name('destroy', 'highligh.destroy')
+    ->name('update', 'highligh.update');
     
     Route::prefix('documentation')->middleware('auth')->group(function() {
         Route::get('/', [DocumentationController::class, 'index'])
@@ -167,7 +174,7 @@ Route::prefix('manager')->group(function() {
         ->name('logout');
     });
     
-    Route::prefix('office')->group(function() {
+    Route::prefix('officer')->group(function() {
        Route::get('/', [OfficerController::class, 'index'])
        ->name('office');
        Route::get('/create', [OfficerController::class, 'create'])

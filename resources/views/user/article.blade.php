@@ -9,7 +9,7 @@
 @section('content')
 <div id="article">
     <div class="image">
-        <img src="{{ asset($thumbnail->path) }}" alt="{{ $thumbnail->description }}">
+        <img src="{{ asset('uploads/library/'.$thumbnail->path) }}" alt="{{ $thumbnail->description }}">
     </div>
         <div class="container">
             <div class="head">
