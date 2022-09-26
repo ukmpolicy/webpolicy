@@ -12,6 +12,7 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "*",
         "pbmedia/laravel-ffmpeg": "^7.5"
     },
     "require-dev": {
@@ -27,7 +28,12 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+
+            "bootstrap/helpers.php"
+    
+        ]
     },
     "autoload-dev": {
         "psr-4": {

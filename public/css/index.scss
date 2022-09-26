@@ -1,6 +1,10 @@
 @import 'fonts.scss';
 
 $headHeight: 97vh;
+a {
+    text-decoration: none !important;
+}
+
 #flash-load {
     background-color: #fff;
     position: fixed;
@@ -1317,5 +1321,22 @@ footer {
             }
             
         }
+    }
+}
+
+
+.auth {
+    
+    .inp {
+        width: 100%;
+        padding: 4px 12px;
+        border-radius: 4px;
+        background-color: #202020;
+        border: 1px solid #303030;
+        outline: none;
+        margin: .5rem 0;
+        resize: vertical;
+        box-sizing: border-box;
+        color: #ddd;
     }
 }

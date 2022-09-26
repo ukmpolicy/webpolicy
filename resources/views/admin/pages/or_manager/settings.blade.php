@@ -30,7 +30,7 @@
     <div class="row">
       <div class="col-6">
 
-        <form action="{{ route('member.or.settings.save') }}" method="post">
+        <form action="{{ route('open-recruitment.admin.setting.save') }}" method="post">
           @csrf
           <h5># Pendaftaran</h5>
           <div class="form-group">
@@ -44,10 +44,12 @@
           <div class="form-group">
             <label for="or_setting_start">Jadwal Buka:</label>
             <input id="or_setting_start" name="or_setting_start" type="datetime-local" value="{{ date('Y-m-d\TH:i:s', strtotime($or_setting_start)) }}" class="form-control">
+            @error('or_setting_start') <div class="small text-danger">{{ $message }}</div> @endif
           </div>
           <div class="form-group">
             <label for="or_setting_end">Jadwal Tutup:</label>
             <input id="or_setting_end" name="or_setting_end" type="datetime-local" value="{{ date('Y-m-d\TH:i:s', strtotime($or_setting_end)) }}" class="form-control">
+            @error('or_setting_end') <div class="small text-danger">{{ $message }}</div> @endif
           </div>
           <button class="btn btn-primary">Simpan Perubahan</button>
         </form>

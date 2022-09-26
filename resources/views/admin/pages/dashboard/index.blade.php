@@ -2,6 +2,34 @@
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('plugins/chart.js/Chart.min.css') }}">
+<style>
+  .moon-grid {
+    display: grid;
+    grid-template-columns: 16px 16px 16px 16px;
+    gap: 6px;
+  }
+  .day-box {
+    width: 16px;
+    height: 16px;
+    font-size: 8px;
+    background-color: #ccc;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .day-box:hover {
+    background-color: #aaa;
+  }
+  .day-box.active {
+    color: #fff;
+    background-color: royalblue;
+  }
+  .day-box.active:hover {
+    background-color: rgb(69, 102, 202);
+  }
+</style>
 @endsection
 
 @section('content')
@@ -27,10 +55,11 @@
 <section class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-6">
+
+      <div class="col-lg-10">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Pendaftar</h3>
+            <h3 class="card-title">Kalender Ulang Tahun</h3>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -41,13 +70,27 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="chart">
-              <canvas id="registrant" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            <div class="row">
+              @for ($i = 0; $i < 12; $i++)
+                <div class="col-1">
+                  <h6 class="text-capitalize">{{  $moons[$i]  }}</h6>
+                  <div class="moon-grid">
+                    @for ($i2 = 0; $i2 < 32; $i2++)
+                      @if (count($mbd[$i][$i2]) > 0 )
+                      <div class="day-box active"  data-toggle="tooltip" data-placement="top" title="">{{  $i2+1  }}</div>
+                      @else
+                      <div class="day-box">{{  $i2+1  }}</div>
+                      @endif
+                    @endfor
+                  </div>
+                </div>
+              @endfor
             </div>
           </div>
             <!-- /.card-body -->
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -57,30 +100,13 @@
   
 @section('script')
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('plugins/axios/axios.min.js') }}"></script>
 
 <script>
-  let ctx = document.querySelector('#registrant').getContext('2d');
-  var registrant = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [4,5,6,7,8,9,10,11,12,13,14],
-        datasets: [{
-            label: 'Net sales',
-            data: [4,5,6,7,8,9,10,11,12,13,14],
-            parsing: {
-                yAxisKey: 'net'
-            }
-        }
-      ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    },
-  });
+axios.get('/api/members-born-date')
+  .then((res) => {
+    console.log(res);
+  })
 </script>
 {{-- <script src="{{ asset('dist/js/demo.js') }}"></script> --}}
 @endsection

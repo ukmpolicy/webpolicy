@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DocumentationController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\SourceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DocumentationController;
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\SourceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +31,4 @@ Route::post('/documentation/event', [DocumentationController::class, 'storeDocum
 Route::get('/auth/me', [AuthController::class, 'me']);
 
 
-Route::get('/test', function() {
-    return response()->json([
-        "message" => 'Hello WOrld'
-    ]);
-});
+Route::get('/members-born-date', [DashboardController::class, 'getMembersBornDate']);

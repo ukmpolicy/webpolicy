@@ -3,55 +3,38 @@
 }
 
 .wrapper {
-  padding: 0 7rem;
-  font-family: 'Times New Roman';
+  padding: 0 3rem;
+  font-family: "Times New Roman";
   margin: auto;
 }
-
 .wrapper header {
   border-bottom: 3px double #000;
   margin-bottom: 2rem;
   padding: 0 1rem;
-  padding-top: .8rem;
-  display: -ms-grid;
+  padding-top: 0.8rem;
   display: grid;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-grid-columns: auto 2fr auto;
-      grid-template-columns: auto 2fr auto;
+  align-items: center;
+  grid-template-columns: auto 2fr auto;
 }
-
 .wrapper header .logo {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
-
 .wrapper header .logo img {
   height: 5rem;
 }
-
 .wrapper header .text {
   text-align: center;
 }
-
 .wrapper header .text div {
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
 }
-
 .wrapper header .text p {
   font-size: 11px;
 }
-
 .wrapper main img.photo {
   -o-object-fit: cover;
      object-fit: cover;
@@ -60,30 +43,22 @@
   width: 4cm;
   height: 5cm;
 }
-
 .wrapper main .table {
   font-size: 14px;
 }
-
 .wrapper main .table td {
   padding: 6px;
 }
-
 .wrapper main .ttd-right {
   margin: auto;
   margin-right: 0;
 }
-
 .wrapper main .ttd {
   width: 250px;
   margin-top: 3rem;
   margin-bottom: 2rem;
 }
-
 .wrapper main .d-ttd {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
-}
-/*# sourceMappingURL=proof.css.map */
+  grid-template-columns: 1fr 1fr;
+}/*# sourceMappingURL=proof.css.map */

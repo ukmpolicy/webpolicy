@@ -40,39 +40,25 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="d-lg-flex" style="justify-content: space-between">
-              <div class="d-flex">
-                <form action="" method="get" id="sb">
-                  <select class="custom-select mb-2" name="sb" onchange="document.querySelector('#sb').submit()" style="width: fit-content">
-                    <option value="" @if (Request::get('sb')) selected @endif>Semua</option>
-                    <option value="d" @if (Request::get('sb') == 'd') selected @endif>Selesai</option>
-                    <option value="ny" @if (Request::get('sb') == 'ny') selected @endif>Belum</option>
-                  </select>
-                </form>
-                <div>
-                  <a href="{{ route('member.or.download', $_GET) }}" class="btn ml-2 btn-success"><i class="fa fa-print fa-fw mr-2"></i>CETAK</a>
-                </div>
-                <form action="{{ route('member.or.reset') }}" method="post">
-                  @csrf
-                  <button class="btn btn-secondary ml-2" onclick="return confirm('Apakah anda yakin ingin melakukan reset?')"><i class="fa fa-recycle fa-fw mr-2"></i>RESET</button>
-                </form>
-              </div>
+              <a href="{{ route('open-recruitment.admin.download') }}" class="btn btn-success"><i class="fa fa-download mr-2"></i> Unduh</a>
               <form class="d-flex" method="GET" action="">
-                <input type="hidden" name="sb" value="{{ Request::get('sb') }}">
+                {{-- <input type="hidden" name="sb" value="{{ Request::get('sb') }}"> --}}
                 <input type="text" value="{{ Request::get('search') }}" name="search" class="form-control" style="width: 300px" placeholder="Cari">
                 <div>
                   <button class="btn ml-2 btn-primary"><i class="fa fa-search"></i></button>
                 </div>
               </form>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered mt-2">
               <thead>
                 <tr>
                   <th style="width: 10px">#</th>
+                  <th>Foto</th>
                   <th>Nim</th>
                   <th>Nama</th>
-                  <th>Jurusan</th>
-                  <th>No.HP</th>
-                  <th>Menyerahkan Berkas</th>
+                  <th>Jurusan / Prodi</th>
+                  <th>No Whatsapp</th>
+                  <th>Tanggal Lahir</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,20 +66,16 @@
                   
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>{{ $member->nim }}</td>
-                  <td style="text-transform: capitalize">{{ $member->name }}</td>
-                  <td style="text-transform: capitalize">{{ $member->major }}</td>
-                  <td>{{ $member->phone_number }}</td>
                   <td>
-                    <form action="{{ route('member.or.done', ['id' => $member->id]) }}" class="d-inline-block w-100" method="POST">
-                      @csrf
-                      @if ($member->store_document)
-                        <button class="btn btn-secondary w-100 btn-sm">CANCEL</button>
-                      @else
-                        <button class="btn btn-dark w-100 btn-sm">DONE</button>
-                      @endif
-                    </form>
+                    <a href="{{ asset('uploads/'.$member->pas_foto ) }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-success w-100">
+                      <i class="fa fa-image"></i>
+                    </a>
                   </td>
+                  <td>{{ $member->nim }}</td>
+                  <td style="text-transform: capitalize">{{ $member->nama }}</td>
+                  <td style="text-transform: capitalize">{{ $member->jurusan . ' / ' . $member->prodi }}</td>
+                  <td>{{ $member->no_wa }}</td>
+                  <td>{{ date('d M Y', strtotime($member->tgl_lahir)) }}</td>
                 </tr>
 
                 @endforeach
@@ -108,7 +90,7 @@
             @if ($members->count() > $perPage)
               <form action="" method="get">
 
-                <input type="hidden" name="status" value="{{ Request::get('status') }}">
+                {{-- <input type="hidden" name="status" value="{{ Request::get('status') }}"> --}}
                 <input type="hidden" name="search" value="{{ Request::get('search') }}">
                 @include('admin.components.pagination')
               </form>

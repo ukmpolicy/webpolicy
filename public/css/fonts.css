@@ -2,19 +2,15 @@
   font-family: Montserrat;
   src: url("../fonts/Montserrat/Montserrat-Regular.ttf");
 }
-
 @font-face {
   font-family: Montserrat-Bold;
   src: url("../fonts/Montserrat/Montserrat-Bold.ttf");
 }
-
 @font-face {
   font-family: Quicksand;
   src: url("../fonts/Quicksand/Quicksand-Regular.ttf");
 }
-
 @font-face {
   font-family: Quicksand-Bold;
   src: url("../fonts/Quicksand/Quicksand-Bold.ttf");
-}
-/*# sourceMappingURL=fonts.css.map */
+}/*# sourceMappingURL=fonts.css.map */

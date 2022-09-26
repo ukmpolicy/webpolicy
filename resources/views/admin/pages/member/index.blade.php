@@ -41,19 +41,6 @@
             
             <div class="d-lg-flex" style="justify-content: space-between">
               <div class="d-flex">
-                <form action="" method="get" id="status">
-                  <input type="hidden" name="search" value="{{ Request::get('search') }}">
-                  <input type="hidden" name="page" value="{{ Request::get('page') }}">
-                  <select class="custom-select mb-2" name="status" onchange="document.querySelector('#status').submit()" style="width: fit-content">
-
-                    <option value="" @if (Request::get('status')) selected @endif>Semua</option>
-
-                    @foreach ($status as $k => $v)
-                    <option value="{{ strtolower($v) }}" @if (Request::get('status') === strtolower($v)) selected @endif>{{ $v }}</option>
-                    @endforeach
-
-                  </select>
-                </form>
                 <div>
                   <button class="btn btn-success ml-2" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus fa-fw"></i>Tambah</button>
                 </div>

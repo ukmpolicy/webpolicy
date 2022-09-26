@@ -38,7 +38,7 @@
     border-bottom: 2px dashed rgba($color: #000000, $alpha: 0.3);
 }
 .wrapper {
-    padding: 0 7rem;
+    padding: 0 3rem;
     font-family: 'Times New Roman';
     margin: auto;
     header {
@@ -69,6 +69,7 @@
             }
         }
     }
+
     main {
         img.photo {
             object-fit: cover;

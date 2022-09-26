@@ -2,7 +2,7 @@
     $sources = [];
     if (auth()->check()) {
         // dd('a');
-        $sources = DB::table('sources')->where('author_id', auth()->user()->id)->get()->reverse();
+        $sources = DB::table('sources')->get()->reverse();
     }
     // dd($sources);
 @endphp
