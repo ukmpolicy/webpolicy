@@ -153,8 +153,10 @@ class OpenRecruitmentController extends Controller
 
         if ($file) {
             
-            if (file_exists(public_path($dir.$filename))) {
-                unlink(public_path($dir.$filename));
+            if (strlen(trim($filename)) > 0) {
+                if (file_exists(public_path($dir.$filename))) {
+                    unlink(public_path($dir.$filename));
+                }
             }
 
             $filename = time() . rand(0,99999).'.'.$file->getClientOriginalExtension();
