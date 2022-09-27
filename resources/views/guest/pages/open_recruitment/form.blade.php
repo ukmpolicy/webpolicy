@@ -267,7 +267,7 @@
                                         </div>
                                     </div>
                                     
-                                    {{-- Bukti Pembayaran --}}
+                                    {{-- Bukti Follow --}}
                                     <div class="col-lg-6">
                                         <div class="choice-file" id="bukti_follow" onclick="choiceFile('bukti_follow')">
                                             

@@ -148,38 +148,6 @@
   </div>
 
 </section>
-{{-- 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#menuTambah">
-  Launch demo modal
-</button>
- --}}
-
-<div class="modal fade" id="addArticle" tabindex="-1" aria-labelledby="addArticleLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">Tambah Artikel</div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{{ route('article') }}" method="post">
-          @csrf
-          <div class="form-group">
-            <input type="text" name="title" placeholder="Judul artikel..." class="form-control">
-            @error('title')
-              <div class="text-small text-danger"></div>
-            @enderror
-          </div>
-          <div class="form-group">
-            <button class="btn btn-block btn-primary">TAMBAHKAN</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
 @endsection
 
