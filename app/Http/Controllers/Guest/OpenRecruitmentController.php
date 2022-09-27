@@ -182,7 +182,7 @@ class OpenRecruitmentController extends Controller
         $user_id = auth()->user()->id;
         $uf = UserForm::where('form_id', $form->id)->where('user_id', $user_id)->first();
         $dt = json_decode($uf->data);
-        $data['data'] = [...$this->data];
+        $data['data'] = $this->data;
         if ($dt) {
             foreach ($dt as $k => $v) $data['data'][$k] = $v;
         }
