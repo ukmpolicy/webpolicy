@@ -59,6 +59,7 @@
             <tr>
               <td>#</td>
               <td>Nama</td>
+              <td>Akses</td>
               <td>Ubah</td>
               <td>Hapus</td>
             </tr>

@@ -69,7 +69,7 @@
                 @foreach ($members->forPage($page, $perPage) as $member)
                   
                 <tr>
-                  <td>{{ ($page * $perPage) + $loop->iteration }}</td>
+                  <td>{{ (($page - 1) * $perPage) + $loop->iteration }}</td>
                   <td>{{ $member->nim }}</td>
                   <td>{{ $member->name }}</td>
                   <td>{{ $status[$member->status] }}</td>
