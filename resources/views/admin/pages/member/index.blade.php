@@ -42,7 +42,7 @@
             <div class="d-lg-flex" style="justify-content: space-between">
               <div class="d-flex">
                 <div>
-                  <button class="btn btn-success ml-2" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus fa-fw"></i>Tambah</button>
+                  <button class="btn btn-success" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus fa-fw"></i>Tambah</button>
                 </div>
               </div>
               <form class="d-flex" method="GET" action="">
@@ -54,7 +54,7 @@
               </form>
             </div>
 
-            <table class="table table-bordered">
+            <table class="table table-bordered mt-2">
               <thead>
                 <tr>
                   <th style="width: 10px">#</th>
@@ -69,7 +69,7 @@
                 @foreach ($members->forPage($page, $perPage) as $member)
                   
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ ($page * $perPage) + $loop->iteration }}</td>
                   <td>{{ $member->nim }}</td>
                   <td>{{ $member->name }}</td>
                   <td>{{ $status[$member->status] }}</td>
