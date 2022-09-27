@@ -32,10 +32,10 @@ header("Content-Disposition: attachment; filename=Data MemberOR.xls");
                 <td>{{ $member->alamat }}</td>
                 <td>{{ $member->tgl_lahir }}</td>
                 <td>{{ $member->tmp_lahir }}</td>
-                <td><a href="{{ asset('uploads/or/'.$member->pas_foto) }}">download</a></td>
-                <td><a href="{{ asset('uploads/or/'.$member->bkpkkmb) }}">download</a></td>
-                <td><a href="{{ asset('uploads/or/'.$member->bukti_follow) }}">download</a></td>
-                <td><a href="{{ asset('uploads/or/'.$member->kuisioner) }}">download</a></td>
+                <td><a href="{{ asset('uploads/'.$member->pas_foto) }}">download</a></td>
+                <td><a href="{{ asset('uploads/'.$member->bkpkkmb) }}">download</a></td>
+                <td><a href="{{ asset('uploads/'.$member->bukti_follow) }}">download</a></td>
+                <td><a href="{{ asset('uploads/'.$member->kuisioner) }}">download</a></td>
             </tr>
         @endforeach
     </tbody>
