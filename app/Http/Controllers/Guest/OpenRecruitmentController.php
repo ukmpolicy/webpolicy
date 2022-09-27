@@ -107,7 +107,7 @@ class OpenRecruitmentController extends Controller
 
         $uf = UserForm::where('form_id', $form->id)->where('user_id', $user_id)->first();
         
-        $data = [...$this->data];
+        $data = $this->data;
         if (!$uf) {
             $uf = UserForm::create([
                 "form_id" => $form->id,
