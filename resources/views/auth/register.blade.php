@@ -17,7 +17,7 @@
 <body class="auth bg-dark">
     <div class="container m-auto">
         <div class="row">
-            <div class="col-4 m-auto py-3">
+            <div class="col-lg-4 m-auto py-3">
                 <div class="m-auto">
                     <div style="margin: 0 auto; width: 100px; height: 100px;background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;border: 2px solid #151515">
                         <img src="{{ asset('images/policy.png') }}" alt="logo policy" height="64px">
