@@ -229,6 +229,15 @@ class OpenRecruitmentController extends Controller
 
         return $attendees;
     }
+
+    public function destroy($id) {
+        $attendee = UserForm::find($id);
+        if ($attendee) {
+            $attendee->delete();
+            return redirect()->route('open-recruitment.admin.index');
+        }
+        return redirect()->route('open-recruitment.admin.index');
+    }
     
     public static function initSettings() {
         $data = [

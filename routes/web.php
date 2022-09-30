@@ -81,6 +81,7 @@ Route::middleware('sm')->group(function() {
             Route::get('/download', [OpenRecruitmentController::class, 'download'])->name('open-recruitment.admin.download');
             Route::get('/setting', [OpenRecruitmentController::class, 'viewSettings'])->name('open-recruitment.admin.setting');
             Route::post('/setting/save', [OpenRecruitmentController::class, 'saveSettings'])->name('open-recruitment.admin.setting.save');
+            Route::delete('/{id}', [OpenRecruitmentController::class, 'destroy'])->name('open-recruitment.admin.destroy');
         });
         
         Route::prefix('library')->middleware('auth')->group(function() {

@@ -59,6 +59,7 @@
                   <th>Jurusan / Prodi</th>
                   <th>No Whatsapp</th>
                   <th>Tanggal Lahir</th>
+                  <th>Hapus</th>
                 </tr>
               </thead>
               <tbody>
@@ -76,21 +77,26 @@
                   <td style="text-transform: capitalize">{{ $member->jurusan . ' / ' . $member->prodi }}</td>
                   <td>{{ $member->no_wa }}</td>
                   <td>{{ date('d M Y', strtotime($member->tgl_lahir)) }}</td>
+                  <td>
+                    <form action="{{ route('open-recruitment.admin.destroy', ['id' => $member->id]) }}" method="post">
+                      @csrf
+                      @method('delete')
+                      <button onclick="confirm('Apakah anda yakin ingin menghapus baris ini?')" class="btn btn-danger btn-sm w-100"><i class="fa fa-trash"></i></button>
+                    </form>
+                  </td>
                 </tr>
 
                 @endforeach
 
                 @if ($members->forPage($page, $perPage)->isEmpty())
                 <tr>
-                  <td colspan="6" class="text-center small text-black-50">Data Kosong</td>
+                  <td colspan="8" class="text-center small text-black-50">Data Kosong</td>
                 </tr>
                 @endif
               </tbody>
             </table>
             @if ($members->count() > $perPage)
               <form action="" method="get">
-
-                {{-- <input type="hidden" name="status" value="{{ Request::get('status') }}"> --}}
                 <input type="hidden" name="search" value="{{ Request::get('search') }}">
                 @include('admin.components.pagination')
               </form>
