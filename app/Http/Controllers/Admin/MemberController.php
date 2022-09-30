@@ -19,10 +19,11 @@ class MemberController extends Controller
 
     private $majors = [
         "Teknik Sipil" => [
-            "Teknologi Rekayasa Konstruksi Jalan dan Jembatan",
-            "Teknologi Konstruksi Bangunan Gedung",
-            "Teknologi Konstruksi Bangunan Air",
-            "Teknologi Konstruksi Jalan dan Jembatan",
+            "Teknologi Kontruksi Bangunan Air",
+            "Teknologi Rekayasa Kontruksi Bangunan Gedung",
+            "Teknologi Kontruksi Jalan dan Jembatan",
+            "Teknologi Rekayasa Kontruksi Jalan dan Jembatan",
+            "Jalur Cepat Pengukuran dan Penggambaran Tapak Bangunan Gedung",
         ],
         "Teknik Mesin" => [
             "Teknologi Rekayasa Manufaktur",
@@ -42,17 +43,19 @@ class MemberController extends Controller
             "Teknologi Rekayasa Instrumentasi dan Kontrol",
             "Teknologi Telekomunikasi",
             "Teknologi Elektronika",
+            "Teknologi Metronika",
         ],
         "Tata Niaga" => [
             "Akuntansi",
             "Administrasi Bisnis",
-            "Perbankan dan Keuangan",
+            "Akuntansi Sektor Publik",
             "Akuntasi Lembaga Keuangan Syariah",
+            "Manajemen Keuangan Sektor Publik",
         ],
-        "Teknologi Informasi Dan Komputer" => [
+        "Teknologi Informasi dan Komputer" => [
             "Teknik Informatika",
-            "Teknik Rekayasa Komputer Jaringan",
-            "Teknik Rekayasa Multi Media",
+            "Teknologi Rekayasa Komputer Jaringan",
+            "Teknologi Rekayasa Multimedia",
         ],
     ];
 
@@ -61,7 +64,6 @@ class MemberController extends Controller
         $page = 1;
         $perPage = 10;
         $maxPage = ceil($members->count()/$perPage);
-        // dd($maxPage);
 
         if (is_numeric($request->page)) {
             $page = $request->page;
@@ -111,34 +113,57 @@ class MemberController extends Controller
             "email" => "required|email",
             "major" => "required",
             "study_program" => "required",
-            "interested_in" => "required",
-            "profile_picture" => "required|exists:sources,id",
+            "graduation_at" => "required",
+            "photo" => "required",
             "born_at" => "required",
             "birth_place" => "required",
             "joined_at" => "required",
-            "status" => "required",
+            "other_detail" => "required",
         ]);
 
+        
         $member = Member::find($id);
+
+        
         if ($member) {
+            $filename = $member->photo;
+
+            // dd($request->file('photo'));
+            if ($file = $request->file('photo')) {
+                $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
+                $dir = 'uploads/';
+                $file->move($dir, $filename);
+            }
             $member->nim = $request->nim;
-            $member->profile_picture = $request->profile_picture;
+            $member->photo = $filename;
             $member->name = strtolower($request->name);
             $member->address = strtolower($request->address);
             $member->phone_number = $request->phone_number;
             $member->email = strtolower($request->email);
             $member->major = strtolower($request->major);
             $member->study_program = strtolower($request->study_program);
-            $member->interested_in = strtolower($request->interested_in);
+            $member->graduation_at = strtolower($request->graduation_at);
             $member->born_at = strtolower($request->born_at);
             $member->birth_place = $request->birth_place;
             $member->joined_at = $request->joined_at;
-            $member->status = $request->status;
+            $member->other_detail = $request->other_detail;
             $member->save();
             return redirect()->route('member.edit', ['id' => $member->id])->with('success', 'Perubahan berhasil disimpan!');
         }
 
         return redirect()->route('member')->with('failed', 'Anggota tidak ditemukan!');
+    }
+
+    public function migrate() {
+        foreach (Member::all() as $m) {
+            $f = Source::find($m->profile_picture);
+            if ($f) {
+                $filename = $f->path;
+                $member = Member::find($m->id);
+                $member->photo = $filename;
+                $member->save();
+            }
+        }
     }
 
     public function destroy($id) {

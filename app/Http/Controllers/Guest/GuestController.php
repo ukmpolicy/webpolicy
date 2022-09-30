@@ -19,10 +19,8 @@ use Illuminate\Http\Request;
 class GuestController extends Controller
 {
     public function index() {
-        // Role::initRole();
-        // OpenRecruitmentController::initSettings();
-        // return 'success';
         $officers = $this->getDOfficer(Officer::where('role', 0));
+        // dd($officers->toArray());
         $generalDivision = Division::where('name', 'umum')->first();
         $general = $this->getDOfficer(Officer::where('division_id', $generalDivision->id));
         $officers = $general->merge($officers);
@@ -57,10 +55,9 @@ class GuestController extends Controller
 
     private function getDOfficer($o) {
         return $o->select('officers.id', 
-        'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at', 'sources.path as profile_image'
+        'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at', 'members.photo'
         )->join('members', 'officers.member_id', '=', 'members.id')
         ->join('divisions', 'officers.division_id', '=', 'divisions.id')
-        ->join('sources', 'members.profile_picture', '=',  'sources.id')
         ->get();
     }
 

@@ -53,17 +53,6 @@ Route::middleware('sm')->group(function() {
         });
     });
     
-    // Route::prefix('open-recruitment')->group(function() {
-    //     Route::get('/', [ORController::class, 'index'])->name('open-recruitment');
-    //     Route::middleware('or')->group(function() {
-            // Route::post('/', [ORController::class, 'store'])->name('open-recruitment.store');
-    //         Route::get('/form', [ORController::class, 'viewForm'])->name('open-recruitment.form');
-    //         // Route::get('/success', [ORController::class, 'successPage'])->name('open-recruitment.success');
-    //         Route::get('/download-proof/{nim}', [ORController::class, 'proof'])->name('open-recruitment.proof');
-    //         Route::get('/check/{nim}', [ORController::class, 'check'])->name('open-recruitment.check');
-    //     });
-    // });
-    
     Route::prefix('manager')->middleware('pm')->group(function() {
     
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
@@ -92,24 +81,6 @@ Route::middleware('sm')->group(function() {
             Route::get('/download', [OpenRecruitmentController::class, 'download'])->name('open-recruitment.admin.download');
             Route::get('/setting', [OpenRecruitmentController::class, 'viewSettings'])->name('open-recruitment.admin.setting');
             Route::post('/setting/save', [OpenRecruitmentController::class, 'saveSettings'])->name('open-recruitment.admin.setting.save');
-    
-            // Route::get('/', [ORController::class, 'orManager'])
-            // ->name('member.or');
-    
-            // Route::get('/settings', [ORController::class, 'viewSettings'])
-            // ->name('member.or.settings');
-            
-            // Route::post('/settings/save', [ORController::class, 'saveSettings'])
-            // ->name('member.or.settings.save');
-    
-            // Route::post('/done/{id}', [ORController::class, 'orDone'])
-            // ->name('member.or.done');
-    
-            // Route::get('/download', [ORController::class, 'downloadDataOR'])
-            // ->name('member.or.download');
-            
-            // Route::post('/reset', [ORController::class, 'reset'])
-            // ->name('member.or.reset');
         });
         
         Route::prefix('library')->middleware('auth')->group(function() {

@@ -3,9 +3,9 @@
 
 @section('style')
 <style>
-  #choiceImage {
+  .choice-file {
     margin: auto;
-    height: 200px;
+    height: 240px;
     width: 200px;
     padding: .2rem;
     position: relative;
@@ -14,30 +14,36 @@
     border: 2px dashed #ddd;
     border-radius: 4px;
   }
-  #choiceImage img {
+  .choice-file img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 4px;
   }
   
-  #choiceImage .label {
+  .choice-file .label {
     left: .2rem;
     top: .2rem;
     right: .2rem;
     bottom: .2rem;
     cursor: pointer;
     display: flex;
+    flex-direction: column;
     transition: .3s;
     border-radius: 4px;
     position: absolute;
     align-items: center;
     justify-content: center;
   }
+
+  .choice-file .success .label {
+    opacity: 0;
+  }
   
-  #choiceImage:hover .label {
+  .choice-file .success:hover .label {
     background-color: rgba(0,0,0,.5);
     color: #fff;
+    opacity: 1;
   }
 </style>
 @endsection
@@ -76,7 +82,7 @@
       {{ session('failed') }}
     </div>
     @endif
-    <form action="{{ route('member.update', ['id' => $member->id]) }}" method="post">
+    <form action="{{ route('member.update', ['id' => $member->id]) }}" method="post" enctype="multipart/form-data">
       @csrf @method('put')
     <div class="row">
       
@@ -85,19 +91,55 @@
         <div class="card card-primary">
           <!-- form start -->
           <div class="card-body">
-              <div id="choiceImage" onclick="library.open('#profile_picture_form')">
-                @if ($image)
-                  <img src="{{ asset('uploads/library/'.$image->path) }}" id="profile_picture" alt="{{ $image->description }}">
-                @endif
-                <div class="label"><i class="fa fa-edit"></i></div>
-                <input type="hidden" value="{{ $member->profile_picture }}" name="profile_picture" id="profile_picture_form">
+            <div class="row">
+
+              {{-- Photo --}}
+              <div class="col-lg-6">
+                <div class="choice-file" id="photo" onclick="choiceFile('photo')">
+                  @if ($member)
+                    <img src="{{ asset('uploads/'.$member->photo) }}" id="photo" alt="{{ $member->name }}">
+                  @endif
+                  
+                  <div class="normal">
+                    <div class="label">
+                      <div class=""><i class="fa fa-edit"></i></div>
+                      <b>Tap to upload</b>
+                    </div>
+                  </div>
+                  <div class="success">
+                    <div class="label">
+                      <div class=""><i class="fa fa-edit"></i></div>
+                      <b>Tap to change</b>
+                    </div>
+                  </div>
+
+                  <input type="file" class="d-none file-selector" value="" name="photo">
+                  <input type="hidden" class="file-value" name="photo-value" value="{{ $member->photo }}">
+                </div>
+                @error('photo')
+                  <div class="text-center text-danger">{{ $message }}</div>
+                @enderror
               </div>
-              @error('profile_picture')
-                <div class="text-center text-danger">{{ $message }}</div>
-              @enderror
-              <div class="form-group mt-2">
-                <button type="submit" class="btn btn-primary btn-block btn-sm">Simpan Perubahan</button>
+
+              <div class="col-lg-6">
+
+                {{-- Status --}}
+                <div class="d-flex align-items-center mb-2">
+                  <div class="d-inline-block text-primary mr-2" style="font-size: 8px;margin-top: 2px;">
+                    <i class="fa fa-circle"></i>
+                  </div>
+                  <div>Status: <b class="text-capitalize">Anggota tidak tetap</b></div>
+                </div>
+                
+                {{-- Detail --}}
+                <textarea name="other_detail" cols="30" rows="6" placeholder="Other Detail" class="form-control">{{ $member->other_detail }}</textarea>
+
+                {{-- Save Button --}}
+                <div class="form-group mt-2">
+                  <button type="submit" class="btn btn-primary btn-block btn-sm">Simpan Semua Perubahan</button>
+                </div>
               </div>
+            </div>
             </div>
             <!-- /.card-body -->
         </div>
@@ -141,7 +183,6 @@
       <div class="col-md-6">
 
         <div class="card card-primary">
-          <!-- form start -->
             <div class="card-body">
               <div class="form-group">
                 <label for="phone_number">Nomor Handphone</label>
@@ -154,9 +195,7 @@
                 @error('email') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
 
         <div class="card">
           <!-- form start -->
@@ -173,28 +212,14 @@
                 @error('study_program') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
               <div class="form-group">
-                <label for="interested_in">Bidang Minat</label>
-                <select class="custom-select rounded-0" id="interested_in" name="interested_in">
-                  <option @if ($member->interested_in == 'pemrograman') selected @endif value="pemrograman">Pemrograman</option>
-                  <option @if ($member->interested_in == 'jaringan') selected @endif value="jaringan">Jaringan</option>
-                  <option @if ($member->interested_in == 'multimedia') selected @endif value="multimedia">Multimedia</option>
-                </select>
-                @error('interested_in') <div class="text-danger">{{ $message }}</div> @enderror
-              </div>
-              <div class="form-group">
                 <label for="joined_at">Tahun Bergabung</label>
                 <input type="number" class="form-control" value="{{ $member->joined_at }}" id="joined_at" name="joined_at">
                 @error('joined_at') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
               <div class="form-group">
-                <label for="interested_in">Status</label>
-                <select class="custom-select rounded-0" id="status" name="status">
-                  @foreach ($status as $k => $v)
-                  <option @if ($member->status == $k) selected @endif value="{{ $k }}">{{ $v }}</option>
-                  @endforeach
-
-                </select>
-                @error('status') <div class="text-danger">{{ $message }}</div> @enderror
+                <label for="graduation_at">Tahun Lulus</label>
+                <input type="number" class="form-control" value="{{ $member->graduation_at }}" id="graduation_at" name="graduation_at">
+                @error('graduation_at') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
             </div>
         </div>
@@ -209,50 +234,15 @@
 
 </section>
 
-
-<div class="modal fade" id="modalAddMember">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Tambah Anggota</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{{ route('member.store') }}" method="post">
-          @csrf
-          <div class="form-group">
-            <label for="add_nim">Nim:</label>
-            <input type="text" id="add_nim" name="nim" class="form-control">
-            @error('name') <div class="text-danger">{{ $message }}</div> @enderror
-          </div>
-          <div class="form-group">
-            <label for="add_name">Nama:</label>
-            <input type="text" id="add_name" name="name" class="form-control">
-            @error('name') <div class="text-danger">{{ $message }}</div> @enderror
-          </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> --}}
-        <button type="submit" class="btn btn-primary">Tambah</button>
-        </form>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-
 @endsection
 
 @section('script')
 
-<script src="{{ asset('plugins/axios/axios.min.js') }}"></script>
+{{-- <script src="{{ asset('plugins/axios/axios.min.js') }}"></script> --}}
 
-@include('admin.components.library')
+{{-- @include('admin.components.library') --}}
 
-<script>
+{{-- <script>
   let library = new Library();
   library.onChoiced = (r) => {
       library.close();
@@ -260,7 +250,7 @@
       console.log(image);
       document.querySelector('#profile_picture').src = `{{ asset('') }}${r.path}`;
   }
-</script>
+</script> --}}
 
 <script>
   // Deklarasi Librari Toast
@@ -310,6 +300,37 @@
     });
     $('#study_program').html(options);
   }
+  
+
+  function checkFileInputs() {
+        let inps = document.querySelectorAll('.choice-file');
+        inps.forEach(function(inp) {
+            let id = $(inp).attr('id');
+            let input = document.querySelector('#' + id + ' .file-value');
+            
+            // console.log(input.attributes.name)
+            // console.log(document.forms['form'][input.attributes.name]);
+            if (input.value.trim().length > 0) {
+                document.querySelector('#' + id + ' .normal').style.display = 'none';
+                document.querySelector('#' + id + ' .success').style.display = 'block';
+            }else {
+                document.querySelector('#' + id + ' .normal').style.display = 'block';
+                document.querySelector('#' + id + ' .success').style.display = 'none';
+            }
+        })
+    }
+
+    checkFileInputs();
+    
+    function choiceFile(id) {
+      document.querySelector('#'+ id +' .file-selector').onchange = function() {
+          let id = $(this.parentNode).attr('id');
+          document.querySelector('#' + id + ' .file-value').value = true;
+          checkFileInputs();
+      }
+      document.querySelector('#' + id + ' .file-selector').click();
+        // checkFileInputs();
+    }
 </script>
 @endsection
   

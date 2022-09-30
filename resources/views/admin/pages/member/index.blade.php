@@ -58,6 +58,7 @@
               <thead>
                 <tr>
                   <th style="width: 10px">#</th>
+                  <th>Foto</th>
                   <th>Nim</th>
                   <th>Nama</th>
                   <th>Status</th>
@@ -70,6 +71,11 @@
                   
                 <tr>
                   <td>{{ (($page - 1) * $perPage) + $loop->iteration }}</td>
+                  <td>
+                    <a href="{{ asset('uploads/library/'.$member->photo) }}" class="btn btn-sm btn-success w-100" target="_blank" rel="noopener noreferrer">
+                      <i class="fa fa-image"></i>
+                    </a>
+                  </td>
                   <td>{{ $member->nim }}</td>
                   <td>{{ $member->name }}</td>
                   <td>{{ $status[$member->status] }}</td>
