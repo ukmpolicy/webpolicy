@@ -33,6 +33,10 @@ class GuestController extends Controller
         return view('guest.pages.home.home', $data);
     }
 
+    public function profile() {
+        return view('guest.pages.introduction.introduction');
+    }
+
     public function registerMembers() {
         $file = file_get_contents(public_path('members.json'));
         $data = json_decode($file, true);

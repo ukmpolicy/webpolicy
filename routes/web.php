@@ -34,10 +34,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('sm')->group(function() {
 
     Route::get('/', [GuestController::class, 'index'])->name('main.home');
-    
-    Route::get('/introduction', function() {
-        return view('user.introduction');
-    })->name('main.introduction');
+    Route::get('/profile', [GuestController::class, 'profile'])->name('main.profile');
     
     Route::get('/article', [GuestController::class, 'articles'])->name('main.articles');
     Route::get('/article/{slug}', [GuestController::class, 'article'])->name('main.article');

@@ -1,4 +1,4 @@
-@extends('guest.layout.main')
+@extends('guest.layouts.main')
 @section('header')
 @php
     $title = strtoupper($division->name);

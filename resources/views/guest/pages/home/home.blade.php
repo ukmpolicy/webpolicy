@@ -44,7 +44,7 @@
             <h1>UNIT KEGIATAN MAHASISWA</h1>
             <h1>POLYTECHNIC LINUX COMMUNITY</h1>
             <p>Explore Linux And Open Source With Us.</p>
-            <a href="{{ route('main.introduction') }}" class="introduction">MENGENAL LEBIH JAUH</a>
+            <a href="{{ route('main.profile') }}" class="introduction">MENGENAL LEBIH JAUH</a>
         </div>
     </section>
 @endsection
