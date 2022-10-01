@@ -38,35 +38,40 @@
                     <p>Terbukti lulus PKKMB Politeknik Negeri Lhokseumawe.</p>
                 </li>
                 <li>
-                    <p>Mengikuti Instagram UKM-POLICY yaitu @@policy.kmbpnl</p>
+                    <p>Mengikuti Instagram UKM-POLICY yaitu @@ukmpolicy.kmbpnl</p>
                 </li>
                 <li>
-                    <p>Mengunduh dan mengupload video promosi UKM-POLICY 2021 dengan menyertakan tag Instagram UKM-POLICY di Instagram masing-masing.</p>
+                    <p>Mengunduh dan mengupload video promosi UKM-POLICY 2022 ke IGStory dengan menyertakan tag Instagram UKM-POLICY di Instagram masing-masing.</p>
                 </li>
             </ol>
             <h2 class="mt-3">Langkah Pendaftaran</h2>
             <ol>
                 <li>
-                    
+                    <p>Registrasi akun policy anda <a href="{{ route('register') }}">disini</a>.</p>
+                </li>
+                <li>
                     <p>Silahkan mengunduh kuisioner <a href="{{ asset('kuisioner.pdf') }}" target="_blank" rel="noopener noreferrer">disini</a>.</p>
                 </li>
                 <li>
                     <p>Cetak kuisioner tersebut dan menjawab pertanyaan dengan tulis tangan.</p>
                 </li>
                 <li>
-                    <p>Persiapkan pas foto 3x4 layar merah, bukti kelulusan pkkmb, dan sertifikat jika ada.</p>
+                    <p>Persiapkan pas foto 3x4 layar merah, bukti kelulusan pkkmb, dan bukti follow instagram UKM-POLICY.</p>
                 </li>
                 <li>
-                    <p>Mengisi formulir dan mengunggah berkas yang telah dipersiapkan <a href="{{ route('open-recruitment.form') }}">disini</a> atau bisa melalui tombol dibawah.</p>
+                    <p>Mengisi formulir dan mengunggah berkas yang telah dipersiapkan.</p>
                 </li>
                 <li>
-                    <p>Pastikan data sudah terisi semua dan benar, tekan tombol 'Kirim Dan Cetak'.</p>
+                    <p>Pastikan data sudah terisi semua dan benar, tekan tombol 'Simpan'.</p>
                 </li>
                 <li>
-                    <p>Setelah terkirim, maka akan di arahkan ke halaman untuk mencetak dan mengunduh Bukti Pendaftaran.</p>
+                    <p>Setelah tersimpan, tekan tombol 'Cetak' untuk mencetak dan mengunduh Bukti Pendaftaran.</p>
                 </li>
                 <li>
-                    <p>Menyerahkan Bukti Pendaftaram, Kuisioner dan Uang Administrasi sebanyak Rp 10.000 di Sekretariat UKM-POLICY di Lantai 3 Gedung Utama Sayap Kiri.</p>
+                    <p>Menyerahkan Bukti Pendaftaran dan Uang Administrasi sebanyak Rp 10.000 di Sekretariat UKM-POLICY di Lantai 3 Gedung Utama Sayap Kiri.</p>
+                </li>
+                <li>
+                    <p>Bukti Pendaftaran yang sudah dilegalisir dan kuisioner dibawa kembali saat wawancara.</p>
                 </li>
             </ol>
             <div class="py-2 text-center px-3 rounded" style="background-color: #151515">

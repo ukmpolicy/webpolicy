@@ -58,10 +58,10 @@
             <div class="container">
                 <div class="copy">Copyright &copy;2021 Polytechnic Linux Community.</div>
                 <div class="socmeds">
-                    <a href="instagram.com/policy.kbmpnl" class="item">
+                    <a href="instagram.com/ukmpolicy.kbmpnl" class="item">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="youtube.com/" class="item">
+                    <a href="https://www.youtube.com/channel/UCrRUKJF8F7TpbhWTUNP988Q" class="item">
                         <i class="fab fa-youtube"></i>
                     </a>
                     <a href="facebook.com/" class="item">
