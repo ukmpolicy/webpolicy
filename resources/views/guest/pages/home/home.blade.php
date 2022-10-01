@@ -125,7 +125,7 @@
                 @foreach ($officers as $officer)
                     @if ($officer->division == 'umum') <div class="item"> @else <a class="item" href="{{ route('main.division', ['division' => $officer->division]) }}"> @endif
                         <div class="image">
-                            @if (!is_null($officer->profile_image))
+                            @if (!is_null($officer->photo))
                             <img src="{{ asset('uploads/'.$officer->photo) }}" alt="{{ $officer->name }}">
                             @endif
                         </div>
