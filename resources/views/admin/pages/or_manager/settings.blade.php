@@ -48,7 +48,7 @@
               </div>
               <div class="col-6" style="text-align: right">
                 <div class="small text-black-50">
-                  Format: b/t/h, j:m am/pm
+                  Format: bulan/tanggal/tahun, jam:menit am/pm
                 </div>
               </div>
             </div>
@@ -62,7 +62,7 @@
               </div>
               <div class="col-6" style="text-align: right">
                 <div class="small text-black-50">
-                  Format: b/t/h, j:m am/pm
+                  Format: bulan/tanggal/tahun, jam:menit am/pm
                 </div>
               </div>
             </div>
