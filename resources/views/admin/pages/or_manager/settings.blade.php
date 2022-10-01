@@ -42,12 +42,28 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="or_setting_start">Jadwal Buka:</label>
+            <div class="row">
+              <div class="col-6">
+                <label for="or_setting_start">Jadwal Buka:</label>
+              </div>
+              <div class="col-6">
+                <div class="small text-black-50">
+                  Format: b/t/h, j:m am/pm
+                </div>
+              </div>
+            </div>
             <input id="or_setting_start" name="or_setting_start" type="datetime-local" value="{{ date('Y-m-d\TH:i:s', strtotime($or_setting_start)) }}" class="form-control">
             @error('or_setting_start') <div class="small text-danger">{{ $message }}</div> @endif
           </div>
           <div class="form-group">
-            <label for="or_setting_end">Jadwal Tutup:</label>
+            <div class="col-6">
+              <label for="or_setting_start">Jadwal Tutup:</label>
+            </div>
+            <div class="col-6">
+              <div class="small text-black-50">
+                Format: b/t/h, j:m am/pm
+              </div>
+            </div>
             <input id="or_setting_end" name="or_setting_end" type="datetime-local" value="{{ date('Y-m-d\TH:i:s', strtotime($or_setting_end)) }}" class="form-control">
             @error('or_setting_end') <div class="small text-danger">{{ $message }}</div> @endif
           </div>
