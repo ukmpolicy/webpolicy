@@ -6,7 +6,7 @@
     $image = asset('images/poltek.jpg');
     $url = url('introduction');
 @endphp
-@include('user.includes.custom_header')
+@include('guest.includes.custom_header')
 @endsection
 @section('content')
 <div id="introduction">
