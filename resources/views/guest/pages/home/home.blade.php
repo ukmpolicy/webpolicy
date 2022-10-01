@@ -126,7 +126,7 @@
                     @if ($officer->division == 'umum') <div class="item"> @else <a class="item" href="{{ route('main.division', ['division' => $officer->division]) }}"> @endif
                         <div class="image">
                             @if (!is_null($officer->profile_image))
-                            <img src="{{ asset('uploads/library/'.$officer->photo) }}" alt="{{ $officer->name }}">
+                            <img src="{{ asset('uploads/'.$officer->photo) }}" alt="{{ $officer->name }}">
                             @endif
                         </div>
                         <div class="body">
