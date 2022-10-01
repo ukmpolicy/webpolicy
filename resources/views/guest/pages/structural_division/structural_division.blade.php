@@ -33,8 +33,8 @@
                     <div class="item">
                         <div class="image">
                             {{-- {{ dd($officer)}} --}}
-                            @if (!is_null($officer->profile_image))
-                            <img src="{{ asset('uploads/library/'.$officer->profile_image) }}" alt="{{ $officer->name }}">
+                            @if (!is_null($officer->photo))
+                            <img src="{{ asset('uploads/'.$officer->photo) }}" alt="{{ $officer->name }}">
                             @endif
                             {{-- {{ dd(is_null($officer['member']['profile_picture'])) }} --}}
                         </div>
