@@ -76,7 +76,11 @@
             </ol>
             <div class="py-2 text-center px-3 rounded" style="background-color: #151515">
                 <p class="mt-2 text-capitalize">Ayo mari bergabung bersama kami!</p>
+                @if (Auth::check())
                 <a href="{{ route('open-recruitment.form') }}" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">DAFTAR SEKARANG</a>
+                @else
+                <a href="{{ route('register') }}" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">DAFTAR SEKARANG</a>
+                @endif
             </div>
             @else
             <div class="py-2 text-center px-3 rounded" style="background-color: #151515">
