@@ -108,17 +108,17 @@ class MemberController extends Controller
         $this->validate($request, [
             "nim" => "required|unique:members,nim,".$id,
             "name" => "required",
-            "address" => "",
-            "phone_number" => "",
-            "email" => "",
-            "major" => "",
-            "study_program" => "",
-            "graduation_at" => "",
-            "photo" => "",
-            "born_at" => "",
-            "birth_place" => "",
-            "joined_at" => "",
-            "other_detail" => "",
+            "address" => "required",
+            "phone_number" => "required",
+            "email" => "required|email",
+            "major" => "required",
+            "study_program" => "required",
+            "graduation_at" => "required",
+            "photo" => "required",
+            "born_at" => "required",
+            "birth_place" => "required",
+            "joined_at" => "required",
+            "other_detail" => "required",
         ]);
 
         
