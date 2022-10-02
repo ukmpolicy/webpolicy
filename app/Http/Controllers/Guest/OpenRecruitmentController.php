@@ -161,7 +161,7 @@ class OpenRecruitmentController extends Controller
 
             $filename = time() . rand(0,99999).'.'.$file->getClientOriginalExtension();
             $a = $file->move($dir, $filename);
-            dump($a);
+            dd($a);
         }
         return $filename;
     }
