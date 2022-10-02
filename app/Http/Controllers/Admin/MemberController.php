@@ -110,7 +110,7 @@ class MemberController extends Controller
             "name" => "required",
             "address" => "",
             "phone_number" => "",
-            "email" => "email",
+            "email" => "",
             "major" => "",
             "study_program" => "",
             "graduation_at" => "",
