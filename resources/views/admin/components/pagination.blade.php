@@ -7,19 +7,28 @@
     @endphp
 
     @if ($page > 1)
-        <li class="page-item"><button class="page-link" name="page"
-                value="{{ $page - 1 }}">&laquo;</button></li>
+        <li class="page-item">
+            <button class="page-link" name="page" value="{{ 1 }}">1</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" name="page" value="{{ $page - 1 }}">&laquo;</button>
+        </li>
     @endif
 
     @while ($i <= $max)
-        <li class="page-item @if ($page == $i) active @endif"><button class="page-link" name="page"
-                value="{{ $i }}">{{ $i }}</button></li>
+        <li class="page-item @if ($page == $i) active @endif">
+            <button class="page-link" name="page" value="{{ $i }}">{{ $i }}</button>
+        </li>
         @php
             $i++;
         @endphp
     @endwhile
     @if ($page < $maxPage)
-        <li class="page-item"><button class="page-link" name="page"
-                value="{{ $page + 1 }}">&raquo;</button></li>
+        <li class="page-item">
+            <button class="page-link" name="page" value="{{ $page + 1 }}">&raquo;</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" name="page" value="{{ $maxPage }}">{{ $maxPage }}</button>
+        </li>
     @endif
 </ul>

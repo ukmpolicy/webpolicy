@@ -72,7 +72,7 @@
                 <tr>
                   <td>{{ (($page - 1) * $perPage) + $loop->iteration }}</td>
                   <td>
-                    <a href="{{ asset('uploads/library/'.$member->photo) }}" class="btn btn-sm btn-success w-100" target="_blank" rel="noopener noreferrer">
+                    <a href="{{ asset('uploads/'.$member->photo) }}" class="btn btn-sm btn-success w-100" target="_blank" rel="noopener noreferrer">
                       <i class="fa fa-image"></i>
                     </a>
                   </td>

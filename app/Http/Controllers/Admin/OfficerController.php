@@ -24,6 +24,10 @@ class OfficerController extends Controller
         $page = 1;
         $perPage = 10;
         $maxPage = ceil($officers->count()/$perPage);
+        
+        if (is_numeric($request->page)) {
+            $page = $request->page;
+        }
 
         $data['page'] = $page;
         $data['perPage'] = $perPage;
@@ -60,10 +64,11 @@ class OfficerController extends Controller
     }
     
     public function edit($id) {
-        $officer = Officer::where('members.id', $id)
+        $officer = Officer::where('officers.id', $id)
         ->select('officers.id', 'members.nim', 'members.name', 'division_id', 'role', 'period_start_at', 'period_end_at')
         ->join('members', 'officers.member_id', '=', 'members.id')
         ->first();
+        // dd($officer);
         $data['divisions'] = Division::all();
         $data['roles'] = self::$roles;
         $data['officer'] = $officer;
@@ -97,14 +102,17 @@ class OfficerController extends Controller
         $office = Officer::find($id);
         if ($office) {
             $member = Member::where('nim', $request->nim)->first();
-            $office->member_id = $member->id;
-            $office->division_id = $request->division_id;
-            $office->role = $request->role;
-            $office->period_start_at = $request->period_start_at;
-            $office->period_end_at = $request->period_end_at;
-            $office->save();
+            if ($member) {
+                $office->member_id = $member->id;
+                $office->division_id = $request->division_id;
+                $office->role = $request->role;
+                $office->period_start_at = $request->period_start_at;
+                $office->period_end_at = $request->period_end_at;
+                $office->save();
+    
+                return redirect()->route('office')->with('succes', 'Pengurus berhasil diubah');
 
-            return redirect()->route('office')->with('succes', 'Pengurus berhasil diubah');
+            }
         }
         return redirect()->route('office')->with('error', 'Pengurus gagal diubah');
     }
