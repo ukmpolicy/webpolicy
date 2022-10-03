@@ -28,6 +28,7 @@ class Role extends Model
             "admin" => [
                 "admin",
                 "admin.role",
+                "admin.role.dashboard",
                 "admin.role.permission",
             ], 
         ];

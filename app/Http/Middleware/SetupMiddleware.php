@@ -19,10 +19,10 @@ class SetupMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        Visit::create([
-            'url' => $request->url(),
-            'route_name' => $request->route()->getName()
-        ]);
+        // Visit::create([
+        //     'url' => $request->url(),
+        //     'route_name' => $request->route()->getName()
+        // ]);
         if (SetupController::hasSetup()) {
             return $next($request);
         }else {
