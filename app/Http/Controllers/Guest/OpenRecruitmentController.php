@@ -168,6 +168,7 @@ class OpenRecruitmentController extends Controller
 
     public function directToRegister(Request $request) {
         $request->session()->put('goForm', true);
+        dd(session('goForm'));
         return redirect()->route('register');
     }
 
