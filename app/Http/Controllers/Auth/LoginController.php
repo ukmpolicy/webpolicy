@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -39,15 +39,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
     
-    // public function authenticated(Request $request, $user)
-    // {
-    //     dd(session('goForm'));
-    //     // 
-    //     if (session('goForm')) {
-    //         $request->session()->forget('goForm');
-    //         return redirect()->route('open-recruitment.form');
-    //     }else {
-    //         return redirect()->route('home');
-    //     }
-    // }
+    public function authenticated(Request $request, $user)
+    {
+        dd(session('goForm'));
+        // 
+        if (session('goForm')) {
+            $request->session()->forget('goForm');
+            return redirect()->route('open-recruitment.form');
+        }else {
+            return redirect()->route('home');
+        }
+    }
 }
