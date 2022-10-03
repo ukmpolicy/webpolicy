@@ -58,10 +58,11 @@ class OpenRecruitmentController extends Controller
         return $open;
     }
 
-    public function form() {
+    public function form(Request $request) {
         if (!$this->isOpen()) {
             return redirect()->route('open-recruitment.index');
         }
+        $request->session()->forget('goForm');
         $form = Form::where('slug', 'open-recruitment')->first();
         if (!$form) $form = Form::create(['name' => 'open recruitment', 'slug' => 'open-recruitment']);
 
