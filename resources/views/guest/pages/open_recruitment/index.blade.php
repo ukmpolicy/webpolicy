@@ -79,7 +79,7 @@
                 @if (Auth::check())
                 <a href="{{ route('open-recruitment.form') }}" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">DAFTAR SEKARANG</a>
                 @else
-                <a href="{{ route('register') }}" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">DAFTAR SEKARANG</a>
+                <a href="{{ route('register') }}" onclick="alert('Anda harus masuk ke akun policy dulu untuk mendaftar sebagai anggota policy!')" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">DAFTAR SEKARANG</a>
                 @endif
             </div>
             @else
