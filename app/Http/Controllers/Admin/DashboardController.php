@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index() {
+        
         $role_id = auth()->user()->role_id;
 
         foreach (getSidebarMenu() as $menu) {

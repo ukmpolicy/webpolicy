@@ -2,13 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\SetupController;
 use App\Models\Visit;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 
-class SetupMiddleware
+class VisitMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,13 +18,8 @@ class SetupMiddleware
     public function handle(Request $request, Closure $next)
     {
         Visit::create([
-            'url' => $request->url(),
-            'route_name' => $request->route()->getName()
+            'url' => $request->url
         ]);
-        if (SetupController::hasSetup()) {
-            return $next($request);
-        }else {
-            SetupController::setup($request, $next);
-        }
+        return $next($request);
     }
 }
