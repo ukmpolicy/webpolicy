@@ -10,7 +10,7 @@
                 
             <div class="item">
                 <div class="image">
-                    <img src="{{ asset('uploads/library/'.$highligh->thumbnail) }}" alt="{{ $highligh->title }}">
+                    <img src="{{ asset('uploads/'.$highligh->thumbnail) }}" alt="{{ $highligh->title }}">
                 </div>
                 <div class="body">
                     <h2 class="title text-capitalize">{{ $highligh->title }}</h2>
