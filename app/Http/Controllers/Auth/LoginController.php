@@ -39,15 +39,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
     
-    public function authenticated(Request $request, $user)
-    {
-        dd(session('goForm'));
-        // 
-        if (session('goForm')) {
-            $request->session()->forget('goForm');
-            return redirect()->route('open-recruitment.form');
-        }else {
-            return redirect()->route('home');
-        }
-    }
+    // public function authenticated(Request $request, $user)
+    // {
+    //     dd(session('goForm'));
+    //     // 
+    //     if (session('goForm')) {
+    //         $request->session()->forget('goForm');
+    //         return redirect()->route('open-recruitment.form');
+    //     }else {
+    //         return redirect()->route('home');
+    //     }
+    // }
 }
