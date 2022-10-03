@@ -75,11 +75,13 @@
                 </li>
             </ol>
             <div class="py-2 text-center px-3 rounded" style="background-color: #151515">
-                <p class="mt-2 text-capitalize">Ayo mari bergabung bersama kami!</p>
                 @if (Auth::check())
-                <a href="{{ route('open-recruitment.form') }}" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">DAFTAR SEKARANG</a>
+                <p class="mt-2 text-capitalize">Ayo mari bergabung bersama kami!</p>
+                <a href="{{ route('open-recruitment.form') }}" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">ISI FORMULIR SEKARANG</a>
                 @else
-                <a href="{{ route('register') }}" onclick="alert('Anda harus masuk ke akun policy dulu untuk mendaftar sebagai anggota policy!')" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">DAFTAR SEKARANG</a>
+                <p class="mt-2 text-capitalize">Anda harus mempunyai akun policy dulu untuk mendaftar sebagai anggota policy!</p>
+                <p class="mt-2 text-capitalize">Silahkan kembali ke halaman ini.</p>
+                <a href="{{ route('open-recruitment.register') }}" class="btn text-white d-block d-lg-inline-block btn-danger mb-2">REGISTER SEKARANG</a>
                 @endif
             </div>
             @else

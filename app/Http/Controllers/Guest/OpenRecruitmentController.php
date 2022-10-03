@@ -7,6 +7,7 @@ use App\Models\Form;
 use App\Models\Setting;
 use App\Models\UserForm;
 use Faker\Core\Number;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
@@ -163,6 +164,11 @@ class OpenRecruitmentController extends Controller
             $file->move($dir, $filename);
         }
         return $filename;
+    }
+
+    public function directToRegister(Request $request) {
+        $request->session()->put('goForm', true);
+        return redirect()->route('register');
     }
 
     private function imageRequired($request, $attribute) {

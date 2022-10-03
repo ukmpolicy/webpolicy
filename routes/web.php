@@ -43,6 +43,7 @@ Route::middleware('sm')->group(function() {
     
     Route::prefix('open-recruitment')->group(function() {
         Route::get('/', [OpenRecruitmentController::class, 'index'])->name('open-recruitment.index');
+        Route::get('/register', [OpenRecruitmentController::class, 'directToRegister'])->name('open-recruitment.register');
     
         Route::prefix('/')->middleware('auth')->group(function() {
             Route::post('/save', [OpenRecruitmentController::class, 'save'])->name('open-recruitment.save');
