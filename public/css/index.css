@@ -577,6 +577,7 @@ footer .row .inp {
   border: 1px solid #303030;
   outline: none;
   margin: 0.5rem 0;
+  display: block;
   resize: vertical;
   box-sizing: border-box;
   color: #ddd;
@@ -1181,6 +1182,7 @@ footer .credits .container .socmeds .item:hover {
   border-radius: 4px;
   background-color: #202020;
   border: 1px solid #303030;
+  display: block;
   outline: none;
   margin: 0.5rem 0;
   resize: vertical;
