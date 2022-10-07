@@ -93,6 +93,9 @@
             @if (session('success'))
             <div class="alert alert-sm alert-success">{{ session('success') }}</div>
             @endif
+            @if (session('error'))
+            <div class="alert alert-sm alert-danger">{{ session('error') }}</div>
+            @endif
             <form action="{{ route('open-recruitment.save') }}" id="form" enctype="multipart/form-data" method="post">
                 @csrf
                 <div class="row">
@@ -318,7 +321,7 @@
                                 <button class="btn btn-send" name="simpan">Simpan</button>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-send" name="print">Cetak</button>
+                                <a class="btn btn-send" href="{{ route('open-recruitment.print') }}">Cetak</a>
                             </div>
                         </div>
         
@@ -423,8 +426,6 @@
             let id = $(inp).attr('id');
             let input = document.querySelector('#' + id + ' .file-value');
             
-            // console.log(input.attributes.name)
-            // console.log(document.forms['form'][input.attributes.name]);
             if (input.value.trim().length > 0) {
                 document.querySelector('#' + id + ' .normal').style.display = 'none';
                 document.querySelector('#' + id + ' .success').style.display = 'block';

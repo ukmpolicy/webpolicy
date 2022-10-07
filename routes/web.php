@@ -47,6 +47,7 @@ Route::middleware('sm')->group(function() {
     
         Route::prefix('/')->middleware('auth')->group(function() {
             Route::post('/save', [OpenRecruitmentController::class, 'save'])->name('open-recruitment.save');
+            Route::get('/print', [OpenRecruitmentController::class, 'print'])->name('open-recruitment.print');
             Route::get('/form', [OpenRecruitmentController::class, 'form'])->name('open-recruitment.form');
         });
     });

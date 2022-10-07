@@ -84,25 +84,21 @@ class OpenRecruitmentController extends Controller
             return redirect()->route('open-recruitment.index');
         }
         $this->validate($request, [
-            "nim" => "required|numeric",
-            "nama" => "required|min:3",
-            "alamat" => "required",
-            "tgl_lahir" => "required",
-            "tmp_lahir" => "required",
-            "no_wa" => "required",
-            "email" => "required",
-            "jurusan" => "required",
-            "prodi" => "required",
-            "pas_foto" => ["image", $this->imageRequired($request, "pas_foto")],
-            "bkpkkmb" => ["image", $this->imageRequired($request, "bkpkkmb")],
-            // "bukti_pemabayaran" => ["image", $this->imageRequired($request, "bukti_pemabayaran")],
-            "bukti_follow" => ["image", $this->imageRequired($request, "bukti_follow")],
+            "nim" => "",
+            "nama" => "",
+            "alamat" => "",
+            "tgl_lahir" => "",
+            "tmp_lahir" => "",
+            "no_wa" => "",
+            "email" => "",
+            "jurusan" => "",
+            "prodi" => "",
+            "pas_foto" => "image",
+            "bkpkkmb" => "image",
+            // "bukti_pemabayaran" => "image",
+            "bukti_follow" => "image",
             "kusioner" => "image",
         ]);
-
-        if ($request->has('print')) {
-            return $this->print();
-        }
 
         $form = Form::where('slug', 'open-recruitment')->first();
         $user_id = auth()->user()->id;
@@ -181,17 +177,28 @@ class OpenRecruitmentController extends Controller
         return '';
     }
 
-    private function print() {
+    public function print() {
         if (!$this->isOpen()) {
             return redirect()->route('open-recruitment.index');
         }
+
         $form = Form::where('slug', 'open-recruitment')->first();
         $user_id = auth()->user()->id;
         $uf = UserForm::where('form_id', $form->id)->where('user_id', $user_id)->first();
         $dt = json_decode($uf->data);
         $data['data'] = $this->data;
+        $error = [];
         if ($dt) {
-            foreach ($dt as $k => $v) $data['data'][$k] = $v;
+            foreach ($dt as $k => $v) {
+                $data['data'][$k] = $v;
+                if ($data['data'][$k] == '' && $k != 'kuisioner') {
+                    $error[] = $k;
+                }
+
+            };
+        }
+        if (count($error) > 0) {
+            return redirect()->route('open-recruitment.form')->with('error', 'Pastikan formulir telah terisi semua!');
         }
         setlocale(LC_ALL, 'IND');
         $data['date'] = strftime('%d %B %Y');
