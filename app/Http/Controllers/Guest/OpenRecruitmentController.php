@@ -185,8 +185,12 @@ class OpenRecruitmentController extends Controller
         $form = Form::where('slug', 'open-recruitment')->first();
         $user_id = auth()->user()->id;
         $uf = UserForm::where('form_id', $form->id)->where('user_id', $user_id)->first();
+        if (!$uf) {
+            return redirect()->route('open-recruitment.form')->with('error', 'Pastikan formulir telah terisi semua!');
+        }
         $dt = json_decode($uf->data);
         $data['data'] = $this->data;
+        // dd($uf->data);
         $error = [];
         if ($dt) {
             foreach ($dt as $k => $v) {
