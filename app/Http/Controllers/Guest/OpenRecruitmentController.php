@@ -178,15 +178,15 @@ class OpenRecruitmentController extends Controller
         return '';
     }
 
-    public function print($email = null) {
+    public function print(Request $request) {
         if (!$this->isOpen()) {
             return redirect()->route('open-recruitment.index');
         }
 
         $form = Form::where('slug', 'open-recruitment')->first();
         $user_id = auth()->user()->id;
-        if ($email) {
-            $user = User::where('email', $email)->first();
+        if ($request->email) {
+            $user = User::where('email', $request->email)->first();
             if ($user) $user_id = $user->id;
         }
         $uf = UserForm::where('form_id', $form->id)->where('user_id', $user_id)->first();
