@@ -87,10 +87,8 @@
         </main>
     </div>
     <script>
-        if (window.print()) {
-            history.back()
-        }
-        window.location.href = ('{{ route("open-recruitment.form") }}')
+        window.print();
+        // window.location.href = ('{{ route("open-recruitment.form") }}')
     </script>
 </body>
 </html>
