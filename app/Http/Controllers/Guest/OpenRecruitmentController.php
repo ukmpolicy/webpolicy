@@ -215,10 +215,15 @@ class OpenRecruitmentController extends Controller
 
     public function manager(Request $request) {
         $members = $this->getMembers($request);
-        // dd($members);
+        
         $page = 1;
         $perPage = 10;
         $maxPage = ceil($members->count()/$perPage);
+
+        if (is_numeric($request->page)) {
+            $page = $request->page;
+        }
+        
         $data['members'] = $members;
         $data['page'] = $page;
         $data['perPage'] = $perPage;
