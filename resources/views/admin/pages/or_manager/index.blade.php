@@ -66,7 +66,7 @@
                 @foreach ($members->forPage($page, $perPage) as $member)
                   
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ (($page - 0) * $perPage) + $loop->iteration }}</td>
                   <td>
                     <a href="{{ asset('uploads/'.$member->pas_foto ) }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-success w-100">
                       <i class="fa fa-image"></i>
