@@ -37,7 +37,7 @@ class ArticleController extends Controller
     }
     
     public function getArticles(Request $request) {
-        $articles = Article::select('articles.id', 'categories.name as category', 'title')
+        $articles = Article::select('articles.id', 'categories.name as category', 'title', 'is_public')
         ->join('categories', 'articles.category_id', '=', 'categories.id');
 
         if ($request->category) {
