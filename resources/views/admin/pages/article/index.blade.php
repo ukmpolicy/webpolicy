@@ -67,6 +67,7 @@
                 <tr>
                   <th style="width: 10px">#</th>
                   <th>Judul</th>
+                  <th>Status</th>
                   <th>Kategori</th>
                   <th>Edit</th>
                   <th>Hapus</th>
@@ -85,6 +86,7 @@
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td class="text-capitalize">{{ $article->title }}</td>
+                  <td>{{ ($article->is_public) ? 'Online' : 'Offline' }}</td>
                   <td>{{ $article->category }}</td>
                   <td>
                     <a href="{{ route('article.edit', ['id' => $article->id]) }}" class="btn btn-sm btn-block btn-warning"><i class="fa fa-edit"></i></a>

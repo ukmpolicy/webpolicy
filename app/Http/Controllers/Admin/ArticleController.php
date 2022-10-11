@@ -27,6 +27,14 @@ class ArticleController extends Controller
         return view('admin.pages.article.index', $data);
     }
 
+    public function migrateThumbnail() {
+        $articles = Article::all();
+        foreach ($articles as $article) {
+            $source = Source::find($article->thumbnail);
+            $article->thumbnail = $source->path;
+            $article->save();
+        }
+    }
     
     public function getArticles(Request $request) {
         $articles = Article::select('articles.id', 'categories.name as category', 'title')
@@ -52,11 +60,11 @@ class ArticleController extends Controller
         $article = new Article();
         $article->title = strtolower($request->title);
         $article->slug = Str::slug($request->title);
-        $article->creator_id = Auth::user()->id;
+        // $article->creator_id = Auth::user()->id;
         $article->category_id = $request->category_id;
         $article->save();
 
-        Notification::sendNow(Member::all(), new NewArticle($article));
+        // Notification::sendNow(Member::all(), new NewArticle($article));
 
         return redirect()->route('article.edit', ['id' => $article->id])->with('success', 'Artikel berhasil dibuat');
     }
@@ -85,17 +93,34 @@ class ArticleController extends Controller
     public function update(Request $request, $id) {
         $this->validate($request, [
             "title" => "required|min:5",
-            "thumbnail" => "required|exists:sources,id",
             "content" => "required",
             "category_id" => "required",
         ]);
         $article = Article::find($id);
         if ($article) {
+            $filename = $article->thumbnail;
+
+            // dd($request->file('thumbnail'));
+            if (($file = $request->file('thumbnail'))) {
+                $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
+                $dir = 'uploads/';
+                $file->move($dir, $filename);
+            }
             $article->title = strtolower($request->title);
             $article->slug = Str::slug($request->title);
-            $article->thumbnail = $request->thumbnail;
+            $article->thumbnail = $filename;
             $article->content = $this->getContent($request->content);
             $article->category_id = $request->category_id;
+            $article->save();
+            return redirect()->route('article.edit', ['id' => $article->id])->with('success', 'Perubahan berhasil disimpan');
+        }
+        return redirect()->route('article.edit', ['id' => $article->id])->with('failed', 'Perubahan gagal disimpan');
+    }
+
+    public function switchStatus($id) {
+        $article = Article::find($id);
+        if ($article) {
+            $article->is_public = ($article->is_public) ? false : true;
             $article->save();
             return redirect()->route('article.edit', ['id' => $article->id])->with('success', 'Perubahan berhasil disimpan');
         }
@@ -171,5 +196,29 @@ class ArticleController extends Controller
             return redirect()->route('article')->with('success', 'Kategori berhasil dihapus');
         }
         return redirect()->route('article')->with('success', 'Kategori gagal dihapus');
+    }
+
+
+    public function viewArticle($slug) {
+        $user = User::find(Auth::user()->id);
+        if (!$user->hasPermission('admin.article')) {
+            return redirect()->back();
+        }
+        $data = Article::where('slug', $slug)->first();
+        if ($data) {
+            $data = $data->toArray();
+            $data['category'] = Category::find($data['category_id']);
+            $bulan = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+            $time = strtotime($data['created_at']);
+            $hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            $bulan = $bulan[(int)date('m', $time) - 1];
+            $hari = $hari[(int)date('N', $time)-1];
+            // dd($hari);
+            $data['created_at'] = $hari.date(', d ', $time) . $bulan. date(' Y H:i', $time);
+            return view('guest.pages.article.article', $data);
+        }
+        return redirect()->route('main.articles');
     }
 }

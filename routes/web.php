@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 
 // OLD
 
+Route::get('/migrate', [ArticleController::class, 'migrateThumbnail']);
+
 Route::middleware('sm')->group(function() {
 
     Route::get('/', [GuestController::class, 'index'])->name('main.home');
@@ -141,6 +143,9 @@ Route::middleware('sm')->group(function() {
         Route::prefix('article')->middleware('auth')->group(function() {
             Route::get('/', [ArticleController::class, 'index'])
             ->name('article');
+
+            Route::get('/view/{slug}', [ArticleController::class, 'viewArticle'])
+            ->name('article.view');
             
             Route::post('/', [ArticleController::class, 'store'])
             ->name('article.store');
@@ -159,6 +164,9 @@ Route::middleware('sm')->group(function() {
         
             Route::delete('/category/{id}', [ArticleController::class, 'destroyCategory'])
             ->name('article.category.destroy');
+
+            Route::post('/switch_status/{id}', [ArticleController::class, 'switchStatus'])
+            ->name('article.switch_status');
         });
         
         Route::prefix('auth')->group(function() {

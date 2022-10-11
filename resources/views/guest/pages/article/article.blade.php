@@ -2,21 +2,21 @@
 @section('header')
 @php
     $url = url('article/'.$slug);
-    $image = asset($thumbnail->path);
+    $image = asset($thumbnail);
 @endphp
 @include('guest.includes.custom_header')
 @endsection
 @section('content')
 <div id="article">
     <div class="image">
-        <img src="{{ asset('uploads/'.$thumbnail->path) }}" alt="{{ $thumbnail->description }}">
+        <img src="{{ asset('uploads/'.$thumbnail) }}" alt="{{ $title }}">
     </div>
         <div class="container">
             <div class="head">
                 <h1 class="title">{{ $title }}</h1>
                 <div class="meta">
                     <div class="date">{{ $created_at }}</div>
-                    {{-- <div class="date">#{{ $creator->username }} #{{ $category->name }}</div> --}}
+                    <div class="date text-capitalize">#{{ $category->name }}</div>
                 </div>
             </div>
             <div class="content">

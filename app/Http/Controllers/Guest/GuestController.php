@@ -72,9 +72,14 @@ class GuestController extends Controller
                 $maxArticles = (int)$request->max;
             }
         }
-        $articles = Article::where('thumbnail', '!=', NULL);
+        $articles = Article::where('thumbnail', '!=', NULL)
+        ->where('is_public', 1);
+
         if ($request->category) {
-            $category = Category::where('type', 0)->where('name', $request->category)->first();
+            $category = Category::where('type', 0)
+            ->where('name', $request->category)
+            ->first();
+
             if ($category) {
                 $articles = $articles->where('category_id', $category->id);
             }
@@ -84,7 +89,7 @@ class GuestController extends Controller
         $data['articles'] = array_map(function($v) {
             // $v['creator'] = User::find($v['creator_id'])->toArray();
             $v['category'] = Category::find($v['category_id'])->toArray();
-            $v['thumbnail'] = Source::find($v['thumbnail'])->toArray();
+            // $v['thumbnail'] = Source::find($v['thumbnail'])->toArray();
             return $v;
         }, $articles->toArray());
         return view('guest.pages.article.articles', $data);
@@ -112,9 +117,10 @@ class GuestController extends Controller
     public function article($slug) {
         $data = Article::where('slug', $slug)->first();
         if ($data) {
+            if (!$data->is_public) {
+                return redirect()->route('mail.articles');
+            }
             $data = $data->toArray();
-            $data['thumbnail'] = Source::find($data['thumbnail']);
-            // $data['creator'] = User::find($data['creator_id']);
             $data['category'] = Category::find($data['category_id']);
             $bulan = [
                 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'

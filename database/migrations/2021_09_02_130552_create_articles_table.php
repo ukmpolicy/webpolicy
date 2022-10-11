@@ -17,11 +17,11 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->foreignId('thumbnail')->nullable();
             $table->string('title');
-            $table->string('slug')->nullable();
+            $table->string('slug');
             $table->longText('content')->nullable();
             $table->foreignId('creator_id')->nullable();
             $table->foreignId('category_id')->nullable();
-            $table->integer('hightlight')->default(0);
+            // $table->integer('hightlight')->default(0);
             $table->timestamps();
             
             $table->foreign('creator_id')->references('id')->on('users')->nullOnDelete();

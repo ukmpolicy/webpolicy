@@ -5,7 +5,7 @@
 {{-- <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}"> --}}
 {{-- <link rel="stylesheet" href="//bootswatch.com/3/darkly/bootstrap.css"> --}}
 <style>
-  #thumbnail {
+  /* #thumbnail {
     margin: auto;
     height: 150px;
     width: 100%;
@@ -40,11 +40,84 @@
   #thumbnail:hover .label {
     background-color: rgba(0,0,0,.5);
     color: #fff;
+  } */
+  .loading {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,.75);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+      text-align: center;
+      padding: 0 1rem;
+  }
+/*  */
+
+.choice-file {
+    margin: auto;
+    height: 150px;
+    width: 100%;
+    padding: .2rem;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+  }
+  .choice-file img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .choice-file .label {
+    left: .2rem;
+    top: .2rem;
+    right: .2rem;
+    bottom: .2rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: .3s;
+    border-radius: 4px;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .choice-file .success .label {
+    opacity: 0;
+  }
+  
+  .choice-file .success:hover .label {
+    background-color: rgba(0,0,0,.5);
+    color: #fff;
+    opacity: 1;
+  }
+
+/*  */
+  .loading img {
+      height: 100px;
+  }
+  .loading.show {
+      display: flex;
   }
 </style>
 @endsection
 
 @section('content')
+<div class="loading">
+    <img src="{{ asset('images/loading.gif') }}" alt="Loading Pinguin">
+    <p class="small">Sedang menyimpan, mohon tunggu sejenak...</p>
+    {{-- <img src="{{ asset('images/loading2.gif') }}" alt="Loading"> --}}
+</div>
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -67,7 +140,7 @@
 <section class="content">
   
   <div class="container-fluid">
-    <form action="{{ route('article.update', ['id' => $article->id]) }}" method="post">
+    <form action="{{ route('article.update', ['id' => $article->id]) }}" method="post" enctype="multipart/form-data">
     <div class="row">
         @csrf @method('put')
         <div class="col-lg-8 col-12">
@@ -103,7 +176,6 @@
               <h4 class="card-title mt-1">Edit Artikel</h4>
             </div>
             <div class="card-body">
-              <form action="" method="post">
                 <div class="form-group">
                   <label for="title">Judul</label>
                   <input type="text" name="title" value="{{ $article->title }}" id="title" placeholder="Judul" class="form-control">
@@ -112,7 +184,7 @@
                   @enderror
                 </div>
   
-                <label>Thumbnail</label>
+                {{-- <label>Thumbnail</label>
                 <div id="thumbnail" onclick="library.open('#thumbnail_form')">
                   @if ($image)
                   <img src="{{ asset('/uploads/library/'.$image->path) }}" id="thumbnail_image" alt="{{ $image->description }}">
@@ -122,7 +194,33 @@
                 </div>
                 @error('thumbnail')
                   <div class="text-center text-danger">{{ $message }}</div>
-                @enderror
+                @enderror --}}
+                
+              {{-- Photo --}}
+              <div class="choice-file" id="thumbnail" onclick="choiceFile('thumbnail')">
+                @if ($article->thumbnail)
+                  <img src="{{ asset('uploads/'.$article->thumbnail) }}" id="thumbnail" alt="{{ $article->title }}">
+                @endif
+                
+                <div class="normal">
+                  <div class="label">
+                    <div class=""><i class="fa fa-edit"></i></div>
+                    <b>Tap to upload</b>
+                  </div>
+                </div>
+                <div class="success">
+                  <div class="label">
+                    <div class=""><i class="fa fa-edit"></i></div>
+                    <b>Tap to change</b>
+                  </div>
+                </div>
+
+                <input type="file" class="d-none file-selector" value="" name="thumbnail">
+                <input type="hidden" class="file-value" name="thumbnail-value" value="{{ $article->thumbnail }}">
+              </div>
+              @error('thumbnail')
+                <div class="text-center text-danger">{{ $message }}</div>
+              @enderror
 
                 <div class="form-group mt-3">
                   <label for="category">Kategori</label>
@@ -137,14 +235,26 @@
                 </div>
                 
                 <div class="form-group mt-3">
-                  <button class="btn btn-primary btn-block">SIMPAN PERUBAHAN</button>
+                  <button onclick="showLoading()" class="btn btn-primary btn-block">SIMPAN PERUBAHAN</button>
                 </div>
+                
+                <div class="form-group mt-3">
+                  <a href="{{ route('article.view', ['slug' => $article->slug]) }}" onclick="showLoading()" class="btn btn-primary btn-block">TAMPILKAN</a>
+                </div>
+              
               </form>
+              <div class="form-group mt-3">
+                <form action="{{ route('article.switch_status', ['id' => $article->id]) }}" method="post">
+                  @csrf
+                  <button class="btn btn-primary btn-block" onclick="showLoading()">
+                    {{ ($article->is_public) ? 'Batal Publikasi' : 'Publikasikan' }}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </form>
   </div>
 
 </section>
@@ -162,12 +272,37 @@
 
 
 <script>
-  let library = new Library();
-  library.onChoiced = (r, p) => {
-      library.close();
-      let image = document.querySelector('#thumbnail_image');
-      console.log(image);
-      document.querySelector('#thumbnail_image').src = `{{ asset('') }}${r.path}`;
+  
+  function showLoading() {
+      $('.loading').addClass('show');
+  }
+
+  function checkFileInputs() {
+      let inps = document.querySelectorAll('.choice-file');
+      inps.forEach(function(inp) {
+          let id = $(inp).attr('id');
+          let input = document.querySelector('#' + id + ' .file-value');
+
+          if (input.value.trim().length > 0) {
+              document.querySelector('#' + id + ' .normal').style.display = 'none';
+              document.querySelector('#' + id + ' .success').style.display = 'block';
+          }else {
+              document.querySelector('#' + id + ' .normal').style.display = 'block';
+              document.querySelector('#' + id + ' .success').style.display = 'none';
+          }
+      })
+  }
+
+  checkFileInputs();
+  
+  function choiceFile(id) {
+    document.querySelector('#'+ id +' .file-selector').onchange = function() {
+        let id = $(this.parentNode).attr('id');
+        document.querySelector('#' + id + ' .file-value').value = true;
+        checkFileInputs();
+    }
+    document.querySelector('#' + id + ' .file-selector').click();
+      // checkFileInputs();
   }
 
   $(function () {

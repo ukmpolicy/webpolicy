@@ -114,7 +114,7 @@ class MemberController extends Controller
             "major" => "required",
             "study_program" => "required",
             "graduation_at" => "required",
-            "photo" => "required",
+            "photo" => "",
             "born_at" => "required",
             "birth_place" => "required",
             "joined_at" => "required",

@@ -14,7 +14,7 @@
                 @foreach ($articles as $article)
                     <a href="{{ route('main.article', ['slug' => $article['slug']]) }}" class="item">
                         <div class="image">
-                            <img src="{{ asset('uploads/'.$article['thumbnail']['path']) }}" alt="thumbnail">
+                            <img src="{{ asset('uploads/'.$article['thumbnail']) }}" alt="thumbnail">
                         </div>
                         <div class="body">
                             <div class="title text-capitalize">{{ $article['title'] }}</div>
