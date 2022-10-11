@@ -79,10 +79,37 @@
         /* background: rgb(148, 24, 24); */
         box-shadow: none !important;
     }
+    .loading {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,.75);
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #fff;
+        text-align: center;
+        padding: 0 1rem;
+    }
+    .loading img {
+        height: 100px;
+    }
+    .loading.show {
+        display: flex;
+    }
 </style>
 
 @endsection
 @section('content')
+    <div class="loading">
+        <img src="{{ asset('images/loading.gif') }}" alt="Loading Pinguin">
+        <p class="small">Ssedang menyimpan, mohon tunggu sejenak...</p>
+        {{-- <img src="{{ asset('images/loading2.gif') }}" alt="Loading"> --}}
+    </div>
     <div id="recruitment">
         <div class="container py-5">
             
@@ -318,7 +345,7 @@
 
                         <div class="row">
                             <div class="col-6">
-                                <button class="btn btn-send" name="simpan">Simpan</button>
+                                <button onclick="showLoading()" class="btn btn-send" name="simpan">Simpan</button>
                             </div>
                             <div class="col-6">
                                 <a class="btn btn-send" href="{{ route('open-recruitment.print') }}">Cetak</a>
@@ -410,6 +437,10 @@
     $('#jurusan').change(() => {
         updateProdi();
     })
+
+    function showLoading() {
+        $('.loading').addClass('show');
+    }
 
     // Fungsi untuk menampilkan prodi berdasarkan jurusan dalam bentuk tag option
     function updateProdi() {
