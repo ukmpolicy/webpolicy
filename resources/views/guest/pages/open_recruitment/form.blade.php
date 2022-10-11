@@ -107,7 +107,7 @@
 @section('content')
     <div class="loading">
         <img src="{{ asset('images/loading.gif') }}" alt="Loading Pinguin">
-        <p class="small">Ssedang menyimpan, mohon tunggu sejenak...</p>
+        <p class="small">Sedang menyimpan, mohon tunggu sejenak...</p>
         {{-- <img src="{{ asset('images/loading2.gif') }}" alt="Loading"> --}}
     </div>
     <div id="recruitment">
