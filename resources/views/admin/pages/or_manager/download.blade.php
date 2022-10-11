@@ -26,7 +26,7 @@ header("Content-Disposition: attachment; filename=Data MemberOR.xls");
                 <td>{{ $member->nim }}</td>
                 <td>{{ $member->nama }}</td>
                 <td>{{ $member->email }}</td>
-                <td>{{ $member->no_wa }}</td>
+                <td>`{{ $member->no_wa }}</td>
                 <td>{{ $member->jurusan }}</td>
                 <td>{{ $member->prodi }}</td>
                 <td>{{ $member->alamat }}</td>
