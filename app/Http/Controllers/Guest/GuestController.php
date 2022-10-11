@@ -118,7 +118,7 @@ class GuestController extends Controller
         $data = Article::where('slug', $slug)->first();
         if ($data) {
             if (!$data->is_public) {
-                return redirect()->route('mail.articles');
+                return redirect()->route('main.articles');
             }
             $data = $data->toArray();
             $data['category'] = Category::find($data['category_id']);
