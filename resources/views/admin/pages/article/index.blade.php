@@ -73,7 +73,7 @@
                   <th>Hapus</th>
                 </tr>
                 <tr>
-                  <td colspan="5">
+                  <td colspan="6">
                     <button type="button" class="btn btn-block btn-sm btn-primary" data-toggle="modal" data-target="#addArticle">
                       <i class="fa fa-plus"></i>
                     </button>

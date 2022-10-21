@@ -239,7 +239,8 @@
                 </div>
                 
                 <div class="form-group mt-3">
-                  <a href="{{ route('article.view', ['slug' => $article->slug]) }}" onclick="showLoading()" class="btn btn-primary btn-block">TAMPILKAN</a>
+                  <a href="http://" target="_blank" rel="noopener noreferrer"></a>
+                  <a href="{{ route('article.view', ['slug' => $article->slug]) }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">TAMPILKAN</a>
                 </div>
               
               </form>
@@ -312,7 +313,7 @@
     $('#summernote').summernote({
         placeholder: 'Hello stand alone ui',
         tabsize: 2,
-        height: 120,
+        height: 350,
         // codemirror: { "theme": "ambiance" }
         toolbar: [
           ['style', ['style']],

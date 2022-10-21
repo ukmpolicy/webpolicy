@@ -10,12 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class HighlighController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $val = Validator::make($request->all(), [
@@ -33,14 +28,14 @@ class HighlighController extends Controller
         $file = $request->file('thumbnail');
         if ($file) {
             $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
-            $dir = 'uploads/library/';
+            $dir = 'uploads/';
             $file->move($dir, $filename);
 
-            $source = new Source();
-            $source->path = $filename;
-            $source->description = $file->getClientOriginalName();
-            $source->type = 0;
-            $source->save();
+            // $source = new Source();
+            // $source->path = $filename;
+            // $source->description = $file->getClientOriginalName();
+            // $source->type = 0;
+            // $source->save();
 
             // Create Highligh
             $highligh = new Highligh();
@@ -48,7 +43,7 @@ class HighlighController extends Controller
             $highligh->subtitle = strtolower($request->subtitle);
             $highligh->text_button = strtolower($request->text_button);
             $highligh->url_button = $request->url_button;
-            $highligh->thumbnail = $source->id;
+            $highligh->thumbnail = $filename;
             $highligh->save();
 
             return redirect()->route('article')->with('success', 'Sorotan berhasil ditambahkan');
@@ -56,13 +51,6 @@ class HighlighController extends Controller
         return redirect()->route('article')->with('failed', 'Sorotan gagal ditambahkan');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $val = Validator::make($request->all(), [
@@ -82,21 +70,21 @@ class HighlighController extends Controller
             $file = $request->file('thumbnail');
             if ($file) {
                 $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
-                $dir = 'uploads/library/';
+                $dir = 'uploads/';
                 $file->move($dir, $filename);
                 
-                $source = Source::find($highligh->thumbnail);
-                if (file_exists('/uploads/library/'.$source->path)) {
-                    unlink('/uploads/library/'.$source->path);
+                // $source = Source::find($highligh->thumbnail);
+                if (file_exists('/uploads/'.$highligh->thumbnail)) {
+                    unlink('/uploads/'.$highligh->thumbnail);
                 }
-                $source->delete();
+                // $source->delete();
     
-                $source = new Source();
-                $source->path = $filename;
-                $source->description = $file->getClientOriginalName();
-                $source->type = 0;
-                $source->save();
-                $highligh->thumbnail = $source->id;
+                // $source = new Source();
+                // $source->path = $filename;
+                // $source->description = $file->getClientOriginalName();
+                // $source->type = 0;
+                // $source->save();
+                $highligh->thumbnail = $filename;
     
                 
             }
@@ -120,11 +108,9 @@ class HighlighController extends Controller
     {
         $highligh = Highligh::find($id);
         if ($highligh) {
-            $source = Source::find($highligh->thumbnail);
-            if (file_exists('/uploads/library/'.$source->path)) {
-                unlink('/uploads/library/'.$source->path);
+            if (file_exists('/uploads/'.$highligh->thumbnail)) {
+                unlink('/uploads/'.$highligh->thumbnail);
             }
-            $source->delete();
             $highligh->delete();
             return redirect()->route('article')->with('success', 'Sorotan berhasil dihapuskan');
         }

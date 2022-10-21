@@ -27,8 +27,8 @@ class GuestController extends Controller
         $data['officers'] = $officers;
         $data['divisions'] = Division::all();
         $data['highlighs'] = Highligh::select(
-            'highlighs.id', 'title', 'subtitle', 'sources.path as thumbnail', 'text_button', 'url_button'
-            )->join('sources', 'highlighs.thumbnail', '=', 'sources.id')->get();
+            'highlighs.id', 'title', 'subtitle', 'thumbnail', 'text_button', 'url_button'
+        )->get();
         $data['roles'] = ['ketua', 'sekretaris', 'bendahara', 'anggota'];
         return view('guest.pages.home.home', $data);
     }
