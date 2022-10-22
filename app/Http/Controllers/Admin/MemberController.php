@@ -105,22 +105,21 @@ class MemberController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $this->validate($request, [
-            "nim" => "required|unique:members,nim,".$id,
-            "name" => "required",
-            "address" => "required",
-            "phone_number" => "required",
-            "email" => "required|email",
-            "major" => "required",
-            "study_program" => "required",
-            "graduation_at" => "required",
-            "photo" => "",
-            "born_at" => "required",
-            "birth_place" => "required",
-            "joined_at" => "required",
-            "other_detail" => "required",
-        ]);
-
+        // $this->validate($request, [
+        //     "nim" => "required|unique:members,nim,".$id,
+        //     "name" => "required",
+        //     "address" => "required",
+        //     "phone_number" => "required",
+        //     "email" => "required|email",
+        //     "major" => "required",
+        //     "study_program" => "required",
+        //     "graduation_at" => "required",
+        //     "photo" => "",
+        //     "born_at" => "required",
+        //     "birth_place" => "required",
+        //     "joined_at" => "required",
+        //     "other_detail" => "required",
+        // ]);
         
         $member = Member::find($id);
 
@@ -128,25 +127,24 @@ class MemberController extends Controller
         if ($member) {
             $filename = $member->photo;
 
-            // dd($request->file('photo'));
             if ($file = $request->file('photo')) {
                 $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
                 $dir = 'uploads/';
                 $file->move($dir, $filename);
+                $member->photo = $filename;
             }
-            $member->nim = $request->nim;
-            $member->photo = $filename;
-            $member->name = strtolower($request->name);
-            $member->address = strtolower($request->address);
-            $member->phone_number = $request->phone_number;
-            $member->email = strtolower($request->email);
-            $member->major = strtolower($request->major);
-            $member->study_program = strtolower($request->study_program);
-            $member->graduation_at = strtolower($request->graduation_at);
-            $member->born_at = strtolower($request->born_at);
-            $member->birth_place = $request->birth_place;
-            $member->joined_at = $request->joined_at;
-            $member->other_detail = $request->other_detail;
+            if ($request->nim)           $member->nim = $request->nim;
+            if ($request->name)          $member->name = strtolower($request->name);
+            if ($request->address)       $member->address = strtolower($request->address);
+            if ($request->phone_number)  $member->phone_number = $request->phone_number;
+            if ($request->email)         $member->email = strtolower($request->email);
+            if ($request->major)         $member->major = strtolower($request->major);
+            if ($request->study_program) $member->study_program = strtolower($request->study_program);
+            if ($request->graduation_at) $member->graduation_at = strtolower($request->graduation_at);
+            if ($request->born_at)       $member->born_at = strtolower($request->born_at);
+            if ($request->birth_place)   $member->birth_place = $request->birth_place;
+            if ($request->joined_at)     $member->joined_at = $request->joined_at;
+            if ($request->other_detail)  $member->other_detail = $request->other_detail;
             $member->save();
             return redirect()->route('member.edit', ['id' => $member->id])->with('success', 'Perubahan berhasil disimpan!');
         }
