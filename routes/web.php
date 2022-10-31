@@ -38,8 +38,8 @@ Route::middleware('sm')->group(function() {
     Route::get('/', [GuestController::class, 'index'])->name('main.home');
     Route::get('/profile', [GuestController::class, 'profile'])->name('main.profile');
     
-    Route::get('/article', [GuestController::class, 'articles'])->name('main.articles');
-    Route::get('/article/{slug}', [GuestController::class, 'article'])->name('main.article');
+    Route::get('/blog', [GuestController::class, 'articles'])->name('main.articles');
+    Route::get('/blog/post/{slug}', [GuestController::class, 'article'])->name('main.article');
     Route::get('/documentation', [GuestController::class, 'documentation'])->name('main.documentations');
     Route::get('/division/{division}', [GuestController::class, 'detailDivision'])->name('main.division');
     

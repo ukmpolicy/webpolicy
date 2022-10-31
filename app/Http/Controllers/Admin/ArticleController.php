@@ -143,7 +143,7 @@ class ArticleController extends Controller
             $data = $img->getAttribute('src');
             
             $ex = explode('/', $data);
-            $dir= "/uploads/library/";
+            $dir= "/uploads/";
             if (!file_exists(public_path().$dir.end($ex))) {
                 list($type, $data) = explode(';', $data);
     

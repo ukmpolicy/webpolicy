@@ -18,14 +18,14 @@ function hasPermissionByName($permission) {
 function getSidebarMenu() {
     return [
         sidebarMenu("Dashboard", "tachometer-alt", "dashboard", "admin.dashboard"),
-        sidebarMenu("Role", "user-cog", "role", "admin.role"),
-        sidebarMenu("Member", "users", "member", "admin.member"),
-        sidebarMenu("Officer", "user-secret", "office", "admin.officer"),
-        sidebarMenu("Division", "user-secret", "division", "admin.division"),
-        sidebarMenu("Article", "file-alt", "article", "admin.article"),
-        sidebarMenu("Documentation", "camera", "documentation", "admin.documentation"),
-        sidebarMenu("Mailbox", "envelope", "mail", "admin.mailbox"),
-        sidebarMenu("Open Recruitment", "user-cog", "open-recruitment.admin.index", "admin.event.or", [
+        sidebarMenu("Akses Pengguna", "user-shield", "role", "admin.role"),
+        sidebarMenu("Anggota", "users", "member", "admin.member"),
+        sidebarMenu("Pengurus", "user-tie", "office", "admin.officer"),
+        sidebarMenu("Bidang", "sitemap", "division", "admin.division"),
+        sidebarMenu("Blog", "file-alt", "article", "admin.article"),
+        sidebarMenu("Dokumentasi", "camera", "documentation", "admin.documentation"),
+        sidebarMenu("Kotak Surat", "envelope", "mail", "admin.mailbox"),
+        sidebarMenu("Rekrutmen", "house-user", "open-recruitment.admin.index", "admin.event.or", [
             sidebarDropMenu("Peserta", "open-recruitment.admin.index"),
             sidebarDropMenu("Pengaturan", "open-recruitment.admin.setting"),
         ]),
