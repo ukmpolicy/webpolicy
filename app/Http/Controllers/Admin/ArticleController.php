@@ -143,8 +143,8 @@ class ArticleController extends Controller
             $data = $img->getAttribute('src');
             
             $ex = explode('/', $data);
-            $dir= "/../public_html/uploads/";
-            if (!file_exists(base_path().$dir.end($ex))) {
+            $dir= "/uploads/";
+            if (!file_exists(base_path() . "/../public_html".$dir.end($ex))) {
                 list($type, $data) = explode(';', $data);
     
       
@@ -154,7 +154,7 @@ class ArticleController extends Controller
       
                 $filename = time().rand(0,99999).'.png';
       
-                $path = base_path() . $dir . $filename;
+                $path = base_path() . "/../public_html" . $dir . $filename;
       
                 file_put_contents($path, $data);
       
