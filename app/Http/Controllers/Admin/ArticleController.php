@@ -143,8 +143,8 @@ class ArticleController extends Controller
             $data = $img->getAttribute('src');
             
             $ex = explode('/', $data);
-            $dir= "/uploads/";
-            if (!file_exists(public_path().$dir.end($ex))) {
+            $dir= "/../public_html/uploads/";
+            if (!file_exists(base_path().$dir.end($ex))) {
                 list($type, $data) = explode(';', $data);
     
       
@@ -154,16 +154,9 @@ class ArticleController extends Controller
       
                 $filename = time().rand(0,99999).'.png';
       
-                $path = public_path() . $dir . $filename;
+                $path = base_path() . $dir . $filename;
       
                 file_put_contents($path, $data);
-                
-                // $source = new Source();
-                // $source->path = $filename;
-                // $source->description = $filename;
-                // $source->author_id = Auth::user()->id;
-                // $source->type = 0;
-                // $source->save();
       
                 $img->removeAttribute('src');
       
