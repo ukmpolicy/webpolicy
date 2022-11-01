@@ -18,12 +18,24 @@ use Illuminate\Support\Str;
 class ArticleController extends Controller
 {
     public function index(Request $request) {
+        $articles = $this->getArticles($request)->get();
+        $page = 1;
+        $perPage = 10;
+        $maxPage = ceil($articles->count()/$perPage);
+
+        if (is_numeric($request->page)) {
+            $page = $request->page;
+        }
         $data['categories'] = Category::where('type', 0)->get();
         $data['highlighs'] = Highligh::all();
-        $data['articles'] =  $this->getArticles($request)->get();
-        $data['page'] = 1;
-        $data['perPage'] = 5;
-        $data['maxPage'] = 3;
+        $data['articles'] =  $articles;
+        $data['page'] = $page;
+        $data['perPage'] = $perPage;
+        $data['maxPage'] = $maxPage;
+
+        if ($request->page) {
+            $data['page'] = $request->page;
+        }
         return view('admin.pages.article.index', $data);
     }
 
