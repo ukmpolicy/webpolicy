@@ -256,3 +256,9 @@ Route::middleware('sm')->group(function() {
     
     Route::get('/home', [App\Http\Controllers\Guest\GuestController::class, 'index'])->name('home');
 });
+
+Route::prefix('product/game')->group(function() {
+    Route::get('fluppybird', function() {
+        return view('games.fluppybird');
+    });
+});
