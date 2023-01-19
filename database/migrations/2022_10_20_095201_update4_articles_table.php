@@ -14,7 +14,7 @@ class Update4ArticlesTable extends Migration
     public function up()
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->boolean('is_public')->default(0)->change();
+            $table->integer('is_public')->default(0)->change();
         });
     }
 
