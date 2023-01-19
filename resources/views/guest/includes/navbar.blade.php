@@ -18,6 +18,11 @@
                 <li class="nav-item">
                     <a class="nav-link{{ request()->is('documentation') ? ' active' : '' }}" href="{{ route('main.documentations') }}">Dokumentasi</a>
                 </li>
+                @if (hasPermissionByName('admin'))
+                    <li>
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline-danger">MANAGER</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     @if (Auth::check())
                         <form action="{{ route('logout') }}" method="post">
