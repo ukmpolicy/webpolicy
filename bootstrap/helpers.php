@@ -46,6 +46,19 @@ function getSidebarMenu() {
     ];
 }
 
+function containsInDropMenu($group_name, $route) {
+    foreach (getSidebarMenu() as $v) {
+        if ($v['name'] == $group_name) {
+            foreach ($v['dropmenu'] as $dm) {
+                if ($dm['route'] == $route) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 function sidebarMenu($name = '', $icon = '', $route = '', $permission = '', $dropmenu = []) {
     return [
         "name" => $name,
