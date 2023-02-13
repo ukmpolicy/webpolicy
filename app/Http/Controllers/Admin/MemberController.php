@@ -73,7 +73,7 @@ class MemberController extends Controller
 
     public function index(Request $request) {
         // dd(strtotime('2001-12-10'), strtotime('12/10/2001'));
-        $this->repairDate();
+        // $this->repairDate();
         $members = $this->getMembers($request);
         $page = 1;
         $perPage = 10;
