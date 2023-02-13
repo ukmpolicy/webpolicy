@@ -63,7 +63,7 @@ class Officer extends Model
             ->leftJoin('divisions','positions.division_id','=','divisions.id')
             ->where('positions.period_id', Period::getPeriodeActive()->id)
             ->where('positions.sub_in_position_id', null)
-            ->orderBy('index', 'ASC')
+            ->orderBy('positions.index', 'ASC')
             ->get();
         }
         return [];
