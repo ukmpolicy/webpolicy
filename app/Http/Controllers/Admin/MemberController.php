@@ -60,17 +60,6 @@ class MemberController extends Controller
         ],
     ];
 
-    public function repairDate() {
-        foreach (Member::all() as $m) {
-            $m->born_at_temp = strtotime($m->born_at);
-            $m->save();
-        }
-        foreach (Member::all() as $m) {
-            $m->born_at = $m->born_at_temp;
-            $m->save();
-        }
-    }
-
     public function index(Request $request) {
         // dd(strtotime('2001-12-10'), strtotime('12/10/2001'));
         // $this->repairDate();
