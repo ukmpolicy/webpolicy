@@ -79,7 +79,7 @@ class OfficerController extends Controller
         if ($request->period) {
             $officers = $officers->where('positions.period_id', $request->period);
         }else {
-            $officers = $officers->where('positions.period_id', Period::getPeriodeActive()->id);
+            $officers = $officers->where('positions.period_id', (Period::getPeriodeActive()) ? Period::getPeriodeActive()->id : null);
         }
         return $officers->get();
     }
