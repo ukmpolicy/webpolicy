@@ -14,7 +14,7 @@ class Update1DivisionsTable extends Migration
     public function up()
     {
         Schema::table('divisions', function (Blueprint $table) {
-            $table->foreignId('period_id');
+            $table->foreignId('period_id')->nullable()->default(null);
             $table->dropSoftDeletes();
             $table->foreign('period_id')->references('id')->on('periods');
         });
