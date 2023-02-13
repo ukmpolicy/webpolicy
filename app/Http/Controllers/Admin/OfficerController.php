@@ -22,7 +22,7 @@ class OfficerController extends Controller
         if ($request->period) {
             $data['positions'] = Position::where('period_id', $request->period)->get();
         }else {
-            $data['positions'] = Position::where('period_id', Period::getPeriodeActive()->id)->get();
+            $data['positions'] = Position::where('period_id', (Period::getPeriodeActive()) ? Period::getPeriodeActive()->id : null)->get();
         }
         $data['officers'] = $officers;
         $page = 1;
