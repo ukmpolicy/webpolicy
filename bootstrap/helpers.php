@@ -24,6 +24,8 @@ function getSidebarMenu() {
             sidebarDropMenu("Anggota", "member"),
             sidebarDropMenu("Divisi", "division"),
             sidebarDropMenu("Pengurus", "office"),
+            sidebarDropMenu("Periode", "period"),
+            sidebarDropMenu("Jabatan", "position"),
             // sidebarDropMenu("Periode", "open-recruitment.admin.index"),
         ]),
         // sidebarMenu("Pengurus", "user-tie", "office", "admin.officer"),

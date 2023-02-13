@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Update3MembersTable extends Migration
+class UpdatePeriodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class Update3MembersTable extends Migration
      */
     public function up()
     {
-        Schema::table('members', function (Blueprint $table) {
-            $table->string('profile_picture')->nullable()->change();
+        Schema::table('periods', function (Blueprint $table) {
+            $table->integer('status')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class Update3MembersTable extends Migration
      */
     public function down()
     {
-        Schema::table('members', function (Blueprint $table) {
+        Schema::table('periods', function (Blueprint $table) {
             //
         });
     }

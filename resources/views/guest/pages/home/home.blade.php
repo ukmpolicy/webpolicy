@@ -123,17 +123,26 @@
             </div>
             <div class="items">
                 @foreach ($officers as $officer)
-                    @if ($officer->division == 'umum') <div class="item"> @else <a class="item" href="{{ route('main.division', ['division' => $officer->division]) }}"> @endif
-                        <div class="image">
-                            @if (!is_null($officer->photo))
-                            <img src="{{ asset('uploads/'.$officer->photo) }}" alt="{{ $officer->name }}">
-                            @endif
-                        </div>
-                        <div class="body">
-                            <div class="name text-capitalize mt-3">{{ $officer->name }}</div>
-                            <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $roles[$officer->role].' '.$officer->division }}</div>
-                        </div>
-                    @if ($officer->division == 'umum') </div> @else </a> @endif
+
+                    @if ($officer->division) 
+                        <a class="item" href="{{ route('main.division', ['division' => $officer->division]) }}"> 
+                    @else
+                        <div class="item"> 
+                    @endif
+
+                    <div class="image">
+                        @if (!is_null($officer->picture))
+                        <img src="{{ asset('uploads/'.$officer->picture) }}" alt="{{ $officer->name }}">
+                        @endif
+                    </div>
+
+                    <div class="body">
+                        <div class="name text-capitalize mt-3">{{ $officer->name }}</div>
+                        <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $officer->position }}</div>
+                    </div>
+
+                    @if (!$officer->division) </div> @else </a> @endif
+
                     @if ($loop->iteration%3==0 && $loop->iteration < count($officers))
                     <div class="devider d-none d-lg-block">
                         <div class="inner"></div>

@@ -36,30 +36,34 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <table class="table table-bordered">
+        <form action="" id="filter_period">
+          <select name="period" onchange="document.querySelector('#filter_period').submit()" class="form-control" style="width: fit-content">
+            @foreach ($periods as $period)
+              <option @if ($period->id == Request::get('period') || $period->id == $period_active->id) selected @endif value="{{ $period->id }}">Periode {{ $period->name }}</option>
+            @endforeach
+          </select>
+        </form>
+        <table class="table table-bordered mt-2">
           <thead>
             <tr>
               <td>#</td>
               <td>Nama</td>
+              <td>Periode</td>
               <td>Edit</td>
               <td>Hapus</td>
             </tr>
+          </thead>
+          <tbody>
             <tr>
-              <td colspan="4">
+              <td colspan="5">
                 <button class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#modalAddDivision"><i class="fa fa-plus"></i></button>
               </td>
             </tr>
-          </thead>
-          <tbody>
-            @if (empty($divisions)) 
-            <tr>
-              <td colspan="7" class="small text-center text-black-50">Tidak ada data.</td>
-            </tr>
-            @endif
             @foreach ($divisions as $division)
               <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $division->name }}</td>
+                <td>{{ $division->period }}</td>
                 <td>
                   <a href="{{ route('division.edit', ['id' => $division->id]) }}" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i></a>
                 </td>
@@ -96,6 +100,16 @@
             <label for="name">Nama:</label>
             <input type="text" id="name" name="name" class="form-control">
             @error('name') <div class="text-danger">{{ $message }}</div> @enderror
+          </div>
+          <div class="form-group">
+            <label for="name">Periode:</label>
+            {{-- <input type="text" id="name" name="name" class="form-control"> --}}
+            <select class="form-control" name="period_id">
+              @foreach ($periods as $period)
+                <option value="{{ $period->id }}">{{ $period->name }}</option>
+              @endforeach
+            </select>
+            @error('period_id') <div class="text-danger">{{ $message }}</div> @enderror
           </div>
       </div>
       <div class="modal-footer justify-content-between">

@@ -44,16 +44,6 @@
                 <input type="text" value="{{ $division->name }}" id="name" name="name" class="form-control">
                 @error('name') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
-              <div class="form-group">
-                <label for="name">Periode:</label>
-                {{-- <input type="text" id="name" name="name" class="form-control"> --}}
-                <select class="form-control" name="period_id">
-                  @foreach ($periods as $period)
-                    <option value="{{ $period->id }}" @if ($period->id == $division->period_id) selected @endif>{{ $period->name }}</option>
-                  @endforeach
-                </select>
-                @error('period_id') <div class="text-danger">{{ $message }}</div> @enderror
-              </div>
               <button type="submit" class="btn btn-primary btn-block">Ubah</button>
             </form>
           </div>
@@ -63,8 +53,8 @@
           <div class="card-body">
             @foreach ($officers as $officer)
               <div class="alert alert-light text-capitalize">
-                {{ $officer->name }}
-                <span class="small text-black-50 ml-1">( {{ $officer->position }} )</span>
+                {{ $officer['member']->name }}
+                <span class="small text-black-50 ml-1">#{{ $officer['role'] }}</span>
               </div>
             @endforeach
           </div>

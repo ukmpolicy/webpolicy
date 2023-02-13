@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Update3MembersTable extends Migration
+class Update6MembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class Update3MembersTable extends Migration
     public function up()
     {
         Schema::table('members', function (Blueprint $table) {
-            $table->string('profile_picture')->nullable()->change();
+            $table->integer('graduation_at');
         });
     }
 

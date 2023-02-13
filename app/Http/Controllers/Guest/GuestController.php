@@ -19,17 +19,11 @@ use Illuminate\Http\Request;
 class GuestController extends Controller
 {
     public function index() {
-        $officers = $this->getDOfficer(Officer::where('role', 0));
-        // dd($officers->toArray());
-        $generalDivision = Division::where('name', 'umum')->first();
-        $general = $this->getDOfficer(Officer::where('division_id', $generalDivision->id));
-        $officers = $general->merge($officers);
-        $data['officers'] = $officers;
         $data['divisions'] = Division::all();
+        $data['officers'] = Officer::getCoreOfficer();
         $data['highlighs'] = Highligh::select(
             'highlighs.id', 'title', 'subtitle', 'thumbnail', 'text_button', 'url_button'
         )->get();
-        $data['roles'] = ['ketua', 'sekretaris', 'bendahara', 'anggota'];
         return view('guest.pages.home.home', $data);
     }
 
@@ -49,20 +43,13 @@ class GuestController extends Controller
 
     public function detailDivision(Request $request, $division) {
         $division = Division::where('name', $division)->first();
-        $officers = $this->getDOfficer(Officer::where('division_id', $division->id));
-        $data['division'] = $division;
-        $data['officers'] = $officers;
-        $data['roles'] = ['ketua', 'sekretaris', 'bendahara', 'anggota'];
-        $data['programs'] = Program::where('division_id', $division->id)->get();
-        return view('guest.pages.structural_division.structural_division', $data);
-    }
-
-    private function getDOfficer($o) {
-        return $o->select('officers.id', 
-        'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at', 'members.photo'
-        )->join('members', 'officers.member_id', '=', 'members.id')
-        ->join('divisions', 'officers.division_id', '=', 'divisions.id')
-        ->get();
+        if ($division) {
+            $data['division'] = $division;
+            $data['officers'] = Officer::getOfficersByDivision($division->id);
+            $data['programs'] = Program::where('division_id', $division->id)->get();
+            return view('guest.pages.structural_division.structural_division', $data);
+        }
+        return redirect()->route('home');
     }
 
     public function articles(Request $request) {

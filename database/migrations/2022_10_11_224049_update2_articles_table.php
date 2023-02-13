@@ -14,8 +14,7 @@ class Update2ArticlesTable extends Migration
     public function up()
     {
         Schema::table('articles', function (Blueprint $table) {
-            // $table->dropForeign(['thumbnail']);
-            $table->string('thumbnail')->change();
+            $table->dropForeign(['thumbnail']);
         });
     }
 

@@ -97,7 +97,7 @@
               <div class="col-lg-6">
                 <div class="choice-file" id="photo" onclick="choiceFile('photo')">
                   @if ($member)
-                    <img src="{{ asset('uploads/'.$member->photo) }}" id="photo" alt="{{ $member->name }}">
+                    <img src="{{ asset('uploads/'.$member->profile_picture) }}" id="photo" alt="{{ $member->name }}">
                   @endif
                   
                   <div class="normal">
@@ -164,7 +164,7 @@
               </div>
               <div class="form-group">
                 <label for="born_at">Tanggal Lahir</label>
-                <input type="date" value="{{ date('Y-m-d', strtotime($member->born_at)) }}" class="form-control" id="born_at" name="born_at">
+                <input type="date" value="{{ date('Y-m-d', $member->born_at) }}" class="form-control" id="born_at" name="born_at">
                 @error('born_at') <div class="text-danger">{{ $message }}</div> @enderror
               </div>
               <div class="form-group">

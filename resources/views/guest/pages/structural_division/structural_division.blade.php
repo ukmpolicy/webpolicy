@@ -33,14 +33,14 @@
                     <div class="item">
                         <div class="image">
                             {{-- {{ dd($officer)}} --}}
-                            @if (!is_null($officer->photo))
-                            <img src="{{ asset('uploads/'.$officer->photo) }}" alt="{{ $officer->name }}">
+                            @if (!is_null($officer->picture))
+                            <img src="{{ asset('uploads/'.$officer->picture) }}" alt="{{ $officer->name }}">
                             @endif
                             {{-- {{ dd(is_null($officer['member']['profile_picture'])) }} --}}
                         </div>
                         <div class="body">
                             <div class="name text-capitalize mt-3">{{ $officer->name }}</div>
-                            <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $roles[$officer->role].' '.$officer->division }}</div>
+                            <div class="role small mt-0 text-white-50 text-capitalize" style="font-weight:normal;">{{ $officer->position }}</div>
                         </div>
                     </div>
                     @if ($loop->iteration%3==0 && $loop->iteration < count($officers))

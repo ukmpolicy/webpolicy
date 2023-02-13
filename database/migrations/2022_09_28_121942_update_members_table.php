@@ -14,6 +14,7 @@ class UpdateMembersTable extends Migration
     public function up()
     {
         Schema::table('members', function (Blueprint $table) {
+            $table->dropForeign(['profile_picture']);
         });
     }
 

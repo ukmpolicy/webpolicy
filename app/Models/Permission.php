@@ -26,6 +26,7 @@ class Permission extends Model
         "admin.officer",
         "admin.division",
         "admin.dashboard",
+        "admin.struktural",
     ];
 
     public static function isExists(string $name) {

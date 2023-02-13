@@ -14,7 +14,7 @@ class Update2MembersTable extends Migration
     public function up()
     {
         Schema::table('members', function (Blueprint $table) {
-            $table->text('other_detail')->change();
+            $table->text('other_detail');
         });
     }
 

@@ -14,7 +14,7 @@ class Update4MembersTables extends Migration
     public function up()
     {
         Schema::table('members', function (Blueprint $table) {
-            $table->string('nim')->nullable()->change();
+            $table->string('nim')->index()->change();
         });
     }
 

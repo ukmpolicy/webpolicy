@@ -9,10 +9,11 @@ use App\Http\Controllers\Admin\HighlighController;
 use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\OfficerController;
-use App\Http\Controllers\Admin\ORController;
+use App\Http\Controllers\Admin\PeriodController;
+use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\SourceController;
+use App\Http\Controllers\Admin\StructuralController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Guest\FormController;
 use App\Http\Controllers\Guest\OpenRecruitmentController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Auth;
@@ -189,13 +190,9 @@ Route::middleware('sm')->group(function() {
         Route::prefix('officer')->group(function() {
            Route::get('/', [OfficerController::class, 'index'])
            ->name('office');
-           Route::get('/create', [OfficerController::class, 'create'])
-           ->name('office.create');
-           Route::get('/{id}/edit', [OfficerController::class, 'edit'])
-           ->name('office.edit');
            Route::post('/', [OfficerController::class, 'store'])
            ->name('office.store');
-           Route::put('/{id}', [OfficerController::class, 'update'])
+           Route::post('/{id}', [OfficerController::class, 'update'])
            ->name('office.update');
            Route::delete('/{id}', [OfficerController::class, 'destroy'])
            ->name('office.destroy');
@@ -218,6 +215,34 @@ Route::middleware('sm')->group(function() {
             ->name('division.program.update');
             Route::delete('/{division_id}/program/{program_id}', [DivisionController::class, 'destroyProgram'])
             ->name('division.program.destroy');
+        });
+        
+        Route::prefix('period')->group(function() {
+            Route::get('/', [PeriodController::class, 'index'])
+            ->name('period');
+            Route::post('/', [PeriodController::class, 'store'])
+            ->name('period.store');
+            Route::delete('/{id}', [PeriodController::class, 'destroy'])
+            ->name('period.destroy');
+            Route::put('/{id}', [PeriodController::class, 'update'])
+            ->name('period.update');
+            Route::post('/{id}/activate', [PeriodController::class, 'setActive'])
+            ->name('period.activate');
+        });
+        
+        Route::prefix('position')->group(function() {
+            Route::get('/', [PositionController::class, 'index'])
+            ->name('position');
+            Route::post('/', [PositionController::class, 'store'])
+            ->name('position.store');
+            Route::delete('/{id}', [PositionController::class, 'destroy'])
+            ->name('position.destroy');
+            Route::put('/{id}', [PositionController::class, 'update'])
+            ->name('position.update');
+            Route::post('/{id}/movedown', [PositionController::class, 'moveDownIndex'])
+            ->name('position.movedown');
+            Route::post('/{id}/moveup', [PositionController::class, 'moveUpIndex'])
+            ->name('position.moveup');
         });
         
         Route::prefix('user')->group(function() {

@@ -14,7 +14,11 @@ class Role extends Model
     ];
 
     public function hasPermission(string $name) {
-        return !is_null(RolePermission::where('role_id', $this->id)->where('permission_id', Permission::getByName($name)->id)->first());
+        $perm = Permission::getByName($name);
+        if ($perm) {
+            return !is_null(RolePermission::where('role_id', $this->id)->where('permission_id', $perm->id)->first());
+        }
+        return false;
     }
 
     public static function isExists(string $name) {

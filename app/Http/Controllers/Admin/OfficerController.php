@@ -6,21 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Division;
 use App\Models\Member;
 use App\Models\Officer;
+use App\Models\Period;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OfficerController extends Controller
 {
 
-    public static $roles = [
-        "ketua", "sekretaris", "bendahara", "anggota"
-    ];
-
     public function index(Request $request) {
         $officers = $this->getOfficers($request);
 
+        $data['periods'] = Period::all();
+        $data['period_active'] = Period::getPeriodeActive();
+        if ($request->period) {
+            $data['positions'] = Position::where('period_id', $request->period)->get();
+        }else {
+            $data['positions'] = Position::where('period_id', Period::getPeriodeActive()->id)->get();
+        }
         $data['officers'] = $officers;
-        $data['roles'] = self::$roles;
         $page = 1;
         $perPage = 10;
         $maxPage = ceil($officers->count()/$perPage);
@@ -38,19 +42,21 @@ class OfficerController extends Controller
     public function store(Request $request) {
         $this->validate($request, [
             "nim" => "required|exists:members,nim",
-            "role" => "required",
-            "division_id" => "required|exists:divisions,id",
-            "period_start_at" => "required",
-            "period_end_at" => "required",
+            "position_id" => "required|exists:positions,id",
         ]);
         $member = Member::where('nim', $request->nim)->first();
         if ($member) {
+            $filename = $member->profile_picture;
+            if ($request->file('picture')) {
+                $file = $request->file('picture');
+                $filename = time().rand(1111,9999).'.'.$file->getClientOriginalExtension();
+                $dir = 'uploads/';
+                $file->move($dir, $filename);
+            }
             $office = new Officer();
             $office->member_id = $member->id;
-            $office->division_id = $request->division_id;
-            $office->role = $request->role;
-            $office->period_start_at = $request->period_start_at;
-            $office->period_end_at = $request->period_end_at;
+            $office->position_id = $request->position_id;
+            $office->picture = $filename;
             $office->save();
 
             return redirect()->route('office')->with('succes', 'Pengurus berhasil ditambahkan');
@@ -58,35 +64,22 @@ class OfficerController extends Controller
         return redirect()->route('office')->with('error', 'Pengurus gagal ditambahkan');
     }
 
-    public function create() {
-        $data['divisions'] = Division::all();
-        return view('admin.pages.office.create', $data);
-    }
-    
-    public function edit($id) {
-        $officer = Officer::where('officers.id', $id)
-        ->select('officers.id', 'members.nim', 'members.name', 'division_id', 'role', 'period_start_at', 'period_end_at')
-        ->join('members', 'officers.member_id', '=', 'members.id')
-        ->first();
-        // dd($officer);
-        $data['divisions'] = Division::all();
-        $data['roles'] = self::$roles;
-        $data['officer'] = $officer;
-        unset($officer['member_id']);
-        return view('admin.pages.office.edit', $data);
-    }
-
-
     public function getOfficers(Request $request) {
-        $officers = Officer::select(
-            'officers.id', 'members.name', 'divisions.name as division', 'role', 'period_start_at', 'period_end_at')
-        ->join('members','officers.member_id','=','members.id')
-        ->join('divisions','officers.division_id','=','divisions.id');
 
+        $officers = Officer::select('officers.id', 'members.name', 'members.nim', 'officers.picture', 'positions.name as position', 'periods.name  as period', 'positions.period_id')
+        ->join('members','officers.member_id','=','members.id')
+        ->join('positions','officers.position_id','=','positions.id')
+        ->join('periods','positions.period_id','=','periods.id');
         
         if ($request->search) {
             $officers = $officers->where('members.name', 'like', '%'. $request->search . '%')
-            ->orWhere('nim', 'like', '%'. $request->search . '%');
+            ->orWhere('nim', 'like', '%'. $request->search . '%')
+            ->orWhere('positions.name', 'like', '%'. $request->search . '%');
+        }
+        if ($request->period) {
+            $officers = $officers->where('positions.period_id', $request->period);
+        }else {
+            $officers = $officers->where('positions.period_id', Period::getPeriodeActive()->id);
         }
         return $officers->get();
     }
@@ -94,24 +87,25 @@ class OfficerController extends Controller
     public function update(Request $request, $id) {
         $this->validate($request, [
             "nim" => "required|exists:members,nim",
-            "role" => "required",
-            "division_id" => "required|exists:divisions,id",
-            "period_start_at" => "required",
-            "period_end_at" => "required",
+            "position_id" => "required|exists:positions,id",
         ]);
-        $office = Officer::find($id);
-        if ($office) {
+        $officer = Officer::find($id);
+        if ($officer) {
             $member = Member::where('nim', $request->nim)->first();
             if ($member) {
-                $office->member_id = $member->id;
-                $office->division_id = $request->division_id;
-                $office->role = $request->role;
-                $office->period_start_at = $request->period_start_at;
-                $office->period_end_at = $request->period_end_at;
-                $office->save();
+                $filename = $officer->picture;
+                if ($request->file('picture')) {
+                    $file = $request->file('picture');
+                    $filename = time().rand(1111,9999).'.'.$file->getClientOriginalExtension();
+                    $dir = 'uploads/';
+                    $file->move($dir, $filename);
+                }
+                $officer->member_id = $member->id;
+                $officer->position_id = $request->position_id;
+                $officer->picture = $filename;
+                $officer->save();
     
                 return redirect()->route('office')->with('succes', 'Pengurus berhasil diubah');
-
             }
         }
         return redirect()->route('office')->with('error', 'Pengurus gagal diubah');

@@ -7,36 +7,48 @@ use App\Http\Controllers\Controller;
 use App\Models\Division;
 use App\Models\Member;
 use App\Models\Officer;
+use App\Models\Period;
 use App\Models\Program;
 use Illuminate\Http\Request;
 
 class DivisionController extends Controller
 {
-    public function index() {
-        $data['divisions'] = Division::all();
+    public function index(Request $request) {
+        $data['periods'] = Period::all();
+        $data['period_active'] = Period::getPeriodeActive();
+        $divisions = Division::leftJoin('periods', 'periods.id', '=', 'divisions.period_id')->selectRaw('divisions.*, periods.name as period');
+        if ($request->period) {
+            $divisions = $divisions->where('period_id', $request->period);
+        }else {
+            $divisions = $divisions->where('period_id', Period::getPeriodeActive()->id);
+        }
+        $data['divisions'] = $divisions->get();
         return view('admin.pages.division.index', $data);
     }
 
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
+            'period_id' => 'required',
         ]);
         $division = new Division();
         $division->name = strtolower($request->name);
+        $division->period_id = $request->period_id;
         $division->save();
         
         return redirect()->route('division')->with('success', 'Devisi berhasil ditambahkan');
     }
 
     public function edit($id) {
+        $officers = Officer::select('officers.id', 'members.name', 'positions.name as position', 'positions.division_id')
+        ->join('members','officers.member_id','=','members.id')
+        ->join('positions','officers.position_id','=','positions.id')
+        ->where('positions.division_id', $id);
+        // dd($officers->get()->toArray());
+
         $data['division'] = Division::find($id);
-        $officers = Officer::where('division_id', $id)->get();
-        $data['officers'] = array_map(function($v) {
-            $v['member'] = Member::find($v['member_id']);
-            $v['role'] = $this->getRole($v['role']);
-            unset($v['member_id']);
-            return $v;
-        }, $officers->toArray());
+        $data['periods'] = Period::all();
+        $data['officers'] = $officers->get();
         $data['programs'] = Program::where('division_id', $id)->get();
         return view('admin.pages.division.edit', $data);
     }
@@ -52,12 +64,14 @@ class DivisionController extends Controller
     public function update(Request $request, $id) {
         $this->validate($request, [
             'name' => 'required',
+            'period_id' => 'required',
         ]);
         $division = Division::find($id);
         if ($division) {
             $division->name = strtolower($request->name);
+            $division->period_id = $request->period_id;
             $division->save();
-            return redirect()->route('division')->with('success', 'Devisi berhasil diubah');
+            return redirect()->route('division.edit', ['id' => $division->id])->with('success', 'Devisi berhasil diubah');
         }
         return redirect()->route('division')->with('failed', 'Devisi gagal diubah');
     }

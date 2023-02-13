@@ -12,7 +12,6 @@ class MemberController extends Controller
 {
 
     public static $status = [
-        "Anggota Baru",
         "Anggota",
         "Alumni",
     ];
@@ -131,7 +130,7 @@ class MemberController extends Controller
                 $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
                 $dir = 'uploads/';
                 $file->move($dir, $filename);
-                $member->photo = $filename;
+                $member->profile_picture = $filename;
             }
             if ($request->nim)           $member->nim = $request->nim;
             if ($request->name)          $member->name = strtolower($request->name);
@@ -141,10 +140,11 @@ class MemberController extends Controller
             if ($request->major)         $member->major = strtolower($request->major);
             if ($request->study_program) $member->study_program = strtolower($request->study_program);
             if ($request->graduation_at) $member->graduation_at = strtolower($request->graduation_at);
-            if ($request->born_at)       $member->born_at = strtolower($request->born_at);
+            if ($request->born_at)       $member->born_at = strtotime($request->born_at);
             if ($request->birth_place)   $member->birth_place = $request->birth_place;
             if ($request->joined_at)     $member->joined_at = $request->joined_at;
-            if ($request->other_detail)  $member->other_detail = $request->other_detail;
+            if ($request->other_detail)     $member->other_detail = $request->other_detail;
+            // if ($request->other_detail)  $member->other_detail = $request->other_detail;
             $member->save();
             return redirect()->route('member.edit', ['id' => $member->id])->with('success', 'Perubahan berhasil disimpan!');
         }
