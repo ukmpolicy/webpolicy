@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\MembersImport;
 use App\Models\Member;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MemberController extends Controller
 {
@@ -162,6 +164,14 @@ class MemberController extends Controller
                 $member->save();
             }
         }
+    }
+
+    public function import(Request $request) {
+        $this->validate($request, [
+            'file_import' => 'required'
+        ]);
+        Excel::import(new MembersImport, $request->file('file_import'));
+        return redirect()->route('member')->with('success', 'Data berhasil diimport!');
     }
 
     public function destroy($id) {

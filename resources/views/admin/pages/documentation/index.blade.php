@@ -137,7 +137,7 @@
                     <div class="card card-item">
                       <div class="card-image showSource">
                         @if ($doc->type == 0)
-                          <img src="{{ asset($doc->path) }}" alt="{{ $doc->description }}" class="image">
+                          <img src="{{ asset('uploads/'.$doc->path) }}" alt="{{ $doc->description }}" class="image">
                         @elseif ($doc->type == 1)
                           <iframe height="150" class="card-img-top rounded" src="{{ asset($doc->path) }}">
                         </iframe>

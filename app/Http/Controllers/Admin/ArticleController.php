@@ -84,7 +84,6 @@ class ArticleController extends Controller
     public function destroy($id) {
         $article = Article::find($id);
         if ($article) {
-            $temp = $article;
             $article->delete();
             return redirect()->route('article')->with('success', 'Artikel berhasil dihapus');
         }
@@ -156,7 +155,8 @@ class ArticleController extends Controller
             
             $ex = explode('/', $data);
             $dir= "/uploads/";
-            if (!file_exists(base_path() . "/../public_html".$dir.end($ex))) {
+            // if (!file_exists(base_path() . "/../public_html".$dir.end($ex))) {
+            if (!file_exists(base_path() . "/public".$dir.end($ex))) {
                 list($type, $data) = explode(';', $data);
     
       
@@ -166,7 +166,7 @@ class ArticleController extends Controller
       
                 $filename = time().rand(0,99999).'.png';
       
-                $path = base_path() . "/../public_html" . $dir . $filename;
+                $path = base_path() . "/public" . $dir . $filename;
       
                 file_put_contents($path, $data);
       

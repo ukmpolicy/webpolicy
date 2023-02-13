@@ -23,11 +23,11 @@
                 
                 @if ($doc->type == 0)
                 
-                    <img src="{{ asset($doc->path) }}" alt="{{ $doc->description }}">
+                    <img src="{{ asset('uploads/'.$doc->path) }}" alt="{{ $doc->description }}">
                 
                 @elseif ($doc->type == 1)
 
-                    <iframe height="150" src="{{ $doc->path }}">
+                    <iframe height="150" src="{{ asset('uploads/'.$doc->path) }}">
 
                 @endif
 

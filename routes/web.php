@@ -75,6 +75,9 @@ Route::middleware('sm')->group(function() {
         
             Route::put('/{id}', [MemberController::class, 'update'])
             ->name('member.update');
+
+            Route::post('/import', [MemberController::class, 'import'])
+            ->name('member.import');
     
         });
     

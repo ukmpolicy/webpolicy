@@ -39,7 +39,7 @@ class SourceController extends Controller
         if (($file = $request->file('file_source'))) {
             
             $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
-            $dir = 'uploads/library/';
+            $dir = 'uploads/';
             $file->move($dir, $filename);
 
             // dd($file);
@@ -102,8 +102,8 @@ class SourceController extends Controller
     public function destroy($id) {
         $source = Source::find($id);
         if ($source) {
-            if (file_exists('/uploads/library/'.$source->path)) {
-                unlink('/uploads/library/'.$source->path);
+            if (file_exists('/uploads/'.$source->path)) {
+                unlink('/uploads/'.$source->path);
             }
             $temp = $source;
             $source->delete();

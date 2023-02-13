@@ -42,7 +42,8 @@
             <div class="d-lg-flex" style="justify-content: space-between">
               <div class="d-flex">
                 <div>
-                  <button class="btn btn-success" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus fa-fw"></i>Tambah</button>
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus fa-fw mr-2"></i>Tambah</button>
+                  <button class="btn btn-success" data-toggle="modal" data-target="#modalImportMember"><i class="fa fa-file-import mr-2 fa-fw"></i>Import</button>
                 </div>
               </div>
               <form class="d-flex" method="GET" action="">
@@ -153,7 +154,49 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-<!-- /.content -->
+
+{{-- Modal Import Member --}}
+<div class="modal fade" id="modalImportMember">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Import Anggota</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ route('member.import') }}" enctype="multipart/form-data" method="post">
+          @csrf
+          <div class="form-group">
+            <label for="file_import">File Import:</label>
+            <div class="custom-file">
+              <input type="file" id="file_import" name="file_import" class="custom-file-input">
+              <label class="custom-file-label" id="custom-file-import" for="file_import">Choose file</label>
+            </div>
+            @error('file_import') <div class="text-danger">{{ $message }}</div> @enderror
+          </div>
+          <p>
+            Unduh format import <a href="{{ asset('format_import_member.xlsx') }}">disini</a>.
+          </p>
+          <p>
+            Beberapa hal yang harus diperhatikan:
+          </p>
+          <ol>
+            <li>Format tanggal lahir seperti berikut: bulan/tanggal/tahun</li>
+            <li>Format nomor hp di awali dengan kode negara, contoh: 6285300000000</li>
+          </ol>
+      </div>
+      <div class="modal-footer justify-content-between">
+        {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> --}}
+        <button type="submit" class="btn btn-primary">Import</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
 @section('script')
 <script>
@@ -163,6 +206,12 @@
     showConfirmButton: false,
     timer: 3000
   });
+  $('#file_import').on('change',function(){
+      //get the file name
+      var fileName = $(this).val().split('\\');
+      //replace the "Choose a file" label
+      $('#custom-file-import').html(fileName[fileName.length-1]);
+  })
   if ('{{ session('success') }}'.trim() != '') {
     setTimeout(function() {
       $(document).Toasts('create', {
