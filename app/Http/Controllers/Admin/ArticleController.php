@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 class ArticleController extends Controller
 {
     public function index(Request $request) {
-        $articles = $this->getArticles($request)->get();
+        $articles = $this->getArticles($request)->orderBy('id', 'DESC')->get();
         $page = 1;
         $perPage = 10;
         $maxPage = ceil($articles->count()/$perPage);
@@ -154,9 +154,16 @@ class ArticleController extends Controller
             $data = $img->getAttribute('src');
             
             $ex = explode('/', $data);
-            $dir= "/uploads/";
+            $dir = "/uploads/";
+
+            $domain = explode(':', request()->getHttpHost());
+            if (in_array(strtolower($domain[0]), ['localhost', '127.0.0.1'])) {
+                $public_path = "/public/";
+            }else {
+                $public_path = "/../public_html/";
+            }
             // if (!file_exists(base_path() . "/../public_html".$dir.end($ex))) {
-            if (!file_exists(base_path() . "/../public_html".$dir.end($ex))) {
+            if (!file_exists(base_path() . $public_path . $dir.end($ex))) {
                 list($type, $data) = explode(';', $data);
     
       
@@ -166,7 +173,7 @@ class ArticleController extends Controller
       
                 $filename = time().rand(0,99999).'.png';
       
-                $path = base_path() . "/../public_html" . $dir . $filename;
+                $path = base_path() . $public_path . $dir . $filename;
       
                 file_put_contents($path, $data);
       

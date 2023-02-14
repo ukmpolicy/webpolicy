@@ -20,8 +20,10 @@
                 </li>
                 @auth
                     @if (hasPermissionByName('admin'))
-                        <li>
-                            <a href="{{ route('dashboard') }}" class="btn btn-outline-danger">MANAGER</a>
+                        <li class="nav-item">
+                            <div class="nav-btn">
+                                <a href="{{ route('dashboard') }}" class="btn btn-outline-danger">MANAGER</a>
+                            </div>
                         </li>
                     @endif
                 @endauth
