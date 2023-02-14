@@ -10,6 +10,7 @@ use App\Models\Galery;
 use App\Models\Highligh;
 use App\Models\Member;
 use App\Models\Officer;
+use App\Models\Period;
 use App\Models\Program;
 use App\Models\Role;
 use App\Models\Source;
@@ -19,7 +20,7 @@ use Illuminate\Http\Request;
 class GuestController extends Controller
 {
     public function index() {
-        $data['divisions'] = Division::all();
+        $data['divisions'] = Division::where('period_id', (Period::getPeriodeActive()) ? Period::getPeriodeActive()->id : null)->get();
         $data['officers'] = Officer::getCoreOfficer();
         $data['highlighs'] = Highligh::select(
             'highlighs.id', 'title', 'subtitle', 'thumbnail', 'text_button', 'url_button'
