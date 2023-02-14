@@ -36,7 +36,7 @@
                         <div class="item"><a href="{{ route('main.articles') }}"><i class="fa fa-angle-double-right"></i>Artikel</a></div>
                         <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Dokumentasi</a>
                         </div>
-                        <div class="item"><a href="{{ route('main.documentations') }}"><i class="fa fa-angle-double-right"></i>Tentang Kami</a>
+                        <div class="item"><a href="{{ route('main.profile') }}"><i class="fa fa-angle-double-right"></i>Tentang Kami</a>
                         </div>
                     </div>
                 </div>
