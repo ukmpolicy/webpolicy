@@ -50,7 +50,6 @@ class Permission extends Model
     public static function initPerms() {
         foreach (self::$permissions as $name) {
             if (!self::isExists($name)) {
-                dd(self::$permissions);
                 self::create(["name" => $name]);
             }
         }
