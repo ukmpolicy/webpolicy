@@ -1,8 +1,13 @@
 <?php
 
+use App\Models\Period;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RolePermission;
+
+function getIdActivePeriod() {
+    return (Period::getPeriodeActive()) ? Period::getPeriodeActive()->id : null;
+}
 
 function hasPermission($role_id, $permission_id) {
     return !is_null(RolePermission::where('role_id', $role_id)->where('permission_id', $permission_id)->first());

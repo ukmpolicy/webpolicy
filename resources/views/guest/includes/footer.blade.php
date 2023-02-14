@@ -45,7 +45,7 @@
                         <h2>Bidang:</h2>
                     </div>
                     <div class="items">
-                        @foreach (DB::table('divisions')->get() as $div)
+                        @foreach (DB::table('divisions')->where('period_id', getIdActivePeriod())->get(); as $div)
                             <div class="item">
                                 <a href="{{ route('main.division', ['division' => $div->name]) }}" class="text-capitalize"><i class="fa fa-angle-double-right"></i>{{ $div->name }}</a>
                             </div>
