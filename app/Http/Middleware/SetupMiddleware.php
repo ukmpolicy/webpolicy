@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Controllers\SetupController;
+use App\Models\Permission;
 use App\Models\Visit;
 use Closure;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class SetupMiddleware
         //     'url' => $request->url(),
         //     'route_name' => $request->route()->getName()
         // ]);
+        Permission::initPerms();
         if (SetupController::hasSetup()) {
             return $next($request);
         }else {

@@ -15,18 +15,28 @@ class Permission extends Model
 
     private static $permissions =  [
         "admin",
+        "admin.dashboard",
+
+        // Media
         "admin.article",
         "admin.documentation",
         "admin.mailbox",
+
+        // Kepengurusan
         "admin.member",
+        "admin.division",
+        "admin.officer",
+        "admin.struktural",
+        "admin.period",
+        "admin.position",
+
+        // Settings
+        "admin.setting",
         "admin.role",
         "admin.role.permission",
+
+        // Open Recruitment
         "admin.event.or",
-        "admin.setting",
-        "admin.officer",
-        "admin.division",
-        "admin.dashboard",
-        "admin.struktural",
     ];
 
     public static function isExists(string $name) {
@@ -40,6 +50,7 @@ class Permission extends Model
     public static function initPerms() {
         foreach (self::$permissions as $name) {
             if (!self::isExists($name)) {
+                dd(self::$permissions);
                 self::create(["name" => $name]);
             }
         }

@@ -185,10 +185,14 @@
                   </div>
                 </td>
                 <td>
+                  @if (in_array(strtolower($role->name), ['admin', 'guest']))
+                    <button class="btn btn-danger btn-sm btn-block" disabled><i class="fa fa-trash"></i></button>
+                  @else
                   <form action="{{ route('role.destroy', ['id' => $role->id]) }}" method="post">
                     @csrf @method('delete')
                     <button class="btn btn-danger btn-sm btn-block" onclick="return confirm('Apakah anda yakin ingin menghapus?')"><i class="fa fa-trash"></i></button>
                   </form>
+                  @endif
                 </td>
                 
               </tr>

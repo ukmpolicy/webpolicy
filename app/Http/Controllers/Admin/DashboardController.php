@@ -19,6 +19,9 @@ class DashboardController extends Controller
             $permission = Permission::where('name', $menu['permission'])->first();
             $permission_id = ($permission) ? $permission->id : null;
             if (!is_null(RolePermission::where('role_id', $role_id)->where('permission_id', $permission_id)->first())) {
+                if ($menu['route'] == 'dashboard') {
+                    break;
+                }
                 return redirect()->route($menu['route']);
             }
         }

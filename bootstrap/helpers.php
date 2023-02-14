@@ -20,30 +20,30 @@ function getSidebarMenu() {
         sidebarMenu("Dashboard", "tachometer-alt", "dashboard", "admin.dashboard"),
         // sidebarMenu("Akses Pengguna", "user-shield", "role", "admin.role"),
         // sidebarMenu("Anggota", "users", "member", "admin.member"),
-        sidebarMenu("Kepengurusan", "user-tie", "office", "admin.officer", [
-            sidebarDropMenu("Anggota", "member"),
-            sidebarDropMenu("Divisi", "division"),
-            sidebarDropMenu("Pengurus", "office"),
-            sidebarDropMenu("Periode", "period"),
-            sidebarDropMenu("Jabatan", "position"),
+        sidebarMenu("Kepengurusan", "user-tie", "office", "", [
+            sidebarDropMenu("Anggota", "member", "admin.member"),
+            sidebarDropMenu("Divisi", "division", "admin.division"),
+            sidebarDropMenu("Pengurus", "office", "admin.officer"),
+            sidebarDropMenu("Periode", "period", "admin.period"),
+            sidebarDropMenu("Jabatan", "position", "admin.position"),
             // sidebarDropMenu("Periode", "open-recruitment.admin.index"),
         ]),
         // sidebarMenu("Pengurus", "user-tie", "office", "admin.officer"),
         // sidebarMenu("Bidang", "sitemap", "division", "admin.division"),
         sidebarMenu("Media", "file-alt", "article", "admin.article", [
-            sidebarDropMenu("Blog", "article"),
-            sidebarDropMenu("Dokumentasi", "documentation"),
-            sidebarDropMenu("Kota Surat", "mail"),
+            sidebarDropMenu("Blog", "article", "admin.article"),
+            sidebarDropMenu("Dokumentasi", "documentation", "admin.documentation"),
+            sidebarDropMenu("Kota Surat", "mail", "admin.mailbox"),
         ]),
         // sidebarMenu("Blog", "file-alt", "article", "admin.article"),
         // sidebarMenu("Dokumentasi", "camera", "documentation", "admin.documentation"),
         // sidebarMenu("Kotak Surat", "envelope", "mail", "admin.mailbox"),
         sidebarMenu("Rekrutmen", "house-user", "open-recruitment.admin.index", "admin.event.or", [
-            sidebarDropMenu("Peserta", "open-recruitment.admin.index"),
-            sidebarDropMenu("Pengaturan", "open-recruitment.admin.setting"),
+            sidebarDropMenu("Peserta", "open-recruitment.admin.index", "admin.event.or"),
+            sidebarDropMenu("Pengaturan", "open-recruitment.admin.setting", "admin.event.or"),
         ]),
         sidebarMenu("Pengaturan", "cogs", "role", "admin.role", [
-            sidebarDropMenu("Akses Pengguna", "role"),
+            sidebarDropMenu("Akses Pengguna", "role", "admin.role"),
         ]),
     ];
 }
@@ -61,6 +61,20 @@ function containsInDropMenu($group_name, $route) {
     return false;
 }
 
+function hasMenuPermission($group_name) {
+    $hasPermission = false;
+    foreach (getSidebarMenu() as $v) {
+        if ($v['name'] == $group_name) {
+            foreach ($v['dropmenu'] as $dm) {
+                if (hasPermissionByName($dm['permission'])) {
+                    $hasPermission = true;
+                }
+            }
+        }
+    }
+    return $hasPermission;
+}
+
 function sidebarMenu($name = '', $icon = '', $route = '', $permission = '', $dropmenu = []) {
     return [
         "name" => $name,
@@ -71,9 +85,10 @@ function sidebarMenu($name = '', $icon = '', $route = '', $permission = '', $dro
     ];
 }
 
-function sidebarDropMenu($name, $route) {
+function sidebarDropMenu($name, $route, $permission = '') {
     return [
         "name" => $name,
         "route" => $route,
+        "permission" => $permission,
     ];
 }
