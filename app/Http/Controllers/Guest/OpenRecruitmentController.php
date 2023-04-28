@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Form;
+use App\Models\Period;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserForm;
@@ -228,6 +229,9 @@ class OpenRecruitmentController extends Controller
         $data['page'] = $page;
         $data['perPage'] = $perPage;
         $data['maxPage'] = $maxPage;
+        $data['periods'] = Period::all();
+        $data['period_active'] = Period::getPeriodeActive();
+        
         return view('admin.pages.or_manager.index', $data);
     }
     

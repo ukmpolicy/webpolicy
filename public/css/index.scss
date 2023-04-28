@@ -4,7 +4,6 @@ $headHeight: 97vh;
 a {
     text-decoration: none !important;
 }
-
 #flash-load {
     background-color: #fff;
     position: fixed;
@@ -164,7 +163,7 @@ body,html {
         align-items: center;
 
         img {
-            height: 3rem;
+            height: 2.5rem;
             margin-right: 1rem;
         }
     }
@@ -990,7 +989,6 @@ footer {
         }
     }
 }
-
 #programs {
     padding-top: 4rem;
     padding-bottom: 3rem;
@@ -1020,7 +1018,6 @@ footer {
         }
     }
 }
-
 #recruitment {
     min-height: 100vh;
     background-color: #202020;
@@ -1122,6 +1119,142 @@ footer {
     padding-bottom: 3rem;
     color: #fff;
 }
+#user {
+    background-color: #101010;
+    color: #fff;
+
+    .user-container {
+        width: 60%;
+        padding: 3rem;
+        background-color: #202020;
+        border-radius: 8px;
+        margin: 3rem auto;
+        margin-top: 6rem;
+        // display: grid;
+        // grid-template-columns: 300px auto;
+
+        .nav {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            padding-bottom: 1rem;
+            gap: 1rem;
+            .nav-link {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: #fff;
+
+                &.active {
+                    background-color: #fff;
+                    color: #101010;
+                }
+            }
+        }
+
+        .user-content {
+            padding: 1rem 0;
+            max-height: 70vh;
+            overflow-y: auto;
+
+            #profile {
+                display: grid;
+                // grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+
+                .banner {
+                    width: 100%;
+                    height: 250px;
+                    border-radius: 8px;
+                    background-color: #414141;
+                    position: relative;
+
+                    .picture {
+                        position: absolute;
+                        bottom: -1rem;
+                        left: 1rem;
+                        img {
+                            width: 100px;
+                            border-radius: 8px;
+                        }
+                    }
+                }
+                .bio {
+                    padding: 1rem;
+                }
+                .bio-quote {
+                    display: flex;
+                    background-color: #303030;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    position: relative;
+                    margin-top: 1rem;
+                    .bio-icon {
+                        left: 10px;
+                        top: 10px;
+                        font-size: 13px;
+                        position: absolute;
+                    }
+                    .bio-text {
+                        padding: 1rem;
+                        align-self: center;
+                        padding-right: 1rem;
+                        color: #aaa;
+                    }
+
+                }
+            }
+
+            #notifications {
+                .notification {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: #303030;
+                    border-radius: 8px;
+                    margin-bottom: 1rem;
+                    .content {
+                        padding: 1rem 0;
+                        .title {
+                            font-weight: bold;
+                        }
+                        .subtitle {
+                            color: #aaa;
+                        }
+                    }
+                    .notification-icon {
+                        padding: 1.5rem;
+                        align-self: flex-start;
+
+                        &.status {
+                            color: green;
+                        }
+                        &.delete {
+                            color: #707070;
+                            cursor: pointer;
+                            &:hover {
+                                color: #aaa;
+                            }
+                            &:active {
+                                color: red;
+                            }
+                        }
+                    }
+                    &.new {
+                        .notification-icon.status {
+                            color: red;
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 992px)  {
+            width: 90%;
+            padding: 0;
+            background: none;
+            .nav .nav-link .nav-text {
+                display: none;
+            }
+        }
+    }
+}
 @keyframes fadeInBottom{
 	0%{
 		opacity: 0;
@@ -1132,7 +1265,6 @@ footer {
 		transform: translateY(0px);
     }
 }
-
 @media (min-width: 992px) {
     #sidebar {
         display: none;
@@ -1235,7 +1367,6 @@ footer {
         } 
     }
 }
-
 @media (max-width: 575px) {
     #article {
         .head {
@@ -1335,8 +1466,6 @@ footer {
         }
     }
 }
-
-
 .auth {
     
     .inp {

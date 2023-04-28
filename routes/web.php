@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\StructuralController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Guest\OpenRecruitmentController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -285,8 +286,7 @@ Route::middleware('sm')->group(function() {
     Route::get('/home', [App\Http\Controllers\Guest\GuestController::class, 'index'])->name('home');
 });
 
-Route::prefix('product/game')->group(function() {
-    Route::get('fluppybird', function() {
-        return view('games.fluppybird');
-    });
+Route::prefix('/u')->middleware('auth')->group(function() {
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('user.profile');
+    Route::get('/notifications', [ProfileController::class, 'notifications'])->name('user.notifications');
 });

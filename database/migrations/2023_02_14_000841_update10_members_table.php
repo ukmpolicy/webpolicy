@@ -15,6 +15,9 @@ class Update10MembersTable extends Migration
     {
         Schema::table('members', function (Blueprint $table) {
             $table->dropColumn('born_at_temp');
+            $table->integer('born_at')->nullable()->change();
+            $table->integer('graduation_at')->nullable()->change();
+            $table->text('other_detail')->nullable()->change();
         });
     }
 

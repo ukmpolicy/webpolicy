@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\ORDocument;
+use App\Models\Period;
 use App\Models\Setting;
 use App\Models\Source;
 use Illuminate\Http\Request;
@@ -17,11 +18,11 @@ use Illuminate\Support\Facades\DB;
 class ORController extends Controller
 {
     public function index() {
-        $data['settings'] = [];
+        $settings = [];
         foreach (Setting::all() as $s) {
-            $data['settings'][$s->key] = $s->value;
+            $settings[$s->key] = $s->value;
         }
-        return view('user.open_recruitment.index', $data);
+        return view('user.open_recruitment.index', compact($settings));
     }
     
     public function viewForm() {
@@ -38,6 +39,7 @@ class ORController extends Controller
         $data['page'] = $page;
         $data['perPage'] = $perPage;
         $data['maxPage'] = $maxPage;
+        $data['periods'] = Period::all();
         
         return view('admin.pages.or_manager.index', $data);
     }

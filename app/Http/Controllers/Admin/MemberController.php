@@ -58,7 +58,7 @@ class MemberController extends Controller
             "Teknologi Rekayasa Komputer Jaringan",
             "Teknologi Rekayasa Multimedia",
         ],
-    ];
+    ];  
 
     public function index(Request $request) {
         // dd(strtotime('2001-12-10'), strtotime('12/10/2001'));
@@ -70,6 +70,9 @@ class MemberController extends Controller
 
         if (is_numeric($request->page)) {
             $page = $request->page;
+        }
+        if (is_numeric($request->count) || strtolower($request->count) == 'all') {
+            $perPage = $request->count;
         }
 
         $data['members'] = $members;
@@ -104,7 +107,7 @@ class MemberController extends Controller
             
             return view('admin.pages.member.edit', $data);
         }
-        return redirect()->route('member');
+        return redirect()->route('member')->with('failed', 'Anggota tidak ditemukan!');
     }
 
     public function update(Request $request, $id) {
@@ -181,9 +184,9 @@ class MemberController extends Controller
         if ($member) {
             $temp = $member;
             $member->delete();
-            return redirect()->route('member')->with('success', 'Anggota dengan nama '.$temp->name.' berhasil dihapus');
+            return redirect()->back()->with('success', 'Anggota dengan nama '.$temp->name.' berhasil dihapus');
         }
-        return redirect()->route('member')->with('error', 'Anggota tidak ditemukan');
+        return redirect()->back()->with('error', 'Anggota tidak ditemukan');
     }
 
     public function newMember(Request $request) {

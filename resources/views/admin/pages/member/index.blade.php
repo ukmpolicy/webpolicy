@@ -44,6 +44,14 @@
                 <div>
                   <button class="btn btn-primary" data-toggle="modal" data-target="#modalAddMember"><i class="fa fa-plus fa-fw mr-2"></i>Tambah</button>
                   <button class="btn btn-success" data-toggle="modal" data-target="#modalImportMember"><i class="fa fa-file-import mr-2 fa-fw"></i>Import</button>
+                  <form action="" method="get" id="filter_rows" class="d-inline-block">
+                    <select class="form-control" name="rows" onchange="document.querySelector('#filter_rows').submit()">
+                      <option @if ('10' == Request::get('rows')) selected @endif value="10">10 Baris</option>
+                      <option @if ('50' == Request::get('rows')) selected @endif value="50">50 Baris</option>
+                      <option @if ('100' == Request::get('rows')) selected @endif value="100">100 Baris</option>
+                      <option @if ('all' == Request::get('rows')) selected @endif value="all">Semua</option>
+                    </select>
+                  </form>
                 </div>
               </div>
               <form class="d-flex" method="GET" action="">

@@ -20,6 +20,10 @@ function hasPermissionByName($permission) {
     return !is_null(RolePermission::where('role_id', $role_id)->where('permission_id', $permission_id)->first());
 }
 
+function getURLPath($url) {
+    return substr(parse_url($url)['path'], 1);
+}
+
 function getSidebarMenu() {
     return [
         sidebarMenu("Dashboard", "tachometer-alt", "dashboard", "admin.dashboard"),

@@ -40,7 +40,16 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="d-lg-flex" style="justify-content: space-between">
-              <a href="{{ route('open-recruitment.admin.download') }}" class="btn btn-success"><i class="fa fa-download mr-2"></i> Unduh</a>
+              <div class="d-flex" style="gap: 1rem">
+                <form action="" id="filter_period">
+                  <select name="period" onchange="document.querySelector('#filter_period').submit()" class="form-control" style="width: fit-content">
+                    @foreach ($periods as $period)
+                      <option @if ($period->id == Request::get('period') || $period->id == $period_active->id) selected @endif value="{{ $period->id }}">Periode {{ $period->name }}</option>
+                    @endforeach
+                  </select>
+                </form>
+                <a href="{{ route('open-recruitment.admin.download') }}" class="btn btn-success"><i class="fa fa-download mr-2"></i> Unduh</a>
+              </div>
               <form class="d-flex" method="GET" action="">
                 {{-- <input type="hidden" name="sb" value="{{ Request::get('sb') }}"> --}}
                 <input type="text" value="{{ Request::get('search') }}" name="search" class="form-control" style="width: 300px" placeholder="Cari">
