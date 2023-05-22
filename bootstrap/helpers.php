@@ -115,10 +115,6 @@ function generateRandomString($length = 10) {
 }
 
 function randUsername() {
-    $time = substr(time(), -4);
     $username = generateRandomString(7).rand(99999,99999);
-    // while (!is_null(User::where('username', $username)->first())) {
-    //     $username = generateRandomString(5).'-'.$time.rand(999,999);
-    // }
     return $username;
 }
