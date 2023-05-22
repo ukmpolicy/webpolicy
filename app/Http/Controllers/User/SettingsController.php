@@ -12,11 +12,6 @@ class SettingsController extends Controller
 {
     public function index() {
         $user = User::find(Auth::user()->id);
-        // foreach (User::all() as $user) {
-        //     $user->username = $this->generateRandomUsername();
-        //     $user->save();
-        // }
-        // return 'ok';
         return view('user.setting.index', compact('user'));
     }
 
