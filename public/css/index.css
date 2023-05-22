@@ -1174,7 +1174,7 @@ footer .credits .container .socmeds .item:hover {
   #user .user-container .nav .nav-link .nav-text {
     display: none;
   }
-  #user .user-container #settings {
+  #user .user-container .user-content #settings {
     width: 100%;
   }
 }
