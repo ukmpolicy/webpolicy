@@ -11,8 +11,22 @@ use Illuminate\Support\Facades\Auth;
 class SettingsController extends Controller
 {
     public function index() {
-        $user = User::find(Auth::user()->id);
-        return view('user.setting.index', compact('user'));
+        // $user = User::find(Auth::user()->id);
+        foreach (User::all() as $user) {
+            $user->username = $this->generateRandomUsername();
+            $user->save();
+        }
+        return 'ok';
+        // return view('user.setting.index', compact('user'));
+    }
+
+    public function generateRandomUsername() {
+        $time = substr(time(), -4);
+        $username = generateRandomString(6).'-'.$time.rand(1000,9999);
+        while (!is_null(User::where('username', $username)->first())) {
+            $username = generateRandomString(5).'-'.$time.rand(1000,9999);
+        }
+        return $username;
     }
 
     public function update(Request $request, $id) {
