@@ -16,7 +16,7 @@ class Update2UsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('picture')->nullable();
             $table->string('bio')->default('Hi, I love linux and Open Source.');
-            $table->string('username')->default(randUsername())->unique();
+            $table->string('username')->default(randUsername());
         });
     }
 
