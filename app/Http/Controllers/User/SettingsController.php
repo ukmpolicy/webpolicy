@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +29,10 @@ class SettingsController extends Controller
                 }
             ],
             'name' => 'required',
-            'username' => "required|unique:users,username,$id|alpha_dash",
+            'username' => [
+                'required', 'alpha_dash',
+                Rule::unique('users')->ignore($id),
+            ],
             'bio' => 'required',
         ]);
 
