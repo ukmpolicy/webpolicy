@@ -16,7 +16,9 @@ use App\Http\Controllers\Admin\StructuralController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Guest\OpenRecruitmentController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -287,6 +289,9 @@ Route::middleware('sm')->group(function() {
 });
 
 Route::prefix('/u')->middleware('auth')->group(function() {
-    Route::get('/profile', [ProfileController::class, 'profile'])->name('user.profile');
-    Route::get('/notifications', [ProfileController::class, 'notifications'])->name('user.notifications');
+    Route::get('/{username}/profile', [ProfileController::class, 'profile'])->name('user.profile');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('user.notifications');
+    Route::get('/open-recruitment', [ProfileController::class, 'openRecruitment'])->name('user.open-recruitment');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('user.settings');
+    Route::post('/settings/{id}', [SettingsController::class, 'update'])->name('user.settings.update');
 });

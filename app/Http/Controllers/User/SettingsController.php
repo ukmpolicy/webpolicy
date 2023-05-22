@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class SettingsController extends Controller
+{
+    public function index() {
+        $user = User::find(Auth::user()->id);
+        return view('user.setting.index', compact('user'));
+    }
+
+    public function update(Request $request, $id) {
+        $this->validate($request, [
+            'picture' => ['nullable', 'image', 
+                function ($attribute, $value, $fail) {
+                    $imageInfo = getimagesize($value);
+                    $width = $imageInfo[0];
+                    $height = $imageInfo[1];
+                    
+                    if ($width !== $height) {
+                        $fail('The '.$attribute.' must have a 1:1 aspect ratio.');
+                    }
+                }
+            ],
+            'name' => 'required',
+            'username' => "required|unique:users,username,$id|alpha_dash",
+            'bio' => 'required',
+        ]);
+
+        
+        $user = User::find($id);
+        if ($user) {
+            $file = $request->file('picture');
+            $filename = $user->picture;
+            if ($file) {
+                if ($filename) {
+                    if (file_exists('/uploads/'.$filename)) {
+                        unlink('/uploads/'.$filename);
+                    }
+                }
+                $filename = time().rand(0,99999).'.'.$file->getClientOriginalExtension();
+                $file->move('uploads/', $filename);
+            }
+            $user->name = $request->get('name');
+            $user->username = $request->get('username');
+            $user->bio = $request->get('bio');
+            $user->picture = $filename;
+            $user->save();
+            return redirect()->back()->with('success', 'Changes saved successfully');
+        }
+        return redirect()->route('home');
+    }
+}

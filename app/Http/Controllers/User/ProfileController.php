@@ -13,7 +13,7 @@ class ProfileController extends Controller
         return view('user.profile.index', compact(['user']));
     }
 
-    public function notifications() {
-        return view('user.notifications.index');
+    public function openRecruitment() {
+        return view('user.or.index');
     }
 }

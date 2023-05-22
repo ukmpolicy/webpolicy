@@ -4,6 +4,7 @@ use App\Models\Period;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RolePermission;
+use Illuminate\Support\Str;
 
 function getIdActivePeriod() {
     return (Period::getPeriodeActive()) ? Period::getPeriodeActive()->id : null;
@@ -100,4 +101,19 @@ function sidebarDropMenu($name, $route, $permission = '') {
         "route" => $route,
         "permission" => $permission,
     ];
+}
+
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+function randUsername() {
+    $time = substr(time(), -4);
+    return generateRandomString(5).'-'.$time.rand(999,999);
 }

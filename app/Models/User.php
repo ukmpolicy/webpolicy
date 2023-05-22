@@ -54,4 +54,11 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function getPicture() {
+        if (is_null($this->picture)) {
+            return asset('images/default_picture.webp');
+        }
+        return asset('uploads/'.$this->picture);
+    }
 }

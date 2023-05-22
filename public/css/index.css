@@ -166,6 +166,7 @@ a {
   display: flex !important;
   align-items: center !important;
   padding: 0;
+  background: linear-gradient(to bottom, #000000, rgba(0, 0, 0, 0.062745098));
 }
 #navbar .navbar-brand {
   display: flex;
@@ -179,6 +180,15 @@ a {
 #navbar .navbar-collapse {
   width: -moz-fit-content;
   width: fit-content;
+}
+#navbar #navbar-picture > a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+}
+#navbar #navbar-picture > a img {
+  width: 2.5rem;
 }
 #navbar .navbar-nav .nav-item {
   padding: 0 1rem;
@@ -1047,27 +1057,16 @@ footer .credits .container .socmeds .item:hover {
 }
 #user .user-container .user-content {
   padding: 1rem 0;
-  max-height: 70vh;
   overflow-y: auto;
 }
 #user .user-container .user-content #profile {
   display: grid;
+  grid-template-columns: 1fr 4fr;
   gap: 1rem;
 }
-#user .user-container .user-content #profile .banner {
+#user .user-container .user-content #profile .picture img {
   width: 100%;
-  height: 250px;
-  border-radius: 8px;
-  background-color: #414141;
-  position: relative;
-}
-#user .user-container .user-content #profile .banner .picture {
-  position: absolute;
-  bottom: -1rem;
-  left: 1rem;
-}
-#user .user-container .user-content #profile .banner .picture img {
-  width: 100px;
+  margin: auto;
   border-radius: 8px;
 }
 #user .user-container .user-content #profile .bio {
@@ -1078,17 +1077,15 @@ footer .credits .container .socmeds .item:hover {
   background-color: #303030;
   padding: 1rem;
   border-radius: 8px;
-  position: relative;
   margin-top: 1rem;
+  align-items: center;
 }
 #user .user-container .user-content #profile .bio-quote .bio-icon {
-  left: 10px;
-  top: 10px;
+  margin-right: 1rem;
+  align-self: flex-start;
   font-size: 13px;
-  position: absolute;
 }
 #user .user-container .user-content #profile .bio-quote .bio-text {
-  padding: 1rem;
   align-self: center;
   padding-right: 1rem;
   color: #aaa;
@@ -1130,6 +1127,44 @@ footer .credits .container .socmeds .item:hover {
 #user .user-container .user-content #notifications .notification.new .notification-icon.status {
   color: red;
 }
+#user .user-container .user-content #settings {
+  width: 50%;
+  margin: auto;
+}
+#user .user-container .user-content #settings .form {
+  margin-bottom: 1rem;
+}
+#user .user-container .user-content #settings .form label {
+  color: #fff;
+}
+#user .user-container .user-content #settings .form .inp {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #515151;
+  padding: 0.5rem 1rem;
+  outline: none;
+  background-color: #313131;
+  color: #ffffff;
+}
+#user .user-container .user-content #settings .form .inp:focus {
+  border: 1px solid #919191;
+}
+#user .user-container .user-content #settings .form .error {
+  color: rgb(177, 32, 32);
+  font-size: small;
+  margin-top: 0.5rem;
+}
+#user .user-container .user-content #settings .btn {
+  background-color: #ac3333;
+  color: #ffffff;
+  border: 0;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border-radius: 4px;
+}
+#user .user-container .user-content #settings .btn:hover {
+  background-color: #9b2a2a;
+}
 @media (max-width: 992px) {
   #user .user-container {
     width: 90%;
@@ -1138,6 +1173,20 @@ footer .credits .container .socmeds .item:hover {
   }
   #user .user-container .nav .nav-link .nav-text {
     display: none;
+  }
+  #user .user-container #settings {
+    width: 100%;
+  }
+}
+@media (max-width: 575px) {
+  #user .user-container .user-content #profile {
+    margin: auto;
+    display: block;
+    text-align: center;
+  }
+  #user .user-container .user-content #profile .picture {
+    margin: auto;
+    width: 50%;
   }
 }
 
@@ -1194,12 +1243,25 @@ footer .credits .container .socmeds .item:hover {
     border-bottom: 1px solid #ddd;
     margin: 1rem auto;
   }
+  #navbar .container {
+    display: grid;
+    grid-template-areas: "logo profile";
+    width: 100% !important;
+  }
   #navbar .navbar-collapse {
     width: 100%;
   }
   #navbar .navbar-brand, #navbar button {
     position: relative;
     z-index: 99;
+  }
+  #navbar #logo {
+    grid-area: logo;
+  }
+  #navbar #navbar-picture {
+    grid-area: profile;
+    z-index: 99;
+    position: relative;
   }
   #navbar .navbar-nav {
     position: fixed;
